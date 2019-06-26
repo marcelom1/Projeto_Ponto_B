@@ -1,0 +1,203 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ponto B - Cartão Ponto</title>
+    <link rel="icon" href="../Content/img/LogoB.gif">
+
+    <!-- Font Google Knewave CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Knewave&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--CSS Próprio -->
+    <link rel="stylesheet" href="../Content/CSS/menuAdm.css">
+    <link rel="stylesheet" href="../Content/CSS/cadastroEmpresa.css">
+
+
+
+</head>
+<body class="Fundo">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand Fonte-Knewave-Red" href="#"> <img src="../Content/img/LogoB.gif" width="30" height="29" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Ausências</a>
+                        <a class="dropdown-item" href="cadastroColaborador.html">Colaboradores</a>
+                        <a class="dropdown-item" href="cadastroEmpresa.html">Empresas</a>
+                        <a class="dropdown-item" href="#">Escalas</a>
+                    </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fechamento</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Calcular</a>
+                        <a class="dropdown-item" href="#">Manutenção</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Item</a>
+                        <a class="dropdown-item" href="#">Outro item</a>
+                        <a class="dropdown-item" href="#">Algum outro item</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Configurações</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button class="btn p-1 mb-0 botao_cor" type="submit">Sair</button>
+            </form>
+        </div>
+    </nav>
+    <main>
+        <!-- AQUI VAI O CONTEUDO DA PAGINA -->
+
+
+        <div class="pt-5 form-signin ">
+            <form action="/Empresa/Adiciona" class="FundoEmpresa mt-3  centro">
+                <h3 class="pb-3">Cadastro Empresa</h3>
+                <button type="button" class="btn botao_cor btn-sm">Novo</button>
+                <div class="form-row pb-1 pt-4 ">
+                    <div class="form-group col-md-6">
+                        <label for="RazaoSocial">Razão Social</label>
+                        <input type="text" class="form-control" id="RazaoSocial" name="empresa.RazaoSocial" placeholder="Razão Social">
+                    </div>
+                  
+                    <div class="form-group col-md-2">
+                        <label for="CodigoEmpresa">Código</label>
+                        <div class="input-group mb-1">
+                            <input type="text" class="form-control" placeholder="Código">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" name="empresa.Id" id="button-addon2"><img src="../Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row pb-5 ">
+                    <div class="form-group col-md-6">
+                        <label for="CNPJ">CNPJ</label>
+                        <input type="text" class="form-control" id="CNPJ" name="empresa.Cnpj" placeholder="CNPJ">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="NomeFantasia">Nome Fantasia</label>
+                        <input type="text" class="form-control" id="NomeFantasia" name="empresa.NomeFantasia" placeholder="Nome Fantasia">
+                    </div>
+                </div>
+                <div class="form-row pb-2 ">
+                    <div class="form-group col-md-2">
+                        <label for="inputCEP">CEP</label>
+                        <input type="text" class="form-control" name="empresa.CEP" id="inputCEP">
+                    </div>
+                </div>
+                <div class="form-row pb-2">
+                    <div class="form-group col-md-5">
+                        <label for="Logradouro">Logradouro</label>
+                        <input type="text" class="form-control" id="Logradouro" name="empresa.Logradouro" placeholder="Ex: Rua Exemplo XI">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="LogradouroNumero">Numero</label>
+                        <input type="text" class="form-control" id="LogradouroNumero" name="empresa.Numero" placeholder="Ex: 1234">
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="LogradouroComplemento">Complemento</label>
+                        <input type="text" class="form-control" id="LogradouroComplemento" name="empresa.Complemento" placeholder="Ex: Sala 02">
+                    </div>
+                </div>
+                <div class="form-row pb-2">
+                    <div class="form-group col-md-5">
+                        <label for="LogradouroBairro">Bairro</label>
+                        <input type="text" class="form-control" id="LogradouroBairro" name="empresa.Bairro" placeholder="Ex: Vila Formosa">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="LogradouroEstado">Estado</label>
+                        <select id="LogradouroEstado" name="empresa.Estado" class="form-control">
+                            <option selected>Escolher...</option>
+                            <option>AC</option>
+                            <option>AL</option>
+                            <option>AP</option>
+                            <option>AM</option>
+                            <option>BA</option>
+                            <option>CE</option>
+                            <option>DF</option>
+                            <option>ES</option>
+                            <option>GO</option>
+                            <option>MA</option>
+                            <option>MT</option>
+                            <option>MS</option>
+                            <option>MG</option>
+                            <option>PA</option>
+                            <option>PB</option>
+                            <option>PR</option>
+                            <option>PE</option>
+                            <option>PI</option>
+                            <option>RJ</option>
+                            <option>RN</option>
+                            <option>RS</option>
+                            <option>RO</option>
+                            <option>RR</option>
+                            <option>SC</option>
+                            <option>SP</option>
+                            <option>SE</option>
+                            <option>TO</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-5">
+                        <label for="LogradouroCidade">Cidade</label>
+                        <input type="text" class="form-control" id="LogradouroCidade" name="empresa.Cidade" placeholder="Ex: Blumenau">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input type="email" class="form-control" id="inputEmail4" name="empresa.Email"  placeholder="Email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Telefone">Telefone</label>
+                        <input type="text" class="form-control" id="Telefone" name="empresa.Telefone" placeholder="473333-3333">
+                    </div>
+                </div>
+                <button type="submit" class="btn botao_cor_verde btn-lg">Salvar</button>
+                <div class="form-row float-right">
+                    <div class="form-group col-md-1">
+                        <button type="button" class="btn botao_cor btn-lg">Excluir</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- AQUI VAI O CONTEUDO DA PAGINA -->
+    </main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

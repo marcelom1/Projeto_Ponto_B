@@ -215,6 +215,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\CSS\cadastroColaborador.css" />
+    <Content Include="Content\CSS\cadastroEmpresa.css" />
+    <Content Include="Content\CSS\login.css" />
+    <Content Include="Content\CSS\menuAdm.css" />
+    <Content Include="Content\img\Fundo2.jpg" />
+    <Content Include="Content\img\LogoB.gif" />
+    <Content Include="Content\img\lupa.jpg" />
+    <Content Include="Content\img\Lupa2.png" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -240,6 +248,7 @@
     <None Include="packages.config" />
     <Content Include="Views\Empresa\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Empresa\Form.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

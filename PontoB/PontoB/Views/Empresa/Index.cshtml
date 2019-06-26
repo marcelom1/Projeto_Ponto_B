@@ -11,7 +11,29 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <td>Razão Social</td>
+                    <th>CNPJ</th>
+                    <th>Nome Fantasia</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Empresa in ViewBag.Empresas)
+                {
+                <tr>
+                    <td>@Empresa.Id</td>
+                    <td>@Empresa.RazaoSocial</td>
+                    <td>@Empresa.Cnpj</td>
+                    <td>@Empresa.NomeFantasia</td>
+                </tr>
+
+                }
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
