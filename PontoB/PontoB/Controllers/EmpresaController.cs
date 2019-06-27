@@ -15,7 +15,6 @@ namespace PontoB.Controllers
         {
 
             EmpresaDAO dao = new EmpresaDAO();
-           // dao.Adiciona(new Empresa("Mj", "23.123.123/0001-71", "mm", 89110000, "Rua dos bobos", 123, "casa", "centro", "SC", "Gaspar", "fulano@hotmail.com", "333-3333"));
             IList<Empresa> empresas = dao.Lista();
             ViewBag.Empresas = empresas;
             return View();

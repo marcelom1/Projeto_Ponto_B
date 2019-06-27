@@ -249,6 +249,7 @@
     <Content Include="Views\Empresa\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Empresa\Form.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
