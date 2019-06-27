@@ -10,7 +10,7 @@ namespace PontoB.Models
     {
         public int Id { get;  set; }
         [Required]
-        public string RazaoSocial { get;  set; }
+        public string RazaoSocial { get; set; }
         [Required]
         public string Cnpj { get;  set; }
         public string NomeFantasia { get;  set; }
@@ -24,6 +24,5 @@ namespace PontoB.Models
         public string Email { get;  set; }
         public string Telefone { get;  set; }
 
-      
     }
 }
