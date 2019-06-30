@@ -33,6 +33,8 @@
 .centro {
     position: absolute;
     left: 2.5%;
+    overflow: auto !important;
+    
 }
 
 .botao_cor {
@@ -48,4 +50,5 @@
     background-color: green;
     color: white;
 }
+
 
