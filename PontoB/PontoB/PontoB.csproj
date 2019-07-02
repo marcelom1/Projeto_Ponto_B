@@ -250,6 +250,9 @@
     <Content Include="Content\img\lixeira.png" />
     <Content Include="Content\img\LogoB.gif" />
     <Content Include="Content\img\Lupa2.png" />
+    <Content Include="Content\js\BuscarCep.js" />
+    <Content Include="Content\js\CadastroEmpresa.js" />
+    <Content Include="Content\js\jquery-3.4.1.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -284,6 +287,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Empresa\Form.cshtml" />
     <Content Include="Views\Shared\_LayoutAdm.cshtml" />
+    <Content Include="Views\Modals\EmpresaPesquisaModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

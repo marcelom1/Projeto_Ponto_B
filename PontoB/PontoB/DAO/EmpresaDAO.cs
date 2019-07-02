@@ -33,7 +33,7 @@ namespace PontoB.DAO
             using(var contexto = new PontoContex())
             {
 
-                contexto.Endereco.Remove(empresa.EnderecoEmpresa);
+               // contexto.Endereco.Remove(empresa.EnderecoEmpresa);
                 contexto.Empresa.Remove(empresa);
                 contexto.SaveChanges();
                 
@@ -45,7 +45,6 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                //return contexto.Empresa.Find(id);
                 return contexto.Empresa.Include(e=> e.EnderecoEmpresa).Where(e=> e.Id==id).FirstOrDefault();
             }
         }

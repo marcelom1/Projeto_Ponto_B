@@ -30,21 +30,10 @@ namespace PontoB.Controllers
                 Empresa empresa = dao.BuscarPorId(id);
                 ViewBag.Empresa = empresa;
 
-                //EnderecoDAO daoEndereco = new EnderecoDAO();
-                /*using (var contexto = new PontoContex())
-                {
-                    var enderecoempresa = contexto.Empresa.Include(e => e.EnderecoEmpresa).Where(e=> e.Id==id).FirstOrDefault();
-
-                    ViewBag.Endereco = enderecoempresa;
-                }*/
-
-                
-                
-
                 return View();
             }
 
-           
+            
             ViewBag.Empresa = new Empresa();
             ViewBag.Empresa.EnderecoEmpresa = new Endereco();
             return View();
@@ -56,15 +45,8 @@ namespace PontoB.Controllers
         {
             EmpresaDAO dao = new EmpresaDAO();
             var pesquisa = dao.BuscarPorId(empresa.Id);
-            /*pesquisa.NomeFantasia = empresa.NomeFantasia;
-            pesquisa.RazaoSocial = empresa.RazaoSocial;
-            pesquisa.Telefone = empresa.Telefone;
-            pesquisa.Email = empresa.Email;
-            pesquisa.Cnpj = empresa.Cnpj;
-            pesquisa.EnderecoEmpresa = empresa.EnderecoEmpresa;
-            dao.Atualiza(pesquisa);*/
             
-            if (dao.BuscarPorId(empresa.Id) != null)
+            if (pesquisa != null)
             {
                 dao.Atualiza(empresa);
 
@@ -77,11 +59,37 @@ namespace PontoB.Controllers
            
         }
 
-        public ActionResult Alterar(Empresa empresa)
+       
+
+        [HttpPost]
+        public ActionResult Excluir(Empresa empresa)
         {
-            
+            EmpresaDAO dao = new EmpresaDAO();
+            var pesquisa = dao.BuscarPorId(empresa.Id);
+
+            if (pesquisa != null)
+            {
+                dao.ExcluirEmpresa(empresa);
+
+            }
+           
+            return RedirectToAction("Index", "Empresa");
+        }
+
+        public ActionResult Excluir(int id)
+        {
+            EmpresaDAO dao = new EmpresaDAO();
+            var pesquisa = dao.BuscarPorId(id);
+
+            if (pesquisa != null)
+            {
+                dao.ExcluirEmpresa(pesquisa);
+
+            }
 
             return RedirectToAction("Index", "Empresa");
         }
+
+
     }
 }

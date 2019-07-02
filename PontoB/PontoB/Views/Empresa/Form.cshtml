@@ -1,120 +1,144 @@
-﻿@model PontoB.Models.Empresa
+﻿
 @{
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
 
+<!--
+<form action="/Empresa/Adiciona" method="post">-->
+@using (Html.BeginForm("Adiciona", "Empresa", FormMethod.Post))
+{
+    <h3 class="pb-3">Cadastro Empresa</h3>
+    <button type="button" class="btn botao_cor btn-sm">Novo</button>
 
-    <form action="/Empresa/Adiciona" method="post">
-        <h3 class="pb-3">Cadastro Empresa</h3>
-        <button type="button" class="btn botao_cor btn-sm">Novo</button>
-       
-        <div class="form-row pb-1 pt-4 ">
-            <div class="form-group col-md-2">
-                <label for="CodigoEmpresa">Código</label>
-                <div class="input-group mb-1">
-                    <input type="text" class="form-control" placeholder="Código" name="empresa.Id" value="@ViewBag.Empresa.Id">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button"  id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
-                    </div>
+    <div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-2">
+            <label for="CodigoEmpresa">Código</label>
+            <div class="input-group mb-1">
+                <input type="text" class="form-control" id="Empresa_id" disabled placeholder="Código" name="empresa.Id" value="@ViewBag.Empresa.Id">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" data-target="#modalExemplo" data-toggle="modal" type="button" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="RazaoSocial">Razão Social</label>
-                <input type="text" class="form-control" id="RazaoSocial" name="empresa.RazaoSocial" placeholder="Razão Social" value="@ViewBag.Empresa.RazaoSocial">
-            </div>
-
-
+        </div>
+        <div class="form-group col-md-6">
+            <label for="RazaoSocial">Razão Social</label>
+            <input type="text" class="form-control" id="RazaoSocial" name="empresa.RazaoSocial" placeholder="Razão Social" value="@ViewBag.Empresa.RazaoSocial">
         </div>
 
-        <div class="form-row pb-5 ">
-            <div class="form-group col-md-6">
-                <label for="CNPJ">CNPJ</label>
-                <input type="text" class="form-control" id="CNPJ" name="empresa.Cnpj" placeholder="CNPJ" value="@ViewBag.Empresa.Cnpj">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="NomeFantasia">Nome Fantasia</label>
-                <input type="text" class="form-control" id="NomeFantasia" name="empresa.NomeFantasia" placeholder="Nome Fantasia" value="@ViewBag.Empresa.NomeFantasia">
+
+    </div>
+
+    <div class="form-row pb-5 ">
+        <div class="form-group col-md-6">
+            <label for="CNPJ">CNPJ</label>
+            <input type="text" class="form-control" id="CNPJ" name="empresa.Cnpj" placeholder="CNPJ" value="@ViewBag.Empresa.Cnpj">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="NomeFantasia">Nome Fantasia</label>
+            <input type="text" class="form-control" id="NomeFantasia" name="empresa.NomeFantasia" placeholder="Nome Fantasia" value="@ViewBag.Empresa.NomeFantasia">
+        </div>
+    </div>
+
+    <div class="form-group col-md-2">
+        <label for="inputCEP">CEP</label>
+        <div class="input-group mb-1">
+            <input type="text" class="form-control" id="inputCEP" placeholder="CEP" name="empresa.EnderecoEmpresa.CEP" value="@ViewBag.Empresa.EnderecoEmpresa.CEP">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="buscarCEP"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
             </div>
         </div>
+    </div>
+    <!--
         <div class="form-row pb-2 ">
             <div class="form-group col-md-2">
                 <label for="inputCEP">CEP</label>
                 <input type="text" class="form-control" name="empresa.EnderecoEmpresa.CEP" id="inputCEP" value="@ViewBag.Empresa.EnderecoEmpresa.CEP">
             </div>
-        </div>
-        <div class="form-row pb-2">
-            <div class="form-group col-md-5">
-                <label for="Logradouro">Logradouro</label>
-                <input type="text" class="form-control" id="Logradouro" name="empresa.EnderecoEmpresa.Logradouro" placeholder="Ex: Rua Exemplo XI" value="@ViewBag.Empresa.EnderecoEmpresa.Logradouro">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="LogradouroNumero">Numero</label>
-                <input type="text" class="form-control" id="LogradouroNumero" name="empresa.EnderecoEmpresa.Numero" placeholder="Ex: 1234" value="@ViewBag.Empresa.EnderecoEmpresa.Numero">
-            </div>
-            <div class="form-group col-md-5">
-                <label for="LogradouroComplemento">Complemento</label>
-                <input type="text" class="form-control" id="LogradouroComplemento" name="empresa.EnderecoEmpresa.Complemento" placeholder="Ex: Sala 02" value="@ViewBag.Empresa.EnderecoEmpresa.Complemento">
-            </div>
-        </div>
-        <div class="form-row pb-2">
-            <div class="form-group col-md-5">
-                <label for="LogradouroBairro">Bairro</label>
-                <input type="text" class="form-control" id="LogradouroBairro" name="empresa.EnderecoEmpresa.Bairro" placeholder="Ex: Vila Formosa" value="@ViewBag.Empresa.EnderecoEmpresa.Bairro">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="LogradouroEstado">Estado</label>
-                <select id="LogradouroEstado" name="empresa.EnderecoEmpresa.Estado" class="form-control">
-                    <option selected>Escolher...</option>
-                    <option>AC</option>
-                    <option>AL</option>
-                    <option>AP</option>
-                    <option>AM</option>
-                    <option>BA</option>
-                    <option>CE</option>
-                    <option>DF</option>
-                    <option>ES</option>
-                    <option>GO</option>
-                    <option>MA</option>
-                    <option>MT</option>
-                    <option>MS</option>
-                    <option>MG</option>
-                    <option>PA</option>
-                    <option>PB</option>
-                    <option>PR</option>
-                    <option>PE</option>
-                    <option>PI</option>
-                    <option>RJ</option>
-                    <option>RN</option>
-                    <option>RS</option>
-                    <option>RO</option>
-                    <option>RR</option>
-                    <option>SC</option>
-                    <option>SP</option>
-                    <option>SE</option>
-                    <option>TO</option>
-                </select>
-            </div>
-            <div class="form-group col-md-5">
-                <label for="LogradouroCidade">Cidade</label>
-                <input type="text" class="form-control" id="LogradouroCidade" name="empresa.EnderecoEmpresa.Cidade" placeholder="Ex: Blumenau" value="@ViewBag.Empresa.EnderecoEmpresa.Cidade">
-            </div>
-        </div>
+        </div>-->
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" name="empresa.Email"  placeholder="Email" value="@ViewBag.Empresa.Email">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="Telefone">Telefone</label>
-                <input type="text" class="form-control" id="Telefone" name="empresa.Telefone" placeholder="473333-3333" value="@ViewBag.Empresa.Telefone">
-            </div>
+    <div class="form-row pb-2">
+        <div class="form-group col-md-5">
+            <label for="Logradouro">Logradouro</label>
+            <input type="text" class="form-control" id="Logradouro" name="empresa.EnderecoEmpresa.Logradouro" placeholder="Ex: Rua Exemplo XI" value="@ViewBag.Empresa.EnderecoEmpresa.Logradouro">
         </div>
-        <button type="submit" class="btn botao_cor_verde btn-lg">Salvar</button>
-        <div class="form-row float-right">
-            <div class="form-group col-md-1">
-                <button type="button" class="btn botao_cor btn-lg">Excluir</button>
-            </div>
+        <div class="form-group col-md-2">
+            <label for="LogradouroNumero">Numero</label>
+            <input type="text" class="form-control" id="LogradouroNumero" name="empresa.EnderecoEmpresa.Numero" placeholder="Ex: 1234" value="@ViewBag.Empresa.EnderecoEmpresa.Numero">
         </div>
-    </form>
+        <div class="form-group col-md-5">
+            <label for="LogradouroComplemento">Complemento</label>
+            <input type="text" class="form-control" id="LogradouroComplemento" name="empresa.EnderecoEmpresa.Complemento" placeholder="Ex: Sala 02" value="@ViewBag.Empresa.EnderecoEmpresa.Complemento">
+        </div>
+    </div>
+    <div class="form-row pb-2">
+        <div class="form-group col-md-5">
+            <label for="LogradouroBairro">Bairro</label>
+            <input type="text" class="form-control" id="LogradouroBairro" name="empresa.EnderecoEmpresa.Bairro" placeholder="Ex: Vila Formosa" value="@ViewBag.Empresa.EnderecoEmpresa.Bairro">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="LogradouroEstado">Estado</label>
+            <select id="LogradouroEstado" name="empresa.EnderecoEmpresa.Estado" class="form-control">
+                <option selected>Escolher...</option>
+                <option>AC</option>
+                <option>AL</option>
+                <option>AP</option>
+                <option>AM</option>
+                <option>BA</option>
+                <option>CE</option>
+                <option>DF</option>
+                <option>ES</option>
+                <option>GO</option>
+                <option>MA</option>
+                <option>MT</option>
+                <option>MS</option>
+                <option>MG</option>
+                <option>PA</option>
+                <option>PB</option>
+                <option>PR</option>
+                <option>PE</option>
+                <option>PI</option>
+                <option>RJ</option>
+                <option>RN</option>
+                <option>RS</option>
+                <option>RO</option>
+                <option>RR</option>
+                <option>SC</option>
+                <option>SP</option>
+                <option>SE</option>
+                <option>TO</option>
+            </select>
+        </div>
+        <div class="form-group col-md-5">
+            <label for="LogradouroCidade">Cidade</label>
+            <input type="text" class="form-control" id="LogradouroCidade" name="empresa.EnderecoEmpresa.Cidade" placeholder="Ex: Blumenau" value="@ViewBag.Empresa.EnderecoEmpresa.Cidade">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Email</label>
+            <input type="email" class="form-control" id="inputEmail4" name="empresa.Email" placeholder="Email" value="@ViewBag.Empresa.Email">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="Telefone">Telefone</label>
+            <input type="text" class="form-control" id="Telefone" name="empresa.Telefone" placeholder="473333-3333" value="@ViewBag.Empresa.Telefone">
+        </div>
+    </div>
+    <button type="submit" class="btn botao_cor_verde btn-lg">Salvar</button>
+    <div class="form-row float-right">
+        <div class="form-group col-md-1">
+
+
+
+            <input type="submit" formaction="/Empresa/Excluir" onclick="return confirm('Confirma Exclusão do Registro?')" value="Excluir" class="btn botao_cor btn-lg">
+
+
+        </div>
+    </div>
+}
+<!--</form>-->
+<!--MODAL-->
+@RenderPage("~/Views/Modals/EmpresaPesquisaModal.cshtml")
+
+
 
