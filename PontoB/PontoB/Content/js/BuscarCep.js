@@ -5,10 +5,6 @@ var bairro = document.querySelector("#LogradouroBairro");
 var cidade = document.querySelector("#LogradouroCidade");
 var estado = document.querySelector("#LogradouroEstado");
 
-
-console.log(botaoBuscarCep);
-
-
 botaoBuscarCep.addEventListener("click", function () {
     var valorCEP = $("#inputCEP").val();
     var xhr = new XMLHttpRequest();
@@ -25,11 +21,7 @@ botaoBuscarCep.addEventListener("click", function () {
         $("#Logradouro").val(endereco.logradouro);
         $("#LogradouroBairro").val(endereco.bairro);
         $("#LogradouroCidade").val(endereco.localidade);
-        $("#LogradouroEstado").val(endereco.uf);
-
-
-
-        
+        $("#LogradouroEstado").val(endereco.uf);  
     
     });
 

@@ -49,10 +49,11 @@ namespace PontoB.Controllers
             if (pesquisa != null)
             {
                 dao.Atualiza(empresa);
-
+                
             }
             else
             {
+
                 dao.Adiciona(empresa);
             }
             return RedirectToAction("Index", "Empresa");
@@ -69,14 +70,14 @@ namespace PontoB.Controllers
 
             if (pesquisa != null)
             {
-                dao.ExcluirEmpresa(empresa);
+                dao.ExcluirEmpresa(pesquisa);
 
             }
            
             return RedirectToAction("Index", "Empresa");
         }
 
-        public ActionResult Excluir(int id)
+       public ActionResult Excluir(int id)
         {
             EmpresaDAO dao = new EmpresaDAO();
             var pesquisa = dao.BuscarPorId(id);

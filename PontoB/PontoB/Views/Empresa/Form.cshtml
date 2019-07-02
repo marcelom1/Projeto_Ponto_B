@@ -1,22 +1,24 @@
 ﻿
 @{
+    /**/
+
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
 
 <!--
 <form action="/Empresa/Adiciona" method="post">-->
-@using (Html.BeginForm("Adiciona", "Empresa", FormMethod.Post))
-{
-    <h3 class="pb-3">Cadastro Empresa</h3>
-    <button type="button" class="btn botao_cor btn-sm">Novo</button>
+<h3 class="pb-3">Cadastro Empresa</h3>
 
+@using (Html.BeginForm("Adiciona", "Empresa", FormMethod.Post, new { @id = "CadastroEmpresa", @name = "CadastroEmpresa" }))
+{
+    <input type="button" id="Botao_Nova_Empresa" class="btn botao_cor btn-sm" value="Novo">
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2">
             <label for="CodigoEmpresa">Código</label>
             <div class="input-group mb-1">
                 <input type="text" class="form-control" id="Empresa_id" disabled placeholder="Código" name="empresa.Id" value="@ViewBag.Empresa.Id">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" data-target="#modalExemplo" data-toggle="modal" type="button" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
             </div>
         </div>
@@ -48,13 +50,6 @@
             </div>
         </div>
     </div>
-    <!--
-        <div class="form-row pb-2 ">
-            <div class="form-group col-md-2">
-                <label for="inputCEP">CEP</label>
-                <input type="text" class="form-control" name="empresa.EnderecoEmpresa.CEP" id="inputCEP" value="@ViewBag.Empresa.EnderecoEmpresa.CEP">
-            </div>
-        </div>-->
 
     <div class="form-row pb-2">
         <div class="form-group col-md-5">
@@ -78,7 +73,7 @@
         <div class="form-group col-md-2">
             <label for="LogradouroEstado">Estado</label>
             <select id="LogradouroEstado" name="empresa.EnderecoEmpresa.Estado" class="form-control">
-                <option selected>Escolher...</option>
+                <option selected>@ViewBag.Empresa.EnderecoEmpresa.Estado</option>
                 <option>AC</option>
                 <option>AL</option>
                 <option>AP</option>
@@ -124,21 +119,15 @@
             <input type="text" class="form-control" id="Telefone" name="empresa.Telefone" placeholder="473333-3333" value="@ViewBag.Empresa.Telefone">
         </div>
     </div>
-    <button type="submit" class="btn botao_cor_verde btn-lg">Salvar</button>
+
+    <button type="submit" id="Botao_Salvar" class="btn botao_cor_verde btn-lg">Salvar</button>
+
     <div class="form-row float-right">
         <div class="form-group col-md-1">
-
-
-
-            <input type="submit" formaction="/Empresa/Excluir" onclick="return confirm('Confirma Exclusão do Registro?')" value="Excluir" class="btn botao_cor btn-lg">
-
-
+            <input type="submit" id="Botao_Excluir_Formulario" formaction="/Empresa/Excluir" onclick="return confirm('Confirma Exclusão do Registro?')" value="Excluir" class="btn botao_cor btn-lg">
         </div>
     </div>
 }
-<!--</form>-->
-<!--MODAL-->
-@RenderPage("~/Views/Modals/EmpresaPesquisaModal.cshtml")
 
 
 
