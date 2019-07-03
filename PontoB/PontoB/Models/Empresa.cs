@@ -9,9 +9,9 @@ namespace PontoB.Models
     public class Empresa
     {
         public int Id { get;  set; }
-        [Required]
+        [Required(ErrorMessage = "Razão Social é um campo obrigatório.")]
         public string RazaoSocial { get; set; }
-        [Required]
+        [Required(ErrorMessage = "CNPJ é um campo obrigatório.")]
         public string Cnpj { get;  set; }
         public string NomeFantasia { get;  set; }
         public Endereco EnderecoEmpresa { get; set; }

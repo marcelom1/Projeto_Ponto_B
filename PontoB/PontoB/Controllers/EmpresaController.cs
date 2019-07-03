@@ -4,6 +4,7 @@ using PontoB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,41 +24,52 @@ namespace PontoB.Controllers
 
         public ActionResult Form(int id =0)
         {
-            if (id != 0)
-            {
+            
+                if (id != 0)
+                {
                 
-                EmpresaDAO dao = new EmpresaDAO();
-                Empresa empresa = dao.BuscarPorId(id);
-                ViewBag.Empresa = empresa;
+                    EmpresaDAO dao = new EmpresaDAO();
+                    Empresa empresa = dao.BuscarPorId(id);
+                    ViewBag.Empresa = empresa;
 
-                return View();
-            }
+                    return View();
+                }
 
             
-            ViewBag.Empresa = new Empresa();
-            ViewBag.Empresa.EnderecoEmpresa = new Endereco();
-            return View();
-
+                ViewBag.Empresa = new Empresa();
+                ViewBag.Empresa.EnderecoEmpresa = new Endereco();
+                return View();
+        
         }
 
         [HttpPost]
         public ActionResult Adiciona(Empresa empresa)
         {
+
             EmpresaDAO dao = new EmpresaDAO();
             var pesquisa = dao.BuscarPorId(empresa.Id);
-            
-            if (pesquisa != null)
+            empresa.Cnpj = Regex.Replace(empresa.Cnpj, "[^0-9,]", "");
+            ViewBag.erro = empresa.Cnpj;
+            if (ModelState.IsValid)
             {
-                dao.Atualiza(empresa);
                 
+                if (pesquisa != null)
+                {
+                    dao.Atualiza(empresa);
+
+                }
+                else
+                {
+
+                    dao.Adiciona(empresa);
+                }
+                return RedirectToAction("Index", "Empresa");
             }
             else
             {
-
-                dao.Adiciona(empresa);
+                ViewBag.Empresa = empresa;
+                return View("Form");
             }
-            return RedirectToAction("Index", "Empresa");
-           
         }
 
        

@@ -6,7 +6,7 @@ var cidade = document.querySelector("#LogradouroCidade");
 var estado = document.querySelector("#LogradouroEstado");
 
 botaoBuscarCep.addEventListener("click", function () {
-    var valorCEP = $("#inputCEP").val();
+    var valorCEP = $("#inputCEP").val().replace(/[^\d]+/g, "");
     var xhr = new XMLHttpRequest();
     
 
