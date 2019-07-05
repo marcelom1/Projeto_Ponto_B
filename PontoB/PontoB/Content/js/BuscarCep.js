@@ -21,7 +21,9 @@ botaoBuscarCep.addEventListener("click", function () {
         $("#Logradouro").val(endereco.logradouro);
         $("#LogradouroBairro").val(endereco.bairro);
         $("#LogradouroCidade").val(endereco.localidade);
-        $("#LogradouroEstado").val(endereco.uf);  
+        $("#LogradouroEstado option:contains("+endereco.uf+")").attr('selected', true);
+        //$("#LogradouroEstado").val($('option:contains('endereco.uf')').val());
+        //$("#LogradouroEstado").text(endereco.uf);  
     
     });
 

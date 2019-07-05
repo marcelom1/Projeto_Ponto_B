@@ -15,6 +15,7 @@ namespace PontoB
     {
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<Endereco> Endereco { get; set; }
+        public DbSet<EstadosUF> EstadoUF { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

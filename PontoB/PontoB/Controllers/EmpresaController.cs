@@ -24,21 +24,27 @@ namespace PontoB.Controllers
 
         public ActionResult Form(int id=0)
         {
-            
-                if (id != 0)
-                {
+            EstadosUFDAO EstadoDao = new EstadosUFDAO();
+            IList<EstadosUF> estados = EstadoDao.Lista();
+            ViewBag.EstadosUf = estados;
+
+            if (id != 0)
+            {
                 
-                    EmpresaDAO dao = new EmpresaDAO();
-                    Empresa empresa = dao.BuscarPorId(id);
-                    ViewBag.Empresa = empresa;
+                EmpresaDAO dao = new EmpresaDAO();
+                Empresa empresa = dao.BuscarPorId(id);
+                ViewBag.Empresa = empresa;
 
-                    return View();
-                }
+                
+                return View();
+            }
 
             
-                ViewBag.Empresa = new Empresa();
-                ViewBag.Empresa.EnderecoEmpresa = new Endereco();
-                ViewBag.Empresa.EnderecoEmpresa.Estado = "";
+            ViewBag.Empresa = new Empresa();
+            ViewBag.Empresa.EnderecoEmpresa = new Endereco();
+           
+
+
 
             return View();
         

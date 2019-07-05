@@ -23,7 +23,9 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                return contexto.Endereco.ToList();
+                return contexto.Endereco.Include(e => e.Estado).ToList();
+                //return contexto.Endereco.ToList();
+
             }
         }
 
@@ -40,7 +42,8 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                return contexto.Endereco.Find(id);
+                return contexto.Endereco.Include(e => e.Estado).Where(e => e.Id == id).FirstOrDefault();
+                
             }
         }
         public void Atualiza(Endereco empresa)
