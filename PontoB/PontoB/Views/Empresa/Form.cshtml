@@ -1,14 +1,14 @@
 ﻿
 @{
-    /**/
+
 
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
 
+
+<h3 class="pb-3">Cadastro Empresa</h3>
 <!--
 <form action="/Empresa/Adiciona" method="post">-->
-<h3 class="pb-3">Cadastro Empresa</h3>
-
 @using (Html.BeginForm("Adiciona", "Empresa", FormMethod.Post, new { @id = "CadastroEmpresa", @name = "CadastroEmpresa" }))
 {
     <input type="button" id="Botao_Nova_Empresa" class="btn botao_cor btn-sm" value="Novo">
@@ -33,7 +33,7 @@
         <div class="form-group col-md-3">
             <label for="CNPJ">CNPJ</label>
             <input type="text" class="form-control" id="CNPJ" name="empresa.Cnpj" placeholder="CNPJ" onBlur="javascript: validarCNPJ(this.value);" value="@ViewBag.Empresa.Cnpj">
-            <span class="erro" id="Erro_Cnpj">@Html.ValidationMessage("empresa.Cnpj") @ViewBag.erro</span>
+            <span class="erro">@Html.ValidationMessage("empresa.Cnpj")</span>
         </div>
         <div class="form-group col-md-5">
             <label for="NomeFantasia">Nome Fantasia</label>
@@ -48,62 +48,62 @@
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="buscarCEP"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
-                <span class="erro">@Html.ValidationMessage("empresa.EnderecoEmpresa.CEP")</span>
+
             </div>
         </div>
     </div>
 
-        <div class="form-row pb-2">
-            <div class="form-group col-md-5">
-                <label for="Logradouro">Logradouro</label>
-                <input type="text" class="form-control" id="Logradouro" name="empresa.EnderecoEmpresa.Logradouro" placeholder="Ex: Rua Exemplo XI" value="@ViewBag.Empresa.EnderecoEmpresa.Logradouro">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="LogradouroNumero">Numero</label>
-                <input type="text" class="form-control" id="LogradouroNumero" name="empresa.EnderecoEmpresa.Numero" placeholder="Ex: 1234" value="@ViewBag.Empresa.EnderecoEmpresa.Numero">
-            </div>
-            <div class="form-group col-md-5">
-                <label for="LogradouroComplemento">Complemento</label>
-                <input type="text" class="form-control" id="LogradouroComplemento" name="empresa.EnderecoEmpresa.Complemento" placeholder="Ex: Sala 02" value="@ViewBag.Empresa.EnderecoEmpresa.Complemento">
-            </div>
+    <div class="form-row pb-2">
+        <div class="form-group col-md-5">
+            <label for="Logradouro">Logradouro</label>
+            <input type="text" class="form-control" id="Logradouro" name="empresa.EnderecoEmpresa.Logradouro" placeholder="Ex: Rua Exemplo XI" value="@ViewBag.Empresa.EnderecoEmpresa.Logradouro">
         </div>
-        <div class="form-row pb-2">
-            <div class="form-group col-md-5">
-                <label for="LogradouroBairro">Bairro</label>
-                <input type="text" class="form-control" id="LogradouroBairro" name="empresa.EnderecoEmpresa.Bairro" placeholder="Ex: Vila Formosa" value="@ViewBag.Empresa.EnderecoEmpresa.Bairro">
-            </div>
-            <div class="form-group col-md-2">
-                <label for="LogradouroEstado">Estado</label>
-                <select id="LogradouroEstado" name="empresa.EnderecoEmpresa.Estado" class="form-control">
-                    <option selected>@ViewBag.Empresa.EnderecoEmpresa.Estado</option>
-                    <option>AC</option>
-                    <option>AL</option>
-                    <option>AP</option>
-                    <option>AM</option>
-                    <option>BA</option>
-                    <option>CE</option>
-                    <option>DF</option>
-                    <option>ES</option>
-                    <option>GO</option>
-                    <option>MA</option>
-                    <option>MT</option>
-                    <option>MS</option>
-                    <option>MG</option>
-                    <option>PA</option>
-                    <option>PB</option>
-                    <option>PR</option>
-                    <option>PE</option>
-                    <option>PI</option>
-                    <option>RJ</option>
-                    <option>RN</option>
-                    <option>RS</option>
-                    <option>RO</option>
-                    <option>RR</option>
-                    <option>SC</option>
-                    <option>SP</option>
-                    <option>SE</option>
-                    <option>TO</option>
-                </select>
+        <div class="form-group col-md-2">
+            <label for="LogradouroNumero">Numero</label>
+            <input type="text" class="form-control" id="LogradouroNumero" name="empresa.EnderecoEmpresa.Numero" placeholder="Ex: 1234" value="@ViewBag.Empresa.EnderecoEmpresa.Numero">
+        </div>
+        <div class="form-group col-md-5">
+            <label for="LogradouroComplemento">Complemento</label>
+            <input type="text" class="form-control" id="LogradouroComplemento" name="empresa.EnderecoEmpresa.Complemento" placeholder="Ex: Sala 02" value="@ViewBag.Empresa.EnderecoEmpresa.Complemento">
+        </div>
+    </div>
+    <div class="form-row pb-2">
+        <div class="form-group col-md-5">
+            <label for="LogradouroBairro">Bairro</label>
+            <input type="text" class="form-control" id="LogradouroBairro" name="empresa.EnderecoEmpresa.Bairro" placeholder="Ex: Vila Formosa" value="@ViewBag.Empresa.EnderecoEmpresa.Bairro">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="LogradouroEstado">Estado</label>
+            <select id="LogradouroEstado" name="empresa.EnderecoEmpresa.Estado" class="form-control">
+
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("AC")">AC</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("AL")">AL</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("AP")">AP</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("AM")">AM</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("BA")">BA</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("CE")">CE</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("DF")">DF</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("ES")">ES</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("GO")">GO</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("MA")">MA</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("MT")">MT</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("MS")">MS</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("MG")">MG</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("PA")">PA</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("PB")">PB</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("PR")">PR</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("PE")">PE</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("PI")">PI</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("RJ")">RJ</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("RN")">RN</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("RS")">RS</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("RO")">RO</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("RR")">RR</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("SC")">SC</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("SP")">SP</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("SE")">SE</option>
+                <option selected="@ViewBag.Empresa.EnderecoEmpresa.Estado.Equals("TO")">TO</option>
+            </select>
             </div>
             <div class="form-group col-md-5">
                 <label for="LogradouroCidade">Cidade</label>
@@ -126,10 +126,10 @@
 
         <div class="form-row float-right">
             <div class="form-group col-md-1">
-                <input type="submit" id="Botao_Excluir_Formulario" formaction="/Empresa/Excluir" onclick="return confirm('Confirma Exclusão do Registro?')" value="Excluir" class="btn botao_cor btn-lg">
+                <input type="submit" id="Botao_Excluir_Formulario" formaction="/Empresa/Excluir" onclick="return confirm('Confirma Exclusão do Registro @ViewBag.Empresa.Id?')" value="Excluir" class="btn botao_cor btn-lg">
             </div>
         </div>
-        }
+    }
 
 
 

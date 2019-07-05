@@ -40,7 +40,7 @@
             @foreach (var Empresa in ViewBag.Empresas)
             {
                 <tr onclick="location.href = '@Url.Action("Form", "Empresa", new { Id = Empresa.Id})';" style="cursor:Pointer">
-                    <td><a href="@Url.Action("Excluir", "Empresa", new { Id = Empresa.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro?') " ><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                    <td><a href="@Url.Action("Excluir", "Empresa", new { Id = Empresa.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Empresa.Id ? ') " ><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
                     <td>@Empresa.Id</td>
                     <td>@Empresa.RazaoSocial</td>
                     <td id="CNPJ">@Empresa.Cnpj</td>

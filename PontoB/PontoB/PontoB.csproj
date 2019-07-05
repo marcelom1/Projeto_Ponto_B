@@ -281,6 +281,10 @@
     <Compile Include="Migrations\20190628192359_EnderecoEmpresa.designer.cs">
       <DependentUpon>20190628192359_EnderecoEmpresa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190704132544_StringCep.cs" />
+    <Compile Include="Migrations\20190704132544_StringCep.designer.cs">
+      <DependentUpon>20190704132544_StringCep.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />

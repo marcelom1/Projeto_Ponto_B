@@ -22,7 +22,7 @@ namespace PontoB.Controllers
             return View();
         }
 
-        public ActionResult Form(int id =0)
+        public ActionResult Form(int id=0)
         {
             
                 if (id != 0)
@@ -38,7 +38,9 @@ namespace PontoB.Controllers
             
                 ViewBag.Empresa = new Empresa();
                 ViewBag.Empresa.EnderecoEmpresa = new Endereco();
-                return View();
+                ViewBag.Empresa.EnderecoEmpresa.Estado = "";
+
+            return View();
         
         }
 
@@ -48,8 +50,7 @@ namespace PontoB.Controllers
 
             EmpresaDAO dao = new EmpresaDAO();
             var pesquisa = dao.BuscarPorId(empresa.Id);
-            empresa.Cnpj = Regex.Replace(empresa.Cnpj, "[^0-9,]", "");
-            ViewBag.erro = empresa.Cnpj;
+           
             if (ModelState.IsValid)
             {
                 
