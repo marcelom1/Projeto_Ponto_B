@@ -28,6 +28,71 @@ namespace PontoB.DAO
             }
         }
 
+
+        public IList<Empresa> Filtro(string coluna, string filtro)
+        {
+
+            using (var contexto = new PontoContex())
+            {
+               
+                if (coluna == "Todos")
+                {
+                    return contexto
+                         .Empresa
+                         .AsNoTracking()
+                         .Where(e => e.RazaoSocial.Contains(filtro) || e.NomeFantasia.Contains(filtro) || e.Cnpj.Contains(filtro) || e.Id.Equals(filtro))
+                         .ToList();
+                }
+                else
+                {
+                    if (coluna == "Código")
+                    {
+                        return contexto
+                             .Empresa
+                             .AsNoTracking()
+                             .Where(e => e.Id.Equals(filtro))
+                             .ToList();
+                    }
+                    else
+                    {
+                        if (coluna == "Razão Social")
+                        {
+                            return contexto
+                               .Empresa
+                               .AsNoTracking()
+                               .Where(e => e.RazaoSocial.Equals(filtro))
+                               .ToList();
+                        }
+                        else
+                        {
+                            if (coluna == "Nome Fantasia")
+                            {
+                                return contexto
+                                   .Empresa
+                                   .AsNoTracking()
+                                   .Where(e => e.NomeFantasia.Equals(filtro))
+                                   .ToList();
+                            }
+                            else
+                            {
+                                if (coluna == "CNPJ")
+                                {
+                                    return contexto
+                                       .Empresa
+                                       .AsNoTracking()
+                                       .Where(e => e.Cnpj.Equals(filtro))
+                                       .ToList();
+                                }
+                            }
+                        }
+                    }
+                }
+              return contexto.Empresa.ToList();
+            }
+        }
+               
+       
+
         public void ExcluirEmpresa(Empresa empresa)
         {
             using(var contexto = new PontoContex())

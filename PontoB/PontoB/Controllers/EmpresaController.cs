@@ -22,6 +22,14 @@ namespace PontoB.Controllers
             return View();
         }
 
+
+        public ActionResult Filtro(string coluna, string texto)
+        {
+            EmpresaDAO dao = new EmpresaDAO();
+            IList<Empresa> filtro = dao.Filtro(coluna, texto);
+            ViewBag.Empresas = filtro;
+            return View("Index");
+        }
         public ActionResult Form(int id=0)
         {
             EstadosUFDAO EstadoDao = new EstadosUFDAO();
@@ -59,7 +67,9 @@ namespace PontoB.Controllers
            
             if (ModelState.IsValid)
             {
-                
+                EstadosUFDAO daoEstado = new EstadosUFDAO();
+                var pesquisarEstado = daoEstado.BuscarPorId(empresa.EnderecoEmpresa.Estado.Id);
+                empresa.EnderecoEmpresa.Estado = pesquisarEstado;
                 if (pesquisa != null)
                 {
                     dao.Atualiza(empresa);
