@@ -14,7 +14,7 @@ namespace PontoB.Models
         [Required(ErrorMessage = "CNPJ é um campo obrigatório.")]
         public string Cnpj { get;  set; }
         public string NomeFantasia { get;  set; }
-        public Endereco EnderecoEmpresa { get; set; }
+        public virtual Endereco EnderecoEmpresa { get; set; }
         public string Email { get;  set; }
         public string Telefone { get;  set; }
 

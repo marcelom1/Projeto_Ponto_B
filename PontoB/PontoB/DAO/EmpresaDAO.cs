@@ -16,6 +16,7 @@ namespace PontoB.DAO
         {
             using (var context = new PontoContex())
             {
+                context.Entry(empresa.EnderecoEmpresa.Estado).State = EntityState.Unchanged;
                 context.Empresa.Add(empresa);
                 context.SaveChanges();
             }

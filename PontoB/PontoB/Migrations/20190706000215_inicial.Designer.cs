@@ -10,8 +10,8 @@ using PontoB;
 namespace PontoB.Migrations
 {
     [DbContext(typeof(PontoContex))]
-    [Migration("20190705015459_EstadosUf")]
-    partial class EstadosUf
+    [Migration("20190706000215_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

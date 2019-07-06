@@ -26,6 +26,15 @@ namespace PontoB
         {
             modelBuilder.ApplyConfiguration(new EmpresaMap());
 
+            modelBuilder.Entity<Empresa>()
+                    .HasOne(p => p.EnderecoEmpresa)
+                    .WithMany();
+
+            modelBuilder.Entity<Endereco>()
+                    .HasOne(p => p.Estado)
+                    .WithMany();
+            
+
             modelBuilder.HasSequence<int>("MinhaSequencia").StartsAt(1).IncrementsBy(1);
 
             base.OnModelCreating(modelBuilder);

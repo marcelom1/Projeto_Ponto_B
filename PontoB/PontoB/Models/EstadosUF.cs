@@ -9,6 +9,7 @@ namespace PontoB.Models
     {
         public int Id { get; set; }
         public string Sigla { get; set; }
+        
 
     }
 }

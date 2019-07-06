@@ -268,27 +268,16 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAO\Config\EmpresaMap.cs" />
+    <Compile Include="DAO\Config\EnderecoMap.cs" />
     <Compile Include="DAO\EmpresaDAO.cs" />
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\EstadosUFDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190627190014_InicialEmpresa.cs" />
-    <Compile Include="Migrations\20190627190014_InicialEmpresa.designer.cs">
-      <DependentUpon>20190627190014_InicialEmpresa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190628192359_EnderecoEmpresa.cs" />
-    <Compile Include="Migrations\20190628192359_EnderecoEmpresa.designer.cs">
-      <DependentUpon>20190628192359_EnderecoEmpresa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190704132544_StringCep.cs" />
-    <Compile Include="Migrations\20190704132544_StringCep.designer.cs">
-      <DependentUpon>20190704132544_StringCep.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190705015459_EstadosUf.cs" />
-    <Compile Include="Migrations\20190705015459_EstadosUf.designer.cs">
-      <DependentUpon>20190705015459_EstadosUf.cs</DependentUpon>
+    <Compile Include="Migrations\20190706000215_inicial.cs" />
+    <Compile Include="Migrations\20190706000215_inicial.designer.cs">
+      <DependentUpon>20190706000215_inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Empresa.cs" />

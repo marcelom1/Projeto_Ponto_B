@@ -4,6 +4,7 @@ using PontoB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
@@ -70,6 +71,7 @@ namespace PontoB.Controllers
                 EstadosUFDAO daoEstado = new EstadosUFDAO();
                 var pesquisarEstado = daoEstado.BuscarPorId(empresa.EnderecoEmpresa.Estado.Id);
                 empresa.EnderecoEmpresa.Estado = pesquisarEstado;
+                
                 if (pesquisa != null)
                 {
                     dao.Atualiza(empresa);
