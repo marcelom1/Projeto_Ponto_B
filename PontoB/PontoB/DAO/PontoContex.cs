@@ -25,15 +25,7 @@ namespace PontoB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new EmpresaMap());
-
-            modelBuilder.Entity<Empresa>()
-                    .HasOne(p => p.EnderecoEmpresa)
-                    .WithMany();
-
-            modelBuilder.Entity<Endereco>()
-                    .HasOne(p => p.Estado)
-                    .WithMany();
-            
+            modelBuilder.ApplyConfiguration(new EnderecoMap());
 
             modelBuilder.HasSequence<int>("MinhaSequencia").StartsAt(1).IncrementsBy(1);
 

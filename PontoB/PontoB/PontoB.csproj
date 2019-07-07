@@ -252,6 +252,7 @@
     <Content Include="Content\CSS\cadastroEmpresa.css" />
     <Content Include="Content\CSS\login.css" />
     <Content Include="Content\CSS\menuAdm.css" />
+    <Content Include="Content\CSS\tooltipster.bundle.min.css" />
     <Content Include="Content\img\Fundo2.jpg" />
     <Content Include="Content\img\lixeira.png" />
     <Content Include="Content\img\LogoB.gif" />
@@ -259,7 +260,9 @@
     <Content Include="Content\js\BuscarCep.js" />
     <Content Include="Content\js\CadastroEmpresa.js" />
     <Content Include="Content\js\jquery-3.4.1.min.js" />
+    <Content Include="Content\js\jquery.js" />
     <Content Include="Content\js\jquery.mask.min.js" />
+    <Content Include="Content\js\tooltipster.bundle.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -267,17 +270,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAO\Config\EmpresaMap.cs" />
-    <Compile Include="DAO\Config\EnderecoMap.cs" />
+    <Compile Include="DAO\Mapeamento\EmpresaMap.cs" />
+    <Compile Include="DAO\Mapeamento\EnderecoMap.cs" />
     <Compile Include="DAO\EmpresaDAO.cs" />
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\EstadosUFDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190706000215_inicial.cs" />
-    <Compile Include="Migrations\20190706000215_inicial.designer.cs">
-      <DependentUpon>20190706000215_inicial.cs</DependentUpon>
+    <Compile Include="Migrations\20190706184120_Inicial.cs" />
+    <Compile Include="Migrations\20190706184120_Inicial.designer.cs">
+      <DependentUpon>20190706184120_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190707145232_CNPJUnico.cs" />
+    <Compile Include="Migrations\20190707145232_CNPJUnico.designer.cs">
+      <DependentUpon>20190707145232_CNPJUnico.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Empresa.cs" />

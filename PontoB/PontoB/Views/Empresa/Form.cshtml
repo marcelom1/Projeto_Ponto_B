@@ -18,7 +18,7 @@
             <div class="input-group mb-1">
                 <input type="text" class="form-control" id="Empresa_id" disabled placeholder="Código" name="empresa.Id" value="@ViewBag.Empresa.Id">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+                    <button class="btn btn-outline-secondary" onclick="location.href='@Url.Action("Index", "Empresa")';" type="button" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
             </div>
         </div>
@@ -33,20 +33,22 @@
         <div class="form-group col-md-3">
             <label for="CNPJ">CNPJ</label>
             <input type="text" class="form-control" id="CNPJ" name="empresa.Cnpj" placeholder="CNPJ" onBlur="javascript: validarCNPJ(this.value);" value="@ViewBag.Empresa.Cnpj">
-            <span class="erro">@Html.ValidationMessage("empresa.Cnpj")</span>
+            <span class="erro" id="Erro_Cnpj">@Html.ValidationMessage("empresa.Cnpj")</span>
+
         </div>
         <div class="form-group col-md-5">
             <label for="NomeFantasia">Nome Fantasia</label>
             <input type="text" class="form-control" id="NomeFantasia" name="empresa.NomeFantasia" placeholder="Nome Fantasia" value="@ViewBag.Empresa.NomeFantasia">
         </div>
     </div>
+    <input name="empresa.EnderecoEmpresa.Id" value="@ViewBag.Empresa.EnderecoEmpresa.Id" class="IdEndereco" />
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2">
             <label for="inputCEP">CEP</label>
             <div class="input-group mb-1">
                 <input type="text" class="form-control" id="inputCEP" placeholder="CEP" name="empresa.EnderecoEmpresa.CEP" value="@ViewBag.Empresa.EnderecoEmpresa.CEP">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="buscarCEP"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+                    <button class="btn btn-outline-secondary tooltip" title="Buscando..." type="button" id="buscarCEP"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
 
             </div>
@@ -77,10 +79,10 @@
             <select id="LogradouroEstado" name="empresa.EnderecoEmpresa.Estado.Id" class="form-control">
                 @foreach (var estado in ViewBag.EstadosUf)
                 {
-                    <option value="@estado.Id" selected="@estado.Id.Equals(ViewBag.Empresa.EnderecoEmpresa.Estado)">@estado.Sigla</option>
+                    <option value="@estado.Id" selected="@estado.Id.Equals(ViewBag.Empresa.EnderecoEmpresa.Estado.Id)">@estado.Sigla</option>
                 }
 
-                
+
             </select>
         </div>
         <div class="form-group col-md-5">
@@ -109,8 +111,6 @@
     </div>
 }
 
-
-<script src="~/Content/js/BuscarCep.js"></script>
 
 
 

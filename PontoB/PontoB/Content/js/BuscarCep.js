@@ -1,4 +1,11 @@
 ﻿
+
+$(document).ready(function () {
+    $('.tooltip').tooltipster({
+        trigger: "custom"
+    });
+});
+
 var botaoBuscarCep = document.querySelector("#buscarCEP");
 var logradouro = document.querySelector("#Logradouro");
 var bairro = document.querySelector("#LogradouroBairro");
@@ -6,6 +13,8 @@ var cidade = document.querySelector("#LogradouroCidade");
 var estado = document.querySelector("#LogradouroEstado");
 
 botaoBuscarCep.addEventListener("click", function () {
+    
+    $(".tooltip").tooltipster("open").tooltipster("content", "Buscando...");
     var valorCEP = $("#inputCEP").val().replace(/[^\d]+/g, "");
     var xhr = new XMLHttpRequest();
     
@@ -13,19 +22,21 @@ botaoBuscarCep.addEventListener("click", function () {
     xhr.open("GET", "https://viacep.com.br/ws/" + valorCEP +"/json/");
 
     xhr.addEventListener("load", function () {
+            var resposta = xhr.responseText;
 
-        var resposta = xhr.responseText;
-        var endereco = JSON.parse(resposta);
-        console.log(endereco.logradouro);
+            var endereco = JSON.parse(resposta);
+        
+            $("#Logradouro").val(endereco.logradouro);
+            $("#LogradouroBairro").val(endereco.bairro);
+            $("#LogradouroCidade").val(endereco.localidade);
+            $("#LogradouroEstado option:contains(" + endereco.uf + ")").attr('selected', true);
+      
 
-        $("#Logradouro").val(endereco.logradouro);
-        $("#LogradouroBairro").val(endereco.bairro);
-        $("#LogradouroCidade").val(endereco.localidade);
-        $("#LogradouroEstado option:contains("+endereco.uf+")").attr('selected', true);
-        //$("#LogradouroEstado").val($('option:contains('endereco.uf')').val());
-        //$("#LogradouroEstado").text(endereco.uf);  
-    
     });
-
+    
     xhr.send();
+    
+    setTimeout(function () {
+        $(".tooltip").tooltipster("close");
+    }, 1200);
 });

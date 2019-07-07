@@ -1,3 +1,11 @@
 .erro{
     color: red;
 }
+
+.IdEndereco {
+    display: none;
+}
+
+.tooltip{
+    opacity:unset;
+}

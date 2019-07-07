@@ -111,14 +111,15 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                return contexto.Empresa.Include(e=> e.EnderecoEmpresa).Where(e=> e.Id==id).FirstOrDefault();
+                return contexto.Empresa.Include(e => e.EnderecoEmpresa).Include(e=>e.EnderecoEmpresa.Estado).Where(e=> e.Id==id).FirstOrDefault();
             }
         }
         public void Atualiza(Empresa empresa)
         {
             using (var contexto = new PontoContex())
             {
-             
+
+               
                 contexto.Empresa.Update(empresa);
                 contexto.SaveChanges();
             }

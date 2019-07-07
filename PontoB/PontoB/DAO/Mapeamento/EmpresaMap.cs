@@ -13,7 +13,12 @@ namespace PontoB.DAO.Config
         public void Configure(EntityTypeBuilder<Empresa> builder)
         {
             builder.Property(c => c.Id)
-                .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
+                   .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
+
+            builder.HasOne(p => p.EnderecoEmpresa);
+
+            builder.HasIndex(p => p.Cnpj)
+                   .IsUnique();
 
             builder.ToTable("Empresa");
         }

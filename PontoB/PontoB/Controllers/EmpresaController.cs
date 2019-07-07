@@ -1,12 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PontoB.DAO;
+﻿using PontoB.DAO;
 using PontoB.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PontoB.Controllers
@@ -51,7 +46,9 @@ namespace PontoB.Controllers
             
             ViewBag.Empresa = new Empresa();
             ViewBag.Empresa.EnderecoEmpresa = new Endereco();
-           
+            ViewBag.Empresa.EnderecoEmpresa.Estado = new EstadosUF();
+
+
 
 
 
@@ -62,16 +59,23 @@ namespace PontoB.Controllers
         [HttpPost]
         public ActionResult Adiciona(Empresa empresa)
         {
-
+            ModelState.Clear();
             EmpresaDAO dao = new EmpresaDAO();
             var pesquisa = dao.BuscarPorId(empresa.Id);
-           
+            EstadosUFDAO EstadoDao = new EstadosUFDAO();
+            IList<EstadosUF> estados = EstadoDao.Lista();
+            ViewBag.EstadosUf = estados;
+            ViewBag.Empresa = empresa;
+            ViewBag.Empresa.EnderecoEmpresa = empresa.EnderecoEmpresa;
+            ViewBag.Empresa.EnderecoEmpresa.Estado = empresa.EnderecoEmpresa.Estado;
             if (ModelState.IsValid)
             {
                 EstadosUFDAO daoEstado = new EstadosUFDAO();
                 var pesquisarEstado = daoEstado.BuscarPorId(empresa.EnderecoEmpresa.Estado.Id);
                 empresa.EnderecoEmpresa.Estado = pesquisarEstado;
+
                 
+
                 if (pesquisa != null)
                 {
                     dao.Atualiza(empresa);
@@ -79,14 +83,25 @@ namespace PontoB.Controllers
                 }
                 else
                 {
+                    try
+                    {
+                        dao.Adiciona(empresa);
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.Empresa.Id = 0;
+                        ViewBag.Empresa.EnderecoEmpresa.Id = 0;
+                        ModelState.AddModelError("empresa.Cnpj","CNPJ já consta cadastrado no Banco de Dados");
+                  
+                        return View("Form");
+                    }
 
-                    dao.Adiciona(empresa);
                 }
                 return RedirectToAction("Index", "Empresa");
             }
             else
             {
-                ViewBag.Empresa = empresa;
+
                 return View("Form");
             }
         }
@@ -101,7 +116,10 @@ namespace PontoB.Controllers
 
             if (pesquisa != null)
             {
+                
                 dao.ExcluirEmpresa(pesquisa);
+                EnderecoDAO daoe = new EnderecoDAO();
+                daoe.ExcluirEndereco(pesquisa.EnderecoEmpresa);
 
             }
            

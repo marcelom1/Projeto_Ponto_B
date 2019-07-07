@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PontoB;
 
 namespace PontoB.Migrations
 {
     [DbContext(typeof(PontoContex))]
-    partial class PontoContexModelSnapshot : ModelSnapshot
+    [Migration("20190706182303_Inicial")]
+    partial class Inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,6 @@ namespace PontoB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Cnpj")
-                        .IsUnique();
-
                     b.HasIndex("EnderecoEmpresaId");
 
                     b.ToTable("Empresa");
@@ -64,6 +63,8 @@ namespace PontoB.Migrations
 
                     b.Property<string>("Complemento");
 
+                    b.Property<int>("EmpresaId");
+
                     b.Property<int?>("EstadoId");
 
                     b.Property<string>("Logradouro");
@@ -71,6 +72,8 @@ namespace PontoB.Migrations
                     b.Property<int>("Numero");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmpresaId");
 
                     b.HasIndex("EstadoId");
 
@@ -99,6 +102,11 @@ namespace PontoB.Migrations
 
             modelBuilder.Entity("PontoB.Models.Endereco", b =>
                 {
+                    b.HasOne("PontoB.Models.Empresa", "Empresa")
+                        .WithMany()
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("PontoB.Models.EstadosUF", "Estado")
                         .WithMany()
                         .HasForeignKey("EstadoId");

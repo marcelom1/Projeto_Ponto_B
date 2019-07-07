@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PontoB.Migrations
 {
-    public partial class inicial : Migration
+    public partial class Inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,7 +35,8 @@ namespace PontoB.Migrations
                     Complemento = table.Column<string>(nullable: true),
                     Bairro = table.Column<string>(nullable: true),
                     EstadoId = table.Column<int>(nullable: true),
-                    Cidade = table.Column<string>(nullable: true)
+                    Cidade = table.Column<string>(nullable: true),
+                    EmpresaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,18 +78,35 @@ namespace PontoB.Migrations
                 column: "EnderecoEmpresaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Endereco_EmpresaId",
+                table: "Endereco",
+                column: "EmpresaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Endereco_EstadoId",
                 table: "Endereco",
                 column: "EstadoId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Endereco_Empresa_EmpresaId",
+                table: "Endereco",
+                column: "EmpresaId",
+                principalTable: "Empresa",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Empresa");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Empresa_Endereco_EnderecoEmpresaId",
+                table: "Empresa");
 
             migrationBuilder.DropTable(
                 name: "Endereco");
+
+            migrationBuilder.DropTable(
+                name: "Empresa");
 
             migrationBuilder.DropTable(
                 name: "EstadoUF");
