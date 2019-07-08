@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PontoB;
 
 namespace PontoB.Migrations
 {
     [DbContext(typeof(PontoContex))]
-    partial class PontoContexModelSnapshot : ModelSnapshot
+    [Migration("20190708140217_aa")]
+    partial class aa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +79,41 @@ namespace PontoB.Migrations
                     b.ToTable("Endereco");
                 });
 
-            
+            modelBuilder.Entity("PontoB.Models.Escala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descricao")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Escala");
+                });
+
+            modelBuilder.Entity("PontoB.Models.EscalaHorario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DiaSemana");
+
+                    b.Property<int?>("EscalaIdId");
+
+                    b.Property<int>("HoraEntrada");
+
+                    b.Property<TimeSpan>("HoraSaida");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EscalaIdId");
+
+                    b.ToTable("EscalaHorario");
+                });
+
             modelBuilder.Entity("PontoB.Models.EstadosUF", b =>
                 {
                     b.Property<int>("Id")
@@ -105,7 +141,12 @@ namespace PontoB.Migrations
                         .HasForeignKey("EstadoId");
                 });
 
-          
+            modelBuilder.Entity("PontoB.Models.EscalaHorario", b =>
+                {
+                    b.HasOne("PontoB.Models.Escala", "EscalaId")
+                        .WithMany()
+                        .HasForeignKey("EscalaIdId");
+                });
 #pragma warning restore 612, 618
         }
     }

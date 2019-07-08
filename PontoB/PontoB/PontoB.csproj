@@ -275,6 +275,13 @@
     <Compile Include="DAO\EmpresaDAO.cs" />
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\EstadosUFDAO.cs" />
+    <Compile Include="Filtros\FEmpresa\FiltroEmpresa.cs" />
+    <Compile Include="Filtros\FEmpresa\FiltroEmpresaCodigo.cs" />
+    <Compile Include="Filtros\FEmpresa\FiltroEmpresaTodos .cs" />
+    <Compile Include="Filtros\FEmpresa\FiltroEmpresaRazaoSocial.cs" />
+    <Compile Include="Filtros\FEmpresa\FiltroEmpresaNomeFantasia.cs" />
+    <Compile Include="Filtros\FEmpresa\FiltroEmpresaCnpj.cs" />
+    <Compile Include="Filtros\IFiltro.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -286,10 +293,16 @@
     <Compile Include="Migrations\20190707145232_CNPJUnico.designer.cs">
       <DependentUpon>20190707145232_CNPJUnico.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190708140217_aa.cs" />
+    <Compile Include="Migrations\20190708140217_aa.designer.cs">
+      <DependentUpon>20190708140217_aa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />
     <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\Escala.cs" />
+    <Compile Include="Models\EscalaHorario.cs" />
     <Compile Include="Models\EstadosUF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

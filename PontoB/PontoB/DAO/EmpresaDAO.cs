@@ -6,7 +6,8 @@ using System.Web;
 using PontoB.Models;
 using Empresa = PontoB.Models.Empresa;
 using Microsoft.EntityFrameworkCore;
-
+using PontoB.Filtros;
+using PontoB.Filtros.FEmpresa;
 
 namespace PontoB.DAO
 {
@@ -35,14 +36,30 @@ namespace PontoB.DAO
 
             using (var contexto = new PontoContex())
             {
-               
+                var objFiltro = FiltroEmpresa.ObterFiltroColuna(coluna);
+                var result= objFiltro.Filtrar(contexto
+                         .Empresa
+                         .AsNoTracking(), filtro);
+                return result;
+
+
                 if (coluna == "Todos")
                 {
-                    return contexto
+                    var resultado = contexto
                          .Empresa
                          .AsNoTracking()
-                         .Where(e => e.RazaoSocial.Contains(filtro) || e.NomeFantasia.Contains(filtro) || e.Cnpj.Contains(filtro) || e.Id.Equals(filtro))
+                         .Where(e => e.RazaoSocial.Contains(filtro) || e.NomeFantasia.Contains(filtro) || e.Cnpj.Contains(filtro))
                          .ToList();
+                    if (int.TryParse(filtro,out int numero))
+                    {
+                        resultado.AddRange(contexto
+                        .Empresa
+                        .AsNoTracking()
+                        .Where(e => e.Id.Equals(numero)).ToList());
+                       
+                    }
+                    return resultado;
+
                 }
                 else
                 {
