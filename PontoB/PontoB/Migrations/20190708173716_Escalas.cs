@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PontoB.Migrations
 {
-    public partial class aa : Migration
+    public partial class Escalas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,26 +26,28 @@ namespace PontoB.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    EscalaIdId = table.Column<int>(nullable: true),
                     DiaSemana = table.Column<string>(nullable: true),
-                    HoraEntrada = table.Column<int>(nullable: false),
-                    HoraSaida = table.Column<TimeSpan>(nullable: false)
+                    EntradaHora = table.Column<int>(nullable: false),
+                    EntradaMinuto = table.Column<int>(nullable: false),
+                    SaidaHora = table.Column<int>(nullable: false),
+                    SaidaMinuto = table.Column<int>(nullable: false),
+                    EscalaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EscalaHorario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EscalaHorario_Escala_EscalaIdId",
-                        column: x => x.EscalaIdId,
+                        name: "FK_EscalaHorario_Escala_EscalaId",
+                        column: x => x.EscalaId,
                         principalTable: "Escala",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EscalaHorario_EscalaIdId",
+                name: "IX_EscalaHorario_EscalaId",
                 table: "EscalaHorario",
-                column: "EscalaIdId");
+                column: "EscalaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

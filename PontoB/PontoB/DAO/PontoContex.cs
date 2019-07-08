@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using PontoB.Controllers;
 using PontoB.DAO;
 using PontoB.DAO.Config;
+using PontoB.DAO.Mapeamento;
 using PontoB.Models;
 
 
@@ -28,6 +29,7 @@ namespace PontoB
         {
             modelBuilder.ApplyConfiguration(new EmpresaMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());
+            modelBuilder.ApplyConfiguration(new EscalaMap());
 
             modelBuilder.HasSequence<int>("MinhaSequencia").StartsAt(1).IncrementsBy(1);
 

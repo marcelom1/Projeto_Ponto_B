@@ -77,7 +77,45 @@ namespace PontoB.Migrations
                     b.ToTable("Endereco");
                 });
 
-            
+            modelBuilder.Entity("PontoB.Models.Escala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descricao")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Escala");
+                });
+
+            modelBuilder.Entity("PontoB.Models.EscalaHorario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DiaSemana");
+
+                    b.Property<int>("EntradaHora");
+
+                    b.Property<int>("EntradaMinuto");
+
+                    b.Property<int?>("EscalaId");
+
+                    b.Property<int>("SaidaHora");
+
+                    b.Property<int>("SaidaMinuto");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EscalaId");
+
+                    b.ToTable("EscalaHorario");
+                });
+
             modelBuilder.Entity("PontoB.Models.EstadosUF", b =>
                 {
                     b.Property<int>("Id")
@@ -105,7 +143,12 @@ namespace PontoB.Migrations
                         .HasForeignKey("EstadoId");
                 });
 
-          
+            modelBuilder.Entity("PontoB.Models.EscalaHorario", b =>
+                {
+                    b.HasOne("PontoB.Models.Escala")
+                        .WithMany("EscalasHorario")
+                        .HasForeignKey("EscalaId");
+                });
 #pragma warning restore 612, 618
         }
     }

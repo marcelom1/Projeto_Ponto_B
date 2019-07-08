@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdm.cshtml";
+}
+<h3 class="pb-3">Cadastro Escalas</h3>
+@Html.ActionLink("Novo", "Form", "0", new { @class = "btn botao_cor btn-sm" })
+<h5 class="pt-1">Filtrar</h5>
+@using (Html.BeginForm("Filtro", "Empresa", FormMethod.Get, new { @id = "FiltroEmpresa", @name = "FiltroEmpresa" }))
+{
+    <div class="form-row pb-1 pt-1">
+        <div class="form-group col-md-2">
+            <select id="OpcaoFiltro" class="form-control" name="coluna">
+                <option selected>Todos</option>
+                <option>Código</option>
+                <option>Descrição</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <div class="input-group mb-1">
+                <input type="text" class="form-control" name="texto" placeholder="Pesquisar">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>Ação</th>
+                <th>Código</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Escalas in ViewBag.Escalas)
+            {
+                <tr onclick="location.href = '@Url.Action("Form", "Escalas", new { Id = Escalas.Id})';" style="cursor:Pointer">
+                    <td><a href="@Url.Action("Excluir", "Escalas", new { Id = Escalas.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escalas.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                    <td>@Escalas.Id</td>
+                    <td>@Escalas.Descricao</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

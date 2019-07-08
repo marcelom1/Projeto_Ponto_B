@@ -10,8 +10,8 @@ using PontoB;
 namespace PontoB.Migrations
 {
     [DbContext(typeof(PontoContex))]
-    [Migration("20190708140217_aa")]
-    partial class aa
+    [Migration("20190708173716_Escalas")]
+    partial class Escalas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -101,15 +101,19 @@ namespace PontoB.Migrations
 
                     b.Property<string>("DiaSemana");
 
-                    b.Property<int?>("EscalaIdId");
+                    b.Property<int>("EntradaHora");
 
-                    b.Property<int>("HoraEntrada");
+                    b.Property<int>("EntradaMinuto");
 
-                    b.Property<TimeSpan>("HoraSaida");
+                    b.Property<int?>("EscalaId");
+
+                    b.Property<int>("SaidaHora");
+
+                    b.Property<int>("SaidaMinuto");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EscalaIdId");
+                    b.HasIndex("EscalaId");
 
                     b.ToTable("EscalaHorario");
                 });
@@ -143,9 +147,9 @@ namespace PontoB.Migrations
 
             modelBuilder.Entity("PontoB.Models.EscalaHorario", b =>
                 {
-                    b.HasOne("PontoB.Models.Escala", "EscalaId")
-                        .WithMany()
-                        .HasForeignKey("EscalaIdId");
+                    b.HasOne("PontoB.Models.Escala")
+                        .WithMany("EscalasHorario")
+                        .HasForeignKey("EscalaId");
                 });
 #pragma warning restore 612, 618
         }

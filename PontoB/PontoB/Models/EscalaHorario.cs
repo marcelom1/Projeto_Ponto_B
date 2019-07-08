@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Timers;
 
 namespace PontoB.Models
 {
     public class EscalaHorario
     {
         public int Id { get; set; }
-        public Escala EscalaId { get; set; }
+        public int EscalaId { get; set; }
         public string DiaSemana { get; set; }
-        public TimeSpan HoraEntrada { get; set; }
-        public TimeSpan HoraSaida { get; set; }
+        public int EntradaHora { get; set; }
+        public int EntradaMinuto { get; set; }
+        public int SaidaHora { get; set; }
+        public int SaidaMinuto { get; set; }
     }
 }

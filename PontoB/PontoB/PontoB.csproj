@@ -248,8 +248,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CSS\cadastroColaborador.css" />
     <Content Include="Content\CSS\cadastroEmpresa.css" />
+    <Content Include="Content\CSS\CadastroEscala.css" />
     <Content Include="Content\CSS\login.css" />
     <Content Include="Content\CSS\menuAdm.css" />
     <Content Include="Content\CSS\tooltipster.bundle.min.css" />
@@ -263,18 +266,30 @@
     <Content Include="Content\js\jquery.js" />
     <Content Include="Content\js\jquery.mask.min.js" />
     <Content Include="Content\js\tooltipster.bundle.min.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
+    <Compile Include="Controllers\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAO\EscalaDAO.cs" />
+    <Compile Include="DAO\EscalaHorarioDAO.cs" />
     <Compile Include="DAO\Mapeamento\EmpresaMap.cs" />
     <Compile Include="DAO\Mapeamento\EnderecoMap.cs" />
     <Compile Include="DAO\EmpresaDAO.cs" />
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\EstadosUFDAO.cs" />
+    <Compile Include="DAO\Mapeamento\EscalaMap.cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresa.cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresaCodigo.cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresaTodos .cs" />
@@ -293,9 +308,9 @@
     <Compile Include="Migrations\20190707145232_CNPJUnico.designer.cs">
       <DependentUpon>20190707145232_CNPJUnico.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190708140217_aa.cs" />
-    <Compile Include="Migrations\20190708140217_aa.designer.cs">
-      <DependentUpon>20190708140217_aa.cs</DependentUpon>
+    <Compile Include="Migrations\20190708173716_Escalas.cs" />
+    <Compile Include="Migrations\20190708173716_Escalas.designer.cs">
+      <DependentUpon>20190708173716_Escalas.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Empresa.cs" />
@@ -308,11 +323,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
     <Content Include="Views\Empresa\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Empresa\Form.cshtml" />
     <Content Include="Views\Shared\_LayoutAdm.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Escalas\Form.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Escalas\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
