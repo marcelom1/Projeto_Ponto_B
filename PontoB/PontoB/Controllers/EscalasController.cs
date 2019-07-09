@@ -46,6 +46,8 @@ namespace PontoB.Controllers
 
             return View();
         }
+
+
         [HttpPost]
         public ActionResult Adiciona(Escala escala)
         {
@@ -54,7 +56,7 @@ namespace PontoB.Controllers
             var pesquisa = dao.BuscarPorId(escala.Id);
             
             ViewBag.Escalas = escala;
-            ViewBag.Empresa.EscalaHorario = escala.EscalasHorario;
+           // ViewBag.Empresa.EscalaHorario = escala.EscalasHorario;
             if (ModelState.IsValid)
             {
                
@@ -68,18 +70,19 @@ namespace PontoB.Controllers
                     //try
                    // {
                         dao.Adiciona(escala);
+                        return RedirectToAction("Form", new {id=escala.Id });
                     //}
                     //catch (Exception)
                     //{
-                        /*ViewBag.Empresa.Id = 0;
-                        ViewBag.Empresa.EnderecoEmpresa.Id = 0;
-                        ModelState.AddModelError("empresa.Cnpj", "CNPJ já consta cadastrado no Banco de Dados");
-                        */
-                     //   return View("Form");
+                    /*ViewBag.Empresa.Id = 0;
+                    ViewBag.Empresa.EnderecoEmpresa.Id = 0;
+                    ModelState.AddModelError("empresa.Cnpj", "CNPJ já consta cadastrado no Banco de Dados");
+                    */
+                    //   return View("Form");
                     //}
 
                 }
-                return RedirectToAction("Index", "Escala");
+                return RedirectToAction("Index", "Escalas");
             }
             else
             {
@@ -88,6 +91,45 @@ namespace PontoB.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult NovoHorario(string DiasDaSemana,DateTime NovoHoraEntrada, DateTime NovoHoraSaida, int EscalaID)
+        {
+      
+
+            EscalaHorario escalaHorario = new EscalaHorario()
+            {
+                EscalaId = EscalaID,
+                DiaSemana = DiasDaSemana,
+                EntradaHora = NovoHoraEntrada.Hour,
+                EntradaMinuto = NovoHoraEntrada.Minute,
+                SaidaHora = NovoHoraSaida.Hour,
+                SaidaMinuto = NovoHoraSaida.Minute
+                
+            };
+
+            EscalaHorarioDAO dao = new EscalaHorarioDAO();
+            dao.Adiciona(escalaHorario);
+
+            return RedirectToAction("Form", new { id = EscalaID });
+          
+        }
+
+        public ActionResult ExcluirEscalaHorario(int EscalaHorarioID)
+        {
+            EscalaHorarioDAO dao = new EscalaHorarioDAO();
+            var pesquisa = dao.BuscarPorId(EscalaHorarioID);
+            var EscalaID = pesquisa.EscalaId;
+            if (pesquisa != null)
+            {
+
+                dao.ExcluirEscalaHorario(pesquisa);
+                //EnderecoDAO daoe = new EnderecoDAO();
+                //daoe.ExcluirEndereco(pesquisa.EnderecoEmpresa);
+
+            }
+
+            return RedirectToAction("Form", new { id = EscalaID });
+        }
 
 
         [HttpPost]
@@ -105,7 +147,7 @@ namespace PontoB.Controllers
 
             }
 
-            return RedirectToAction("Index", "Escala");
+            return RedirectToAction("Index", "Escalas");
         }
 
         public ActionResult Excluir(int id)
@@ -119,7 +161,7 @@ namespace PontoB.Controllers
 
             }
 
-            return RedirectToAction("Index", "Escala");
+            return RedirectToAction("Index", "Escalas");
         }
 
 

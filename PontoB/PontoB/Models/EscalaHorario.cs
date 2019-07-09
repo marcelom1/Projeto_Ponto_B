@@ -6,7 +6,7 @@ namespace PontoB.Models
     public class EscalaHorario
     {
         public int Id { get; set; }
-        public int EscalaId { get; set; }
+        public virtual int EscalaId { get; set; }
         public string DiaSemana { get; set; }
         public int EntradaHora { get; set; }
         public int EntradaMinuto { get; set; }

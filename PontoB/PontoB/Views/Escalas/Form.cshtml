@@ -6,7 +6,7 @@
 
 
 <h3 class="pb-3">Cadastro Escala</h3>
-@using (Html.BeginForm("Adiciona", "Escala", FormMethod.Post, new { @id = "CadastroEscala", @name = "CadastroEscala" }))
+@using (Html.BeginForm("Adiciona", "Escalas", FormMethod.Post, new { @id = "CadastroEscala", @name = "CadastroEscala" }))
 {
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2">
@@ -23,60 +23,83 @@
             <input type="text" class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Ex: Escala Geral" value="@ViewBag.Escalas.Descricao">
         </div>
     </div>
-    <div class="form-row pb-1 pt-4 ">
-        <div class="form-group col-md-2">
-            <label for="DiasDaSemana">Adicionar</label>
-            <select id="DiasDaSemana" class="form-control">
-                <option selected></option>
-                <option>Segunda</option>
-                <option>Terça</option>
-                <option>Quarta</option>
-                <option>Quinta</option>
-                <option>Sexta</option>
-                <option>Sábado</option>
-                <option>Domingo</option>
-            </select>
-        </div>
-        <div class="form-group col-md-2">
-            <label>Entrada</label>
-            <input type="time" id="NovoHoraSaida" class="form-control">
+}
+
+
+@using (Html.BeginForm("NovoHorario", "Escalas", FormMethod.Post, new { @id = "CadastroEscalaHorario", @name = "CadastroEscalaHorario" }))
+{
+    <div class="" id="EscalaCaddastro">
+        <div class="form-row pb-1 pt-4 ">
+            <div class="form-group col-md-2">
+                <label for="DiasDaSemana">Adicionar</label>
+
+                <select id="DiasDaSemana" name="DiasDaSemana" class="form-control">
+                    <option selected></option>
+                    <option>Segunda</option>
+                    <option>Terça</option>
+                    <option>Quarta</option>
+                    <option>Quinta</option>
+                    <option>Sexta</option>
+                    <option>Sábado</option>
+                    <option>Domingo</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label>Entrada</label>
+                <input type="time" id="NovoHoraEntrada" name="NovoHoraEntrada" class="form-control">
+
+            </div>
+            <div class="form-group col-md-2">
+                <label>Saida</label>
+                <input type="time" id="NovoHoraSaida" name="NovoHoraSaida" class="form-control">
+            </div>
+            <input name="EscalaID" value="@ViewBag.Escalas.Id" class="IdEndereco" />
+            
+            <div class="form-group col-md-2">
+                <div class="form-group pt-4 mt-2">
+                    <button type="submit" id="NovaLinhaEscala" class="btn botao_cor btn-sm">Novo</button>
+                </div>
+            </div>
 
         </div>
-        <div class="form-group col-md-2">
-            <label>Saida</label>
-            <input type="time" id="NovoHoraEntrada" class="form-control">
+
+        <div>
+            <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Ação</th>
+                        <th scope="col">Código</th>
+                        <th scope="col">Dia da Semana</th>
+                        <th scope="col">Entrada</th>
+                        <th scope="col">Saida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var Escala in ViewBag.Escalas.EscalasHorario)
+                    {
+                        <tr>
+                            <td><a href="@Url.Action("ExcluirEscalaHorario", "Escalas", new {EscalaHorarioID = Escala.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escala.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                            <td>@Escala.Id</td>
+                            <td>@Escala.DiaSemana</td>
+                            <td>@Escala.EntradaHora:@Escala.EntradaMinuto</td>
+                            <td>@Escala.SaidaHora:@Escala.SaidaMinuto</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-        <div class="form-group col-md-2">
-            <div class="form-group pt-4 mt-2">
-                <button type="button" class="btn botao_cor btn-sm">Novo</button>
+    </div>
+}
+    <div class="form-row pb-1 pt-4 ">
+
+        <button type="button" id="Botao_Salvar_Escala" class="btn botao_cor_verde btn-lg">Salvar</button>
+
+        <div class="form-row float-right">
+            <div class="form-group col-md-1">
+                <input type="submit" id="Botao_Excluir_Formulario_Escala" formaction="/Escalas/Excluir" onclick="return confirm('Confirma Exclusão do Registro @ViewBag.Escalas.Id?')" value="Excluir" class="btn botao_cor btn-lg">
             </div>
         </div>
 
     </div>
-    <div>
-        <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Ação</th>
-                    <th scope="col">Código</th>
-                    <th scope="col">Dia da Semana</th>
-                    <th scope="col">Entrada</th>
-                    <th scope="col">Saida</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var Escala in ViewBag.Escalas.EscalasHorario)
-                {
-                    <tr>
-                        <td><a href="@Url.Action("Excluir", "EscalaHorario", new { Id = Escala.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escala.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
-                        <td>@Escala.Id</td>
-                        <td>@Escala.DiaSemana</td>
-                        <td>@Escala.EntradaHora:@Escala.EntradaMinuto</td>
-                        <td>@Escala.SaidaHora:@Escala.SaidaMinuto</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-}
+
 
