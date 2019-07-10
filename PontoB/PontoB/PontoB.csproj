@@ -313,6 +313,10 @@
     <Compile Include="Migrations\20190708173716_Escalas.designer.cs">
       <DependentUpon>20190708173716_Escalas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190709201556_TotalEscala.cs" />
+    <Compile Include="Migrations\20190709201556_TotalEscala.designer.cs">
+      <DependentUpon>20190709201556_TotalEscala.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />

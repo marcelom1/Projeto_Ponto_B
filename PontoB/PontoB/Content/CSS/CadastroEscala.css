@@ -25,10 +25,16 @@
     
 }
 
-.botao_cor{
+.botao_adicionar {
     background-color: #fd5759;
     color: white;
     height: 37px;
+}
+
+.botao_cor{
+    background-color: #fd5759;
+    color: white;
+    
    
 }
 

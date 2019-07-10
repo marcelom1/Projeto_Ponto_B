@@ -53,7 +53,6 @@ $("#CNPJ").blur(function () {
         var empresaId = $("#Empresa_id");
         empresaId.attr("disabled", true);
     } else {
-        console.log("else");
         $("#Erro_Cnpj").hide();
         $("#Botao_Salvar").attr("type", "submit");
     }

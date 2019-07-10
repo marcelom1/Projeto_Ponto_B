@@ -1,8 +1,9 @@
 ﻿
 $(document).ready(function () {
-    $("#NovaLinhaEscala").click(AdicionarLinhaEscala);
+    
     $("#Botao_Salvar_Escala").click(SalvarFormulario);
     $("#NovaLinhaEscala").click(SalvarNovoHorarioEscala);
+    $("#Botao_Nova_Escala").click(Nova_Escala);
     $(".Botao_Excluir").click(function (e) {
         e.stopPropagation();
     });
@@ -16,22 +17,64 @@ $(document).ready(function () {
     } else {
         $(".EscalaCadastro").slideDown(500);
     }
+
+    //Verifica se o Campo Dia da Semana está em Branco ou não
+    $("#DiasDaSemana").blur(function () {
+        var diasSemana = $("#DiasDaSemana").val();
+        if (diasSemana == "") {
+            $("#ErroDiaSemana").text("Campo Obrigatório!").show();
+        } else {
+            $("#ErroDiaSemana").hide();
+        }
+    });
+
+    $("#DescricaoEscala").blur(function () {
+        var diasSemana = $("#DescricaoEscala").val();
+        if (diasSemana == "") {
+            $("#ErroDescricao").text("Campo descrição não pode ficar em branco!").show();
+        } else {
+            $("#ErroDescricao").hide();
+        }
+    });
+
+
+
 });
+
+function Nova_Escala() {
+
+}
+
 
 function ExcluirFormulario() {
     var formularioEscala = $("#CadastroEscala");
     var EscalaId = $("#Escala_id");
     EscalaId.attr("disabled", false);
-    formularioEscala.attr("action", "Excluir");
-    console.log("TESTE");
+    formularioEscala.attr("action", "/Escalas/Excluir");
     formularioEscala.submit();
  
-}
+    };
 
 function SalvarNovoHorarioEscala() {
-    var formularioEscala = $("#CadastroEscalaHorario");
-    formularioEscala.submit();
-  
+    var HoraEntrada = $("#NovoHoraEntrada").val();
+    var HoraSaida = $("#NovoHoraSaida").val();
+    var DiaSemana = $("#DiasDaSemana").val();
+    console.log(HoraEntrada);
+    if (DiaSemana == "") {
+        alert("Dia da semana não pode ficar em branco!");
+    }
+    else if (HoraEntrada == null) {
+        alert("Hora Entrada não pode ser nula!");
+    }
+    else if (HoraSaida == null) {
+        alert("Hora Saida não pode ser nula!");
+    }
+    else if (HoraEntrada >= HoraSaida) {
+        alert("Hora Saida Não Pode Ser Maior ou iqual que Hora Entrada!");
+    } else {
+        var formularioEscala = $("#CadastroEscalaHorario");
+        formularioEscala.submit();
+    }
 };
 
 
@@ -46,7 +89,7 @@ function SalvarFormulario() {
     } else {
         formularioEscala.submit()
     }
-}
+    };
 
 function scrollEscala() {
     $(".EscalaCadastro").slideDown(500);
@@ -54,31 +97,4 @@ function scrollEscala() {
     $("body").animate({
         scrollTop: posicaoEscala + "px"
     }, 1000);
-}
-
-function AdicionarLinhaEscala() {
-    var diaDaSemana = $("#DiasDaSemana").val();
-    var horaEntrada = $("#NovoHoraEntrada").val();
-    var horaSaida = $("#NovoHoraSaida").val();
-    console.log("Dia da Semana: "+diaDaSemana);
-    console.log("Hora Entrada: "+horaEntrada);
-    console.log("Hora Saida" + horaSaida);
-
-   /* var linha = $("<tr>");
-    var colunaAcao = $("<td>").text(usuario)
-    var colunaPalavras = $("<td>").text(numPalavras)
-    var colunaRemove = $("<td>");
-
-    var link = $("<a>").addClass("botao_remover").attr("href", "#");
-    var icone = $("<i>").addClass("small").addClass("material-icons").text("delete");
-
-
-    link.append(icone);
-
-    colunaRemove.append(link);
-
-    linha.append(colunaUsuario);
-    linha.append(colunaPalavras);
-    linha.append(colunaRemove);
-    */
-};
+    };

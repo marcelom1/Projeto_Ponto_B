@@ -3,6 +3,7 @@ using PontoB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Web;
 using System.Web.Mvc;
 
@@ -54,9 +55,13 @@ namespace PontoB.Controllers
 
             EscalaDAO dao = new EscalaDAO();
             var pesquisa = dao.BuscarPorId(escala.Id);
-            
             ViewBag.Escalas = escala;
-           // ViewBag.Empresa.EscalaHorario = escala.EscalasHorario;
+            EscalaHorarioDAO daoHorario = new EscalaHorarioDAO();
+            ViewBag.Escalas.EscalasHorario = daoHorario.Lista(escala.Id); 
+
+
+
+
             if (ModelState.IsValid)
             {
                
@@ -67,19 +72,10 @@ namespace PontoB.Controllers
                 }
                 else
                 {
-                    //try
-                   // {
-                        dao.Adiciona(escala);
-                        return RedirectToAction("Form", new {id=escala.Id });
-                    //}
-                    //catch (Exception)
-                    //{
-                    /*ViewBag.Empresa.Id = 0;
-                    ViewBag.Empresa.EnderecoEmpresa.Id = 0;
-                    ModelState.AddModelError("empresa.Cnpj", "CNPJ já consta cadastrado no Banco de Dados");
-                    */
-                    //   return View("Form");
-                    //}
+                    
+                    dao.Adiciona(escala);
+                    return RedirectToAction("Form", new {id=escala.Id });
+                    
 
                 }
                 return RedirectToAction("Index", "Escalas");
@@ -94,22 +90,44 @@ namespace PontoB.Controllers
         [HttpPost]
         public ActionResult NovoHorario(string DiasDaSemana,DateTime NovoHoraEntrada, DateTime NovoHoraSaida, int EscalaID)
         {
-      
-
-            EscalaHorario escalaHorario = new EscalaHorario()
+            if (DiasDaSemana == "Segunda a Sexta")
             {
-                EscalaId = EscalaID,
-                DiaSemana = DiasDaSemana,
-                EntradaHora = NovoHoraEntrada.Hour,
-                EntradaMinuto = NovoHoraEntrada.Minute,
-                SaidaHora = NovoHoraSaida.Hour,
-                SaidaMinuto = NovoHoraSaida.Minute
-                
-            };
+                string[] semana = { "Segunda", "Terça", "Quarta", "Quinta", "Sexta" };
+                for (int i = 0; i < semana.Length; i++)
+                {
+                    EscalaHorario escalaHorario = new EscalaHorario()
+                    {
+                        EscalaId = EscalaID,
+                        DiaSemana = semana[i],
+                        EntradaHora = NovoHoraEntrada.Hour,
+                        EntradaMinuto = NovoHoraEntrada.Minute,
+                        SaidaHora = NovoHoraSaida.Hour,
+                        SaidaMinuto = NovoHoraSaida.Minute,
+                        TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
 
-            EscalaHorarioDAO dao = new EscalaHorarioDAO();
-            dao.Adiciona(escalaHorario);
+                    };
+                    EscalaHorarioDAO dao = new EscalaHorarioDAO();
+                    dao.Adiciona(escalaHorario);
+                }
+            }
+            else
+            {
 
+                EscalaHorario escalaHorario = new EscalaHorario()
+                {
+                    EscalaId = EscalaID,
+                    DiaSemana = DiasDaSemana,
+                    EntradaHora = NovoHoraEntrada.Hour,
+                    EntradaMinuto = NovoHoraEntrada.Minute,
+                    SaidaHora = NovoHoraSaida.Hour,
+                    SaidaMinuto = NovoHoraSaida.Minute,
+                    TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
+
+                };
+
+                EscalaHorarioDAO dao = new EscalaHorarioDAO();
+                dao.Adiciona(escalaHorario);
+            }
             return RedirectToAction("Form", new { id = EscalaID });
           
         }

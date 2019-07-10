@@ -6,6 +6,7 @@
 
 
 <h3 class="pb-3">Cadastro Escala</h3>
+@Html.ActionLink("Novo", "/Form",null , new { @class = "btn botao_cor btn-sm" })
 @using (Html.BeginForm("Adiciona", "Escalas", FormMethod.Post, new { @id = "CadastroEscala", @name = "CadastroEscala" }))
 {
     <div class="form-row pb-1 pt-4 ">
@@ -21,6 +22,7 @@
         <div class="form-group col-md-6">
             <label for="DescricaoEscala">Descrição</label>
             <input type="text" class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Ex: Escala Geral" value="@ViewBag.Escalas.Descricao">
+            <span class="erro" id="ErroDescricao">@Html.ValidationMessage("escala.Descricao")</span>
         </div>
     </div>
 }
@@ -35,6 +37,7 @@
 
                 <select id="DiasDaSemana" name="DiasDaSemana" class="form-control">
                     <option selected></option>
+                    <option>Segunda a Sexta</option>
                     <option>Segunda</option>
                     <option>Terça</option>
                     <option>Quarta</option>
@@ -43,21 +46,23 @@
                     <option>Sábado</option>
                     <option>Domingo</option>
                 </select>
+                <span class="erro" id="ErroDiaSemana">@Html.ValidationMessage("DiasDaSema")</span>
             </div>
             <div class="form-group col-md-2">
                 <label>Entrada</label>
-                <input type="time" id="NovoHoraEntrada" name="NovoHoraEntrada" class="form-control">
-
+                <input type="time" id="NovoHoraEntrada" value="00:00" name="NovoHoraEntrada" class="form-control">
+                <span class="erro">@Html.ValidationMessage("NovoHoraEntrada")</span>
             </div>
             <div class="form-group col-md-2">
                 <label>Saida</label>
-                <input type="time" id="NovoHoraSaida" name="NovoHoraSaida" class="form-control">
+                <input type="time" id="NovoHoraSaida" value="00:00" name="NovoHoraSaida" class="form-control">
+                <span class="erro">@Html.ValidationMessage("NovoHoraSaida")</span>
             </div>
             <input name="EscalaID" value="@ViewBag.Escalas.Id" class="IdEndereco" />
-            
+
             <div class="form-group col-md-2">
                 <div class="form-group pt-4 mt-2">
-                    <button type="submit" id="NovaLinhaEscala" class="btn botao_cor btn-sm">Novo</button>
+                    <button type="button" id="NovaLinhaEscala" class="btn botao_adicionar btn-sm">Adicionar</button>
                 </div>
             </div>
 
@@ -68,38 +73,50 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Ação</th>
-                        <th scope="col">Código</th>
                         <th scope="col">Dia da Semana</th>
                         <th scope="col">Entrada</th>
                         <th scope="col">Saida</th>
+                        <th scope="col">Horas Trabalhas</th>
                     </tr>
                 </thead>
                 <tbody>
+
+                    @{ int TotalSemana = 0;}
                     @foreach (var Escala in ViewBag.Escalas.EscalasHorario)
                     {
+                        int TotalHoras = Escala.TotalEmMinutos / 60;
+                        int TotalMinutos = Escala.TotalEmMinutos % 60;
+                        TotalSemana += Escala.TotalEmMinutos;
+
                         <tr>
-                            <td><a href="@Url.Action("ExcluirEscalaHorario", "Escalas", new {EscalaHorarioID = Escala.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escala.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
-                            <td>@Escala.Id</td>
+                            <td><a href="@Url.Action("ExcluirEscalaHorario", "Escalas", new { EscalaHorarioID = Escala.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escala.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
                             <td>@Escala.DiaSemana</td>
-                            <td>@Escala.EntradaHora:@Escala.EntradaMinuto</td>
-                            <td>@Escala.SaidaHora:@Escala.SaidaMinuto</td>
+                            <td>@Escala.EntradaHora.ToString("D2"):@Escala.EntradaMinuto.ToString("D2")</td>
+                            <td>@Escala.SaidaHora.ToString("D2"):@Escala.SaidaMinuto.ToString("D2")</td>
+                            <td>@TotalHoras.ToString("D2"):@TotalMinutos.ToString("D2")</td>
                         </tr>
                     }
+                    @{
+                        int TotalSemanaHora = TotalSemana / 60;
+                        int TotalSemanaMinutos = TotalSemana % 60;
+                    }
+                    <tr>
+                        <th colspan="4">Total de Horas Semana: </th>
+                        <th>@TotalSemanaHora.ToString("D2"):@TotalSemanaMinutos.ToString("D2")</th>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 }
-    <div class="form-row pb-1 pt-4 ">
 
-        <button type="button" id="Botao_Salvar_Escala" class="btn botao_cor_verde btn-lg">Salvar</button>
+<br>
+<button type="button" id="Botao_Salvar_Escala" class="btn botao_cor_verde btn-lg">Salvar</button>
 
-        <div class="form-row float-right">
-            <div class="form-group col-md-1">
-                <input type="submit" id="Botao_Excluir_Formulario_Escala" formaction="/Escalas/Excluir" onclick="return confirm('Confirma Exclusão do Registro @ViewBag.Escalas.Id?')" value="Excluir" class="btn botao_cor btn-lg">
-            </div>
-        </div>
-
+<div class="form-row float-right">
+    <div class="form-group col-md-1">
+        <input type="submit" id="Botao_Excluir_Formulario_Escala" formaction="/Escalas/Excluir" onclick="return confirm('Confirma Exclusão do Registro @ViewBag.Escalas.Id?')" value="Excluir" class="btn botao_cor btn-lg">
     </div>
+</div>
 
 
