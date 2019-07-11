@@ -45,71 +45,7 @@ namespace PontoB.DAO
                          .Empresa
                          .AsNoTracking(), filtro);
                 return result.ToPagedList(numeroPagina,tamanhoPagina);
-
-
-                /*if (coluna == "Todos")
-                {
-                    var resultado = contexto
-                         .Empresa
-                         .AsNoTracking()
-                         .Where(e => e.RazaoSocial.Contains(filtro) || e.NomeFantasia.Contains(filtro) || e.Cnpj.Contains(filtro))
-                         .ToList();
-                    if (int.TryParse(filtro,out int numero))
-                    {
-                        resultado.AddRange(contexto
-                        .Empresa
-                        .AsNoTracking()
-                        .Where(e => e.Id.Equals(numero)).ToList());
-                       
-                    }
-                    return resultado;
-
-                }
-                else
-                {
-                    if (coluna == "Código")
-                    {
-                        return contexto
-                             .Empresa
-                             .AsNoTracking()
-                             .Where(e => e.Id.Equals(filtro))
-                             .ToList();
-                    }
-                    else
-                    {
-                        if (coluna == "Razão Social")
-                        {
-                            return contexto
-                               .Empresa
-                               .AsNoTracking()
-                               .Where(e => e.RazaoSocial.Equals(filtro))
-                               .ToList();
-                        }
-                        else
-                        {
-                            if (coluna == "Nome Fantasia")
-                            {
-                                return contexto
-                                   .Empresa
-                                   .AsNoTracking()
-                                   .Where(e => e.NomeFantasia.Equals(filtro))
-                                   .ToList();
-                            }
-                            else
-                            {
-                                if (coluna == "CNPJ")
-                                {
-                                    return contexto
-                                       .Empresa
-                                       .AsNoTracking()
-                                       .Where(e => e.Cnpj.Equals(filtro))
-                                       .ToList();
-                                }
-                            }
-                        }
-                    }
-                }
-              return contexto.Empresa.ToList();*/
+                
             }
         }
                
@@ -120,7 +56,7 @@ namespace PontoB.DAO
             using(var contexto = new PontoContex())
             {
 
-               // contexto.Endereco.Remove(empresa.EnderecoEmpresa);
+              
                 contexto.Empresa.Remove(empresa);
                 contexto.SaveChanges();
                 

@@ -108,6 +108,7 @@ namespace PontoB.Controllers
                     string HoraSaidaSalva = horario.SaidaHora.ToString("D2") + horario.SaidaMinuto.ToString("D2");
                     if (int.Parse(Hora) >= int.Parse(HoraEntradaSalva) && int.Parse(Hora) <= int.Parse(HoraSaidaSalva))
                     {
+                       
                         return true;
                     }
                 }
@@ -120,15 +121,44 @@ namespace PontoB.Controllers
         [HttpPost]
         public ActionResult NovoHorario(string DiasDaSemana,DateTime NovoHoraEntrada, DateTime NovoHoraSaida, int EscalaID)
         {
-            if (DiasDaSemana == "Segunda a Sexta")
+           
+            if (ModelState.IsValid)
             {
-                string[] semana = { "Segunda", "Terça", "Quarta", "Quinta", "Sexta" };
-                for (int i = 0; i < semana.Length; i++)
+                if (DiasDaSemana == "Segunda a Sexta")
                 {
+                    string[] semana = { "Segunda", "Terça", "Quarta", "Quinta", "Sexta" };
+                    for (int i = 0; i < semana.Length; i++)
+                    {
+                        EscalaHorario escalaHorario = new EscalaHorario()
+                        {
+                            EscalaId = EscalaID,
+                            DiaSemana = semana[i],
+                            EntradaHora = NovoHoraEntrada.Hour,
+                            EntradaMinuto = NovoHoraEntrada.Minute,
+                            SaidaHora = NovoHoraSaida.Hour,
+                            SaidaMinuto = NovoHoraSaida.Minute,
+                            TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
+
+                        };
+                        if ((!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)) && (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)))
+                        {
+                            EscalaHorarioDAO dao = new EscalaHorarioDAO();
+                            dao.Adiciona(escalaHorario);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("AdicionarNovoHorario", "O novo horário não pode sobrepor outro horário existente");
+                        }
+                        
+                    }
+                }
+                else
+                {
+
                     EscalaHorario escalaHorario = new EscalaHorario()
                     {
                         EscalaId = EscalaID,
-                        DiaSemana = semana[i],
+                        DiaSemana = DiasDaSemana,
                         EntradaHora = NovoHoraEntrada.Hour,
                         EntradaMinuto = NovoHoraEntrada.Minute,
                         SaidaHora = NovoHoraSaida.Hour,
@@ -136,37 +166,27 @@ namespace PontoB.Controllers
                         TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
 
                     };
-                    if (!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
-                        if (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
-                        {
-                            EscalaHorarioDAO dao = new EscalaHorarioDAO();
-                            dao.Adiciona(escalaHorario);
-                        }
-                }
-            }
-            else
-            {
-
-                EscalaHorario escalaHorario = new EscalaHorario()
-                {
-                    EscalaId = EscalaID,
-                    DiaSemana = DiasDaSemana,
-                    EntradaHora = NovoHoraEntrada.Hour,
-                    EntradaMinuto = NovoHoraEntrada.Minute,
-                    SaidaHora = NovoHoraSaida.Hour,
-                    SaidaMinuto = NovoHoraSaida.Minute,
-                    TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
-
-                };
-                if (!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
-                    if (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
+                    if ((!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)) && (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)))
                     {
                         EscalaHorarioDAO dao = new EscalaHorarioDAO();
                         dao.Adiciona(escalaHorario);
                     }
+                    
+                }
             }
-            return RedirectToAction("Form", new { id = EscalaID });
-          
+
+            EscalaHorarioDAO horarioDao = new EscalaHorarioDAO();
+            IList<EscalaHorario> escalaHorari;
+            EscalaDAO dao2 = new EscalaDAO();
+            Escala escala = dao2.BuscarPorId(EscalaID);
+            ViewBag.Escalas = escala;
+            escalaHorari = horarioDao.Lista(EscalaID);
+            ViewBag.Escalas.EscalasHorario = escalaHorari;
+
+
+            return View("Form");
+           
+            
         }
 
         public ActionResult ExcluirEscalaHorario(int EscalaHorarioID)
