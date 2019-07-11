@@ -1,4 +1,5 @@
-﻿using PontoB.DAO;
+﻿using PagedList;
+using PontoB.DAO;
 using PontoB.Models;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,20 @@ namespace PontoB.Controllers
 {
     public class EscalasController : Controller
     {
-        // GET: Escalas
-        public ActionResult Index()
+        public ActionResult Index(int pagina = 1, string coluna = "", string filtro = "")
         {
-            EscalaDAO dao = new EscalaDAO();
-            IList<Escala> escala = dao.Lista();
-            ViewBag.Escalas = escala;
+            if (filtro != "" && coluna != "")
+            {
+                return RedirectToAction("Filtro", new { coluna, texto = filtro, pagina });
 
-            return View();
+            }
+            EscalaDAO dao = new EscalaDAO();
+            ViewBag.FiltroColuna = "";
+            ViewBag.Filtro = "";
+
+            return View(dao.Lista(pagina));
         }
+       
 
         public ActionResult Form(int id = 0)
         {
@@ -87,6 +93,30 @@ namespace PontoB.Controllers
             }
         }
 
+        public bool SobrePoemHorario(int hora,int minuto,string DiaSemana, int IdEscala)
+        {
+            
+            EscalaHorarioDAO dao = new EscalaHorarioDAO();
+            IList<EscalaHorario> lista = dao.Lista(IdEscala);
+            string Hora = hora.ToString("D2") + minuto.ToString("D2");
+
+            foreach (var horario in lista)
+            {
+                if (DiaSemana == horario.DiaSemana)
+                {
+                    string HoraEntradaSalva = horario.EntradaHora.ToString("D2") + horario.EntradaMinuto.ToString("D2");
+                    string HoraSaidaSalva = horario.SaidaHora.ToString("D2") + horario.SaidaMinuto.ToString("D2");
+                    if (int.Parse(Hora) >= int.Parse(HoraEntradaSalva) && int.Parse(Hora) <= int.Parse(HoraSaidaSalva))
+                    {
+                        return true;
+                    }
+                }
+
+
+            }
+            return false;
+        }
+
         [HttpPost]
         public ActionResult NovoHorario(string DiasDaSemana,DateTime NovoHoraEntrada, DateTime NovoHoraSaida, int EscalaID)
         {
@@ -106,8 +136,12 @@ namespace PontoB.Controllers
                         TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
 
                     };
-                    EscalaHorarioDAO dao = new EscalaHorarioDAO();
-                    dao.Adiciona(escalaHorario);
+                    if (!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
+                        if (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
+                        {
+                            EscalaHorarioDAO dao = new EscalaHorarioDAO();
+                            dao.Adiciona(escalaHorario);
+                        }
                 }
             }
             else
@@ -124,9 +158,12 @@ namespace PontoB.Controllers
                     TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
 
                 };
-
-                EscalaHorarioDAO dao = new EscalaHorarioDAO();
-                dao.Adiciona(escalaHorario);
+                if (!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
+                    if (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId))
+                    {
+                        EscalaHorarioDAO dao = new EscalaHorarioDAO();
+                        dao.Adiciona(escalaHorario);
+                    }
             }
             return RedirectToAction("Form", new { id = EscalaID });
           
@@ -160,8 +197,7 @@ namespace PontoB.Controllers
             {
 
                 dao.ExcluirEscala(pesquisa);
-                //EnderecoDAO daoe = new EnderecoDAO();
-                //daoe.ExcluirEndereco(pesquisa.EnderecoEmpresa);
+               
 
             }
 
@@ -182,26 +218,17 @@ namespace PontoB.Controllers
             return RedirectToAction("Index", "Escalas");
         }
 
-
-        /*public ActionResult Filtro(string coluna, string texto)
+        public ActionResult Filtro(string coluna, string texto, int pagina = 1)
         {
             EscalaDAO dao = new EscalaDAO();
-            IList<Escala> filtro = dao.Filtro(coluna, texto);
-            ViewBag.Empresas = filtro;
-            return View("Index");
-           
-        }*/
-        /* public ActionResult Adiciona(Empresa empresa)
-         {
-         }
 
-         public ActionResult Excluir(Empresa empresa)
-         {
+            IPagedList<Escala> filtro = dao.Filtro(coluna, texto, pagina);
+            ViewBag.Escala = filtro;
+            ViewBag.FiltroColuna = coluna;
+            ViewBag.Filtro = texto;
+            return View("Index", filtro);
+        }
 
-         }
-         public ActionResult Excluir(int id)
-         {
-         }*/
 
     }
 

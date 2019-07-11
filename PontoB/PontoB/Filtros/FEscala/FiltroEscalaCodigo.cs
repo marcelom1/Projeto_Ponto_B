@@ -6,16 +6,16 @@ using System.Web;
 using PagedList;
 using PontoB.Models;
 
-namespace PontoB.Filtros.FEmpresa
+namespace PontoB.Filtros.FEscala
 {
-    public class FiltroEmpresaCodigo : IFiltro<Empresa>
+    public class FiltroEscalaCodigo : IFiltro<Escala>
     {
-        public IList<Empresa> Filtrar(IQueryable<Empresa> query , string filtro)
+        public IList<Escala> Filtrar(IQueryable<Escala> query , string filtro)
         {
             
             if (int.TryParse(filtro, out int numero))
             {
-                return(query.OrderBy(e=>e.Id).Where(e => e.Id.Equals(numero)).ToList());
+                return(query.OrderBy(e => e.Id).Where(e => e.Id.Equals(numero)).ToList());
 
             }
             return query.OrderBy(e => e.Id).Where(e=>e.Id.Equals(filtro)).ToList();

@@ -77,6 +77,7 @@
         <div class="form-group col-md-2">
             <label for="LogradouroEstado">Estado</label>
             <select id="LogradouroEstado" name="empresa.EnderecoEmpresa.Estado.Id" class="form-control">
+                <option selected></option>
                 @foreach (var estado in ViewBag.EstadosUf)
                 {
                     <option value="@estado.Id" selected="@estado.Id.Equals(ViewBag.Empresa.EnderecoEmpresa.Estado.Id)">@estado.Sigla</option>

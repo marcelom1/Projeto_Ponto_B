@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PagedList;
 using PontoB.Models;
 
 namespace PontoB.Filtros.FEmpresa
@@ -11,7 +12,7 @@ namespace PontoB.Filtros.FEmpresa
         public IList<Empresa> Filtrar(IQueryable<Empresa> query , string filtro)
         {
 
-            return query.Where(e => e.RazaoSocial.Contains(filtro)).ToList();
+            return query.OrderBy(e=>e.RazaoSocial).Where(e => e.RazaoSocial.Contains(filtro)).ToList();
         }
     }
 }

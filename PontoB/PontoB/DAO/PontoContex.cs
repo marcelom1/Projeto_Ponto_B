@@ -22,7 +22,7 @@ namespace PontoB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ControlePontoDB;Trusted_Connection=true;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=PontoDB;Trusted_Connection=true;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

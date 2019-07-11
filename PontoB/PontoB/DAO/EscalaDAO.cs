@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PagedList;
+using PontoB.Filtros.FEscala;
 using PontoB.Models;
 using System;
 using System.Collections.Generic;
@@ -18,94 +20,31 @@ namespace PontoB.DAO
                 context.SaveChanges();
             }
         }
-        public IList<Escala> Lista()
+        public IPagedList<Escala> Lista(int? pagina)
         {
+            int tamanhoPagina = 10;
+            int numeroPagina = pagina ?? 1;
             using (var contexto = new PontoContex())
             {
-                return contexto.Escala.ToList();
+                return contexto.Escala.OrderBy(p => p.Descricao).ToPagedList(numeroPagina, tamanhoPagina);
             }
         }
 
 
-       /* public IList<Escala> Filtro(string coluna, string filtro)
+        public IPagedList<Escala> Filtro(string coluna, string filtro, int? pagina)
         {
-
+            int tamanhoPagina = 10;
+            int numeroPagina = pagina ?? 1;
             using (var contexto = new PontoContex())
             {
-                var objFiltro = FiltroEmpresa.ObterFiltroColuna(coluna);
+                var objFiltro = FiltroEscala.ObterFiltroColuna(coluna);
                 var result = objFiltro.Filtrar(contexto
-                         .Empresa
+                         .Escala
                          .AsNoTracking(), filtro);
-                return result;
-
-
-                if (coluna == "Todos")
-                {
-                    var resultado = contexto
-                         .Empresa
-                         .AsNoTracking()
-                         .Where(e => e.RazaoSocial.Contains(filtro) || e.NomeFantasia.Contains(filtro) || e.Cnpj.Contains(filtro))
-                         .ToList();
-                    if (int.TryParse(filtro, out int numero))
-                    {
-                        resultado.AddRange(contexto
-                        .Empresa
-                        .AsNoTracking()
-                        .Where(e => e.Id.Equals(numero)).ToList());
-
-                    }
-                    return resultado;
-
-                }
-                else
-                {
-                    if (coluna == "Código")
-                    {
-                        return contexto
-                             .Empresa
-                             .AsNoTracking()
-                             .Where(e => e.Id.Equals(filtro))
-                             .ToList();
-                    }
-                    else
-                    {
-                        if (coluna == "Razão Social")
-                        {
-                            return contexto
-                               .Empresa
-                               .AsNoTracking()
-                               .Where(e => e.RazaoSocial.Equals(filtro))
-                               .ToList();
-                        }
-                        else
-                        {
-                            if (coluna == "Nome Fantasia")
-                            {
-                                return contexto
-                                   .Empresa
-                                   .AsNoTracking()
-                                   .Where(e => e.NomeFantasia.Equals(filtro))
-                                   .ToList();
-                            }
-                            else
-                            {
-                                if (coluna == "CNPJ")
-                                {
-                                    return contexto
-                                       .Empresa
-                                       .AsNoTracking()
-                                       .Where(e => e.Cnpj.Equals(filtro))
-                                       .ToList();
-                                }
-                            }
-                        }
-                    }
-                }
-                return contexto.Empresa.ToList();
+                return result.ToPagedList(numeroPagina,tamanhoPagina);
             }
-        }*/
 
-
+        }
 
         public void ExcluirEscala(Escala escala)
         {

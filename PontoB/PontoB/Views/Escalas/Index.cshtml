@@ -1,10 +1,13 @@
-﻿@{
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<PontoB.Models.Escala>
+
+@{
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
 <h3 class="pb-3">Cadastro Escalas</h3>
 @Html.ActionLink("Novo", "Form", "0", new { @class = "btn botao_cor btn-sm" })
 <h5 class="pt-1">Filtrar</h5>
-@using (Html.BeginForm("Filtro", "Empresa", FormMethod.Get, new { @id = "FiltroEmpresa", @name = "FiltroEmpresa" }))
+@using (Html.BeginForm("Filtro", "Escalas", FormMethod.Get, new { @id = "FiltroEscalas", @name = "FiltroEscalas" }))
 {
     <div class="form-row pb-1 pt-1">
         <div class="form-group col-md-2">
@@ -25,25 +28,38 @@
         </div>
     </div>
 }
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-sm">
-        <thead class="thead-dark">
-            <tr>
-                <th>Ação</th>
-                <th>Código</th>
-                <th>Descrição</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var Escalas in ViewBag.Escalas)
-            {
-                <tr onclick="location.href = '@Url.Action("Form", "Escalas", new { Id = Escalas.Id})';" style="cursor:Pointer">
-                    <td><a href="@Url.Action("Excluir", "Escalas", new { Id = Escalas.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escalas.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
-                    <td>@Escalas.Id</td>
-                    <td>@Escalas.Descricao</td>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Ação</th>
+                    <th>Código</th>
+                    <th>Descrição</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var Escalas in Model)
+                {
+                    <tr onclick="location.href = '@Url.Action("Form", "Escalas", new { Id = Escalas.Id})';" style="cursor:Pointer">
+                        <td><a href="@Url.Action("Excluir", "Escalas", new { Id = Escalas.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escalas.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                        <td>@Escalas.Id</td>
+                        <td>@Escalas.Descricao</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { pagina = page, coluna = ViewBag.FiltroColuna, filtro = ViewBag.Filtro }), new PagedListRenderOptions
+    {
+        FunctionToTransformEachPageLink = (liTag, aTag) =>
+        {
+            aTag.Attributes.Add("class", "page-link");
+            liTag.InnerHtml = aTag.ToString();
+            return liTag;
+        },
+        LiElementClasses = new[] { "page-item" },
+        UlElementClasses = new[] { "pagination justify-content-center" }
+    })
+    </div>
 

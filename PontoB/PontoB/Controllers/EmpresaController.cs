@@ -3,28 +3,36 @@ using PontoB.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using PagedList;
 
 namespace PontoB.Controllers
 {
     public class EmpresaController : Controller
     {
         // GET: Empresa
-        public ActionResult Index()
+        public ActionResult Index(int pagina = 1,string coluna="" ,string filtro="")
         {
-
+            if (filtro != "" && coluna !="")
+            {
+                return RedirectToAction("Filtro", new { coluna, texto=filtro, pagina });
+               
+            }
             EmpresaDAO dao = new EmpresaDAO();
-            IList<Empresa> empresas = dao.Lista();
-            ViewBag.Empresas = empresas;
-            return View();
+            ViewBag.FiltroColuna = "";
+            ViewBag.Filtro = "";
+           
+            return View(dao.Lista(pagina));
         }
 
-
-        public ActionResult Filtro(string coluna, string texto)
+        public ActionResult Filtro(string coluna, string texto, int pagina = 1)
         {
             EmpresaDAO dao = new EmpresaDAO();
-            IList<Empresa> filtro = dao.Filtro(coluna, texto);
+
+            IPagedList<Empresa> filtro = dao.Filtro(coluna, texto, pagina);
             ViewBag.Empresas = filtro;
-            return View("Index");
+            ViewBag.FiltroColuna = coluna;
+            ViewBag.Filtro = texto;
+            return View("Index", filtro);
         }
         public ActionResult Form(int id=0)
         {

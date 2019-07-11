@@ -8,6 +8,7 @@ using Empresa = PontoB.Models.Empresa;
 using Microsoft.EntityFrameworkCore;
 using PontoB.Filtros;
 using PontoB.Filtros.FEmpresa;
+using PagedList;
 
 namespace PontoB.DAO
 {
@@ -22,28 +23,31 @@ namespace PontoB.DAO
                 context.SaveChanges();
             }
         }
-        public IList<Empresa> Lista()
+        public IPagedList<Empresa> Lista(int? pagina)
         {
+            int tamanhoPagina = 10;
+            int numeroPagina = pagina ?? 1;
             using(var contexto = new PontoContex())
             {
-                return contexto.Empresa.ToList();
+                return contexto.Empresa.OrderBy(p=>p.RazaoSocial).ToPagedList(numeroPagina,tamanhoPagina);
             }
         }
 
 
-        public IList<Empresa> Filtro(string coluna, string filtro)
+        public IPagedList<Empresa> Filtro(string coluna, string filtro, int? pagina)
         {
-
+            int tamanhoPagina = 10;
+            int numeroPagina = pagina ?? 1;
             using (var contexto = new PontoContex())
             {
                 var objFiltro = FiltroEmpresa.ObterFiltroColuna(coluna);
                 var result= objFiltro.Filtrar(contexto
                          .Empresa
                          .AsNoTracking(), filtro);
-                return result;
+                return result.ToPagedList(numeroPagina,tamanhoPagina);
 
 
-                if (coluna == "Todos")
+                /*if (coluna == "Todos")
                 {
                     var resultado = contexto
                          .Empresa
@@ -105,7 +109,7 @@ namespace PontoB.DAO
                         }
                     }
                 }
-              return contexto.Empresa.ToList();
+              return contexto.Empresa.ToList();*/
             }
         }
                
