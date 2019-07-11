@@ -30,31 +30,76 @@
     </div>
 }
 
-
+    
 @using (Html.BeginForm("NovoHorario", "Escalas", FormMethod.Post, new { @id = "CadastroEscalaHorario", @name = "CadastroEscalaHorario" }))
 {
     <span class="erro">@Html.ValidationMessage("AdicionarNovoHorario")</span>
     <div class="" id="EscalaCaddastro">
-        <div class="form-row pb-1 pt-4 ">
-            <div class="form-group col-md-2">
-                <label for="DiasDaSemana">Adicionar</label>
+        <br />
+        <br />
+        <h4 class="pb-3">Adicionar Escala</h4>
+        <div class="form-row pb-1 pt-1 ">
 
-                
+            <div class="form-group col-md-4 tabela_check">
 
+                <table>
+                    <tr>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="checks" type="checkbox" id="Segunda" value="Segunda">
+                                <label class="form-check-label" for="Segunda">Segunda</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="checks" type="checkbox" id="Terça" value="Terça">
+                                <label class="form-check-label" for="Terça">Terça</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="checks" type="checkbox" id="Quarta" value="Quarta">
+                                <label class="form-check-label" for="Quarta">Quarta</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="checks" type="checkbox" id="Quinta" value="Quinta">
+                                <label class="form-check-label" for="Quinta">Quinta</label>
+                            </div>
+                        </td>
 
-                <select id="DiasDaSemana" name="DiasDaSemana" class="form-control">
-                    <option selected></option>
-                    <option>Segunda a Sexta</option>
-                    <option>Segunda</option>
-                    <option>Terça</option>
-                    <option>Quarta</option>
-                    <option>Quinta</option>
-                    <option>Sexta</option>
-                    <option>Sábado</option>
-                    <option>Domingo</option>
-                </select>
-                <span class="erro" id="ErroDiaSemana">@Html.ValidationMessage("DiasDaSema")</span>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="checks" type="checkbox" id="Sexta" value="Sexta">
+                                <label class="form-check-label" for="Sexta">Sexta</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="checks" type="checkbox" id="Sábado" value="Sábado">
+                                <label class="form-check-label" for="Sábado">Sábado</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="checks" type="checkbox" id="Domingo" value="Domingo">
+                                <label class="form-check-label" for="Domingo">Domingo</label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
+        </div>
+        <div class="form-row pb-1 ">
+
             <div class="form-group col-md-2">
                 <label>Entrada</label>
                 <input type="time" id="NovoHoraEntrada" value="00:00" name="NovoHoraEntrada" class="form-control">

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Timers;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace PontoB.Controllers
 {
@@ -116,21 +117,18 @@ namespace PontoB.Controllers
         }
 
         [HttpPost]
-        public ActionResult NovoHorario(string DiasDaSemana,DateTime NovoHoraEntrada, DateTime NovoHoraSaida, int EscalaID)
+        public ActionResult NovoHorario(IList<string> checks, DateTime NovoHoraEntrada, DateTime NovoHoraSaida, int EscalaID)
         {
-           
+
             if (ModelState.IsValid)
             {
-                //Verifica se o lançamento será em massa 
-                if (DiasDaSemana == "Segunda a Sexta")
+                //Para cada dia da semana selecionado é criado uma nova linha
+                foreach (var Semana in checks)
                 {
-                    string[] semana = { "Segunda", "Terça", "Quarta", "Quinta", "Sexta" };
-                    for (int i = 0; i < semana.Length; i++)
-                    {
                         EscalaHorario escalaHorario = new EscalaHorario()
                         {
                             EscalaId = EscalaID,
-                            DiaSemana = semana[i],
+                            DiaSemana = Semana,
                             EntradaHora = NovoHoraEntrada.Hour,
                             EntradaMinuto = NovoHoraEntrada.Minute,
                             SaidaHora = NovoHoraSaida.Hour,
@@ -138,48 +136,26 @@ namespace PontoB.Controllers
                             TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
 
                         };
+
+                        //Verificação de Horario SobrePosto
                         if ((!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)) && (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)))
                             dbEscalaHorario.Adiciona(escalaHorario);
                         else
-                            ModelState.AddModelError("AdicionarNovoHorario", "O novo horário não pode sobrepor outro horário existente"); 
-                    }
-                }
-                else
-                {
-
-                    EscalaHorario escalaHorario = new EscalaHorario()
-                    {
-                        EscalaId = EscalaID,
-                        DiaSemana = DiasDaSemana,
-                        EntradaHora = NovoHoraEntrada.Hour,
-                        EntradaMinuto = NovoHoraEntrada.Minute,
-                        SaidaHora = NovoHoraSaida.Hour,
-                        SaidaMinuto = NovoHoraSaida.Minute,
-                        TotalEmMinutos = ((NovoHoraSaida.Hour * 60) + NovoHoraSaida.Minute) - ((NovoHoraEntrada.Hour * 60) + NovoHoraEntrada.Minute)
-
-                    };
-
-                    if ((!SobrePoemHorario(escalaHorario.EntradaHora, escalaHorario.EntradaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)) && (!SobrePoemHorario(escalaHorario.SaidaHora, escalaHorario.SaidaMinuto, escalaHorario.DiaSemana, escalaHorario.EscalaId)))
-                        dbEscalaHorario.Adiciona(escalaHorario);
-                    else
-                        ModelState.AddModelError("AdicionarNovoHorario", "O novo horário não pode sobrepor outro horário existente");
+                            ModelState.AddModelError("AdicionarNovoHorario", "O novo horário não pode sobrepor outro horário existente");
+                    
                 }
             }
 
-           
-            IList<EscalaHorario> escalaHorari;
-           
-            Escala escala = dbEscala.BuscarPorId(EscalaID);
-            ViewBag.Escalas = escala;
-            escalaHorari = dbEscalaHorario.Lista(EscalaID);
-            ViewBag.Escalas.EscalasHorario = escalaHorari;
+
+            ViewBag.Escalas = dbEscala.BuscarPorId(EscalaID);
+            ViewBag.Escalas.EscalasHorario = dbEscalaHorario.Lista(EscalaID);
 
 
             return View("Form");
-           
-            
-        }
 
+
+        }
+        
         public ActionResult ExcluirEscalaHorario(int EscalaHorarioID)
         {
             //Antes de excluir é feito a verificação se o horario existe 
