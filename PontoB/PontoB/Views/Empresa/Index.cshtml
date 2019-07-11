@@ -3,6 +3,11 @@
 @{
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
+
+@section css{
+    <link rel="stylesheet" href="~/Content/CSS/cadastroEmpresa.css">
+}
+
 <h3 class="pb-3">Cadastro Empresa</h3>
 @Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_cor btn-sm" })
 <h5 class="pt-1">Filtrar</h5>
@@ -54,7 +59,7 @@
         </tbody>
     </table>
     <br />
-    
+
     @Html.PagedListPager(Model, page => Url.Action("Index", new { pagina = page, coluna = ViewBag.FiltroColuna, filtro = ViewBag.Filtro }), new PagedListRenderOptions
 {
     FunctionToTransformEachPageLink = (liTag, aTag) =>
@@ -65,6 +70,11 @@
     },
     LiElementClasses = new[] { "page-item" },
     UlElementClasses = new[] { "pagination justify-content-center" }
-})  
+})
 </div>
 
+@section scripts{
+
+    <script src="~/Content/js/CadastroEmpresa.js"></script>
+
+}

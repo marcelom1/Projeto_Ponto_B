@@ -75,8 +75,6 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-
-               
                 contexto.Empresa.Update(empresa);
                 contexto.SaveChanges();
             }

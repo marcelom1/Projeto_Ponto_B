@@ -8,7 +8,6 @@
     <title>Ponto B - Cartão Ponto</title>
     <link rel="icon" href="~/Content/img/LogoB.gif">
 
-
     <!-- Font Google Knewave CSS -->
     <link href="https://fonts.googleapis.com/css?family=Knewave&display=swap" rel="stylesheet">
 
@@ -18,10 +17,7 @@
 
     <!--CSS Próprio -->
     <link rel="stylesheet" href="~/Content/CSS/menuAdm.css">
-    <link rel="stylesheet" href="~/Content/CSS/cadastroEmpresa.css">
-    <link rel="stylesheet" href="~/Content/CSS/CadastroEscala.css">
-    
-
+    @RenderSection("css", required: false)
 
 
 </head>
@@ -91,10 +87,9 @@
 
     <script src="~/Content/js/jquery.js"></script>
     <script src="~/Content/js/tooltipster.bundle.min.js"></script>
-    <script src="~/Content/js/BuscarCep.js"></script>
-
     <script src="~/Content/js/jquery.mask.min.js"></script>
-    <script src="~/Content/js/CadastroEmpresa.js"></script>
-    <script src="~/Content/js/CadastroEscala.js"></script>
+    
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

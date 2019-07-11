@@ -5,7 +5,9 @@
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
 
-
+@section css{
+    <link rel="stylesheet" href="~/Content/CSS/cadastroEmpresa.css">
+}
 <h3 class="pb-3">Cadastro Empresa</h3>
 <!--
 <form action="/Empresa/Adiciona" method="post">-->
@@ -112,6 +114,10 @@
     </div>
 }
 
+@section scripts{
+    <script src="~/Content/js/BuscarCep.js"></script>
+    <script src="~/Content/js/CadastroEmpresa.js"></script>
 
+}
 
 

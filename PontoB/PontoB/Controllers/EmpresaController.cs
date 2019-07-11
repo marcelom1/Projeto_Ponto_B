@@ -9,56 +9,60 @@ namespace PontoB.Controllers
 {
     public class EmpresaController : Controller
     {
-        // GET: Empresa
+        private EmpresaDAO dbEmpresa = new EmpresaDAO();
+        private EnderecoDAO dbEndereco = new EnderecoDAO();
+        private EstadosUFDAO dbEstado = new EstadosUFDAO();
+        
+
         public ActionResult Index(int pagina = 1,string coluna="" ,string filtro="")
         {
+            //Aplica paginação no Filtro
             if (filtro != "" && coluna !="")
             {
                 return RedirectToAction("Filtro", new { coluna, texto=filtro, pagina });
                
             }
-            EmpresaDAO dao = new EmpresaDAO();
+            //Caso não tenha Filtro, set VieBag vazia 
             ViewBag.FiltroColuna = "";
             ViewBag.Filtro = "";
            
-            return View(dao.Lista(pagina));
+            //retorna todas as empresas 
+            return View(dbEmpresa.Lista(pagina));
         }
+
+
 
         public ActionResult Filtro(string coluna, string texto, int pagina = 1)
         {
-            EmpresaDAO dao = new EmpresaDAO();
+            //Faz a Busca do filtro
+            IPagedList<Empresa> filtro = dbEmpresa.Filtro(coluna, texto, pagina);
 
-            IPagedList<Empresa> filtro = dao.Filtro(coluna, texto, pagina);
+            //Preenche as ViewBag com os resultado do filtro
             ViewBag.Empresas = filtro;
             ViewBag.FiltroColuna = coluna;
             ViewBag.Filtro = texto;
+
             return View("Index", filtro);
         }
+
+
         public ActionResult Form(int id=0)
         {
-            EstadosUFDAO EstadoDao = new EstadosUFDAO();
-            IList<EstadosUF> estados = EstadoDao.Lista();
+            //Lista todas as UF
+            IList<EstadosUF> estados = dbEstado.Lista();
             ViewBag.EstadosUf = estados;
 
+            //Caso o Id for != de Zero é efetuado uma busca no banco para trazer os dados da empresa
             if (id != 0)
             {
-                
-                EmpresaDAO dao = new EmpresaDAO();
-                Empresa empresa = dao.BuscarPorId(id);
-                ViewBag.Empresa = empresa;
-
-                
+                ViewBag.Empresa = dbEmpresa.BuscarPorId(id);
                 return View();
             }
 
-            
+            //Senão a Empresa é nova 
             ViewBag.Empresa = new Empresa();
             ViewBag.Empresa.EnderecoEmpresa = new Endereco();
             ViewBag.Empresa.EnderecoEmpresa.Estado = new EstadosUF();
-
-
-
-
 
             return View();
         
@@ -67,36 +71,39 @@ namespace PontoB.Controllers
         [HttpPost]
         public ActionResult Adiciona(Empresa empresa)
         {
-            ModelState.Clear();
-            EmpresaDAO dao = new EmpresaDAO();
-            var pesquisa = dao.BuscarPorId(empresa.Id);
-            EstadosUFDAO EstadoDao = new EstadosUFDAO();
-            IList<EstadosUF> estados = EstadoDao.Lista();
+            //Lista todas as UF
+            var pesquisa = dbEmpresa.BuscarPorId(empresa.Id);
+            IList<EstadosUF> estados = dbEstado.Lista();
+
+            //Set os campos ViewBag com o que foi mandado pela View
             ViewBag.EstadosUf = estados;
             ViewBag.Empresa = empresa;
             ViewBag.Empresa.EnderecoEmpresa = empresa.EnderecoEmpresa;
             ViewBag.Empresa.EnderecoEmpresa.Estado = empresa.EnderecoEmpresa.Estado;
-            if (ModelState.IsValid)
+
+
+            if (ModelState.IsValid)//Validação de Todos os Campos
             {
-                EstadosUFDAO daoEstado = new EstadosUFDAO();
-                var pesquisarEstado = daoEstado.BuscarPorId(empresa.EnderecoEmpresa.Estado.Id);
+               
+                var pesquisarEstado = dbEstado.BuscarPorId(empresa.EnderecoEmpresa.Estado.Id);
                 empresa.EnderecoEmpresa.Estado = pesquisarEstado;
 
                 
 
                 if (pesquisa != null)
                 {
-                    dao.Atualiza(empresa);
+                    dbEmpresa.Atualiza(empresa);
 
                 }
                 else
                 {
                     try
                     {
-                        dao.Adiciona(empresa);
+                        dbEmpresa.Adiciona(empresa);
                     }
                     catch (Exception)
                     {
+                        //Caso o CNPJ já esteja Cadastrado retorna para View com o erro
                         ViewBag.Empresa.Id = 0;
                         ViewBag.Empresa.EnderecoEmpresa.Id = 0;
                         ModelState.AddModelError("empresa.Cnpj","CNPJ já consta cadastrado no Banco de Dados");
@@ -114,40 +121,32 @@ namespace PontoB.Controllers
             }
         }
 
-       
-
         [HttpPost]
         public ActionResult Excluir(Empresa empresa)
         {
-            EmpresaDAO dao = new EmpresaDAO();
-            var pesquisa = dao.BuscarPorId(empresa.Id);
+            
+            var pesquisa = dbEmpresa.BuscarPorId(empresa.Id);
 
             if (pesquisa != null)
             {
-                
-                dao.ExcluirEmpresa(pesquisa);
-                EnderecoDAO daoe = new EnderecoDAO();
-                daoe.ExcluirEndereco(pesquisa.EnderecoEmpresa);
 
+                dbEmpresa.ExcluirEmpresa(pesquisa);
+                dbEndereco.ExcluirEndereco(pesquisa.EnderecoEmpresa);
             }
            
             return RedirectToAction("Index", "Empresa");
         }
 
-       public ActionResult Excluir(int id)
+        public ActionResult Excluir(int id)
         {
-            EmpresaDAO dao = new EmpresaDAO();
-            var pesquisa = dao.BuscarPorId(id);
-
+           
+            var pesquisa = dbEmpresa.BuscarPorId(id);
             if (pesquisa != null)
             {
-                dao.ExcluirEmpresa(pesquisa);
+                dbEmpresa.ExcluirEmpresa(pesquisa);
 
             }
-
             return RedirectToAction("Index", "Empresa");
         }
-
-
     }
 }

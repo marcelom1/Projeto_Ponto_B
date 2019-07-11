@@ -51,3 +51,11 @@
     text-align: center;
      margin: auto!important;
 }
+
+.erro {
+    color: red;
+}
+
+.Oculto {
+    display: none;
+}

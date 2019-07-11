@@ -1,7 +1,10 @@
 ﻿@{
 
-
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/Content/CSS/CadastroEscala.css">
 }
 
 
@@ -36,6 +39,9 @@
             <div class="form-group col-md-2">
                 <label for="DiasDaSemana">Adicionar</label>
 
+                
+
+
                 <select id="DiasDaSemana" name="DiasDaSemana" class="form-control">
                     <option selected></option>
                     <option>Segunda a Sexta</option>
@@ -59,7 +65,7 @@
                 <input type="time" id="NovoHoraSaida" value="00:00" name="NovoHoraSaida" class="form-control">
                 <span class="erro">@Html.ValidationMessage("NovoHoraSaida")</span>
             </div>
-            <input name="EscalaID" value="@ViewBag.Escalas.Id" class="IdEndereco" />
+            <input name="EscalaID" value="@ViewBag.Escalas.Id" class="Oculto" />
 
             <div class="form-group col-md-2">
                 <div class="form-group pt-4 mt-2">
@@ -116,8 +122,11 @@
 
 <div class="form-row float-right">
     <div class="form-group col-md-1">
-        <input type="submit" id="Botao_Excluir_Formulario_Escala" formaction="/Escalas/Excluir" onclick="return confirm('Confirma Exclusão do Registro @ViewBag.Escalas.Id?')" value="Excluir" class="btn botao_cor btn-lg">
+        <input type="submit" id="Botao_Excluir_Formulario_Escala" formaction="/Escalas/Excluir"  value="Excluir" class="btn botao_cor btn-lg">
     </div>
 </div>
 
 
+@section scripts{
+    <script src="~/Content/js/CadastroEscala.js"></script>
+}

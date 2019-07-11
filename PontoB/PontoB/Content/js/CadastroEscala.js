@@ -1,17 +1,17 @@
 ﻿
 $(document).ready(function () {
-    
+
+    //Monitoramento de Click
+    $("#Botao_Excluir_Formulario_Escala").click(ExcluirFormulario)
     $("#Botao_Salvar_Escala").click(SalvarFormulario);
     $("#NovaLinhaEscala").click(SalvarNovoHorarioEscala);
-    $("#Botao_Nova_Escala").click(Nova_Escala);
     $(".Botao_Excluir").click(function (e) {
         e.stopPropagation();
     });
-    $("#Botao_Excluir_Formulario_Escala").click(ExcluirFormulario)
-
+    
+    //Controla se deve ou não exibir a tela de cadastro de horas
     var idEscala = $("#Escala_id").val();
     var Idtabela = $("#EscalaCaddastro");
-
     if (idEscala == 0) {
         Idtabela.toggleClass('EscalaCadastro');
     } else {
@@ -28,6 +28,7 @@ $(document).ready(function () {
         }
     });
 
+    //Verifica se a descrição da escala está em branco ou não
     $("#DescricaoEscala").blur(function () {
         var diasSemana = $("#DescricaoEscala").val();
         if (diasSemana == "") {
@@ -41,20 +42,19 @@ $(document).ready(function () {
 
 });
 
-function Nova_Escala() {
 
-}
-
-
+//Excluir Formulário 
 function ExcluirFormulario() {
-    var formularioEscala = $("#CadastroEscala");
-    var EscalaId = $("#Escala_id");
-    EscalaId.attr("disabled", false);
-    formularioEscala.attr("action", "/Escalas/Excluir");
-    formularioEscala.submit();
- 
-    };
+    if (confirm("Confirma Exclusão do Registro " + $("#Escala_id").val()+"?")) {
+        var formularioEscala = $("#CadastroEscala");
+        var EscalaId = $("#Escala_id");
+        EscalaId.attr("disabled", false);
+        formularioEscala.attr("action", "/Escalas/Excluir");
+        formularioEscala.submit();
+    }
+};
 
+//Ao salvar novo horario na escala é efetuado algumas verificações
 function SalvarNovoHorarioEscala() {
     var HoraEntrada = $("#NovoHoraEntrada").val();
     var HoraSaida = $("#NovoHoraSaida").val();
@@ -77,24 +77,25 @@ function SalvarNovoHorarioEscala() {
     }
 };
 
-
+//Salva nova escala
 function SalvarFormulario() {
     var formularioEscala = $("#CadastroEscala");
     var idformulario = $("#Escala_id").val();
     var EscalaId = $("#Escala_id");
     EscalaId.attr("disabled", false);
     if (idformulario != 0) {
+       // scrollEscala(); 
         formularioEscala.submit()
-        scrollEscala();
+        
     } else {
         formularioEscala.submit()
     }
-    };
+};
 
-function scrollEscala() {
+/*function scrollEscala() {
     $(".EscalaCadastro").slideDown(500);
     var posicaoEscala = $(".EscalaCadastro").offset().top;
     $("body").animate({
         scrollTop: posicaoEscala + "px"
     }, 1000);
-    };
+};*/
