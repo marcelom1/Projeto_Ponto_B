@@ -1,0 +1,195 @@
+﻿@{
+    ViewBag.Title = "Colaborador";
+    Layout = "~/Views/Shared/_LayoutAdm.cshtml";
+}
+
+
+@section css{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/CSS/cadastroColaborador.css">
+
+}
+
+
+<form>
+    <h3 class="pb-3">Cadastro Colaborador</h3>
+    <button type="button" class="btn botao_cor btn-sm">Novo</button>
+    <div class="form-row pb-1 pt-4">
+        <div class="form-group col-md-2">
+            <label for="CodigoColaborador">Código</label>
+            <div class="input-group mb-1">
+                <input type="text" class="form-control" placeholder="Ex 3321">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="button_Matriculas"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="NomeCompleto">Nome Completo</label>
+            <input type="text" class="form-control" id="NomeCompleto" placeholder="Ex: João da Silva">
+        </div>
+
+
+        <div class="form-group col-md-2">
+            <div class="form-group col-md-1">
+                <label for="CodigoEmpresa">Empresa</label>
+                <select class="js-example-basic-single" name="state">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-3">
+            <label for="Data_Admissao">Admissão</label>
+            <input type="date" class="form-control" id="Data_Admissao">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="Data_Demissao">Demissão</label>
+            <input type="date" class="form-control" id="Data_Demissao">
+        </div>
+        <div class="form-group col-md-5">
+            <label for="Cargo">Cargo</label>
+            <input type="text" class="form-control" id="Cargo">
+        </div>
+
+    </div>
+
+    <div class="form-row pb-5 ">
+        <div class="form-group col-md-4">
+            <label for="CPF">CPF</label>
+            <input type="text" class="form-control" id="CPF" placeholder="CPF">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="RG">RG</label>
+            <input type="text" class="form-control" id="RG" placeholder="RG">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="PIS">PIS</label>
+            <input type="text" class="form-control" id="PIS" placeholder="PIS">
+        </div>
+    </div>
+
+    <div class="form-row pb-2 ">
+        <div class="form-group col-md-3">
+            <label for="Telefone">Telefone</label>
+            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="Data_Nascimento">Nascimento</label>
+            <input type="date" class="form-control" id="Data_Nascimento">
+        </div>
+        <div class="form-group col-md-2">
+            <div class="form-group col-md-1">
+                <label for="CodigoEmpresa">Escalas</label>
+                <select class="js-example-basic-single" name="state">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <input name="empresa.EnderecoEmpresa.Id" value="" class="IdEndereco" />
+    <div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-2">
+            <label for="inputCEP">CEP</label>
+            <div class="input-group mb-1">
+                <input type="text" class="form-control" id="inputCEP" placeholder="CEP" name="empresa.EnderecoEmpresa.CEP" value="">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary tooltip" title="Buscando..." type="button" id="buscarCEP"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-row pb-2">
+        <div class="form-group col-md-5">
+            <label for="Logradouro">Logradouro</label>
+            <input type="text" class="form-control" id="Logradouro" placeholder="Ex: Rua Exemplo XI">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="LogradouroNumero">Numero</label>
+            <input type="text" class="form-control" id="LogradouroNumero" placeholder="Ex: 1234">
+        </div>
+        <div class="form-group col-md-5">
+            <label for="LogradouroComplemento">Complemento</label>
+            <input type="text" class="form-control" id="LogradouroComplemento" placeholder="Ex: Sala 02">
+        </div>
+    </div>
+    <div class="form-row pb-2">
+        <div class="form-group col-md-5">
+            <label for="LogradouroBairro">Bairro</label>
+            <input type="text" class="form-control" id="LogradouroBairro" placeholder="Ex: Vila Formosa">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="LogradouroEstado">Estado</label>
+            <select id="LogradouroEstado" class="form-control">
+                <option selected>Escolher...</option>
+                <option>AC</option>
+                <option>AL</option>
+                <option>AP</option>
+                <option>AM</option>
+                <option>BA</option>
+                <option>CE</option>
+                <option>DF</option>
+                <option>ES</option>
+                <option>GO</option>
+                <option>MA</option>
+                <option>MT</option>
+                <option>MS</option>
+                <option>MG</option>
+                <option>PA</option>
+                <option>PB</option>
+                <option>PR</option>
+                <option>PE</option>
+                <option>PI</option>
+                <option>RJ</option>
+                <option>RN</option>
+                <option>RS</option>
+                <option>RO</option>
+                <option>RR</option>
+                <option>SC</option>
+                <option>SP</option>
+                <option>SE</option>
+                <option>TO</option>
+            </select>
+        </div>
+        <div class="form-group col-md-5">
+            <label for="LogradouroCidade">Cidade</label>
+            <input type="text" class="form-control" id="LogradouroCidade" placeholder="Ex: Blumenau">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail4">Email</label>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Senha</label>
+            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
+        </div>
+
+    </div>
+    <button type="button" class="btn botao_cor_verde btn-lg">Salvar</button>
+    <div class="form-row float-right">
+        <div class="form-group col-md-1">
+            <button type="button" class="btn botao_cor btn-lg">Excluir</button>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+@section scripts{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    <script src="~/Content/js/BuscarCep.js"></script>
+    <script src="~/Content/js/CadastroColaborador.js"></script>
+
+
+}

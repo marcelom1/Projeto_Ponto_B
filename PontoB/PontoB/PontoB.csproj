@@ -267,6 +267,7 @@
     <Content Include="Content\img\LogoB.gif" />
     <Content Include="Content\img\Lupa2.png" />
     <Content Include="Content\js\BuscarCep.js" />
+    <Content Include="Content\js\CadastroColaborador.js" />
     <Content Include="Content\js\CadastroEmpresa.js" />
     <Content Include="Content\js\CadastroEscala.js" />
     <Content Include="Content\js\jquery-3.4.1.min.js" />
@@ -287,6 +288,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ColaboradorController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -329,6 +331,7 @@
       <DependentUpon>20190709201556_TotalEscala.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
+    <Compile Include="Models\Colaborador.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />
     <Compile Include="Models\Endereco.cs" />
@@ -352,6 +355,8 @@
     <Content Include="Views\Escalas\Form.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Escalas\Index.cshtml" />
+    <Content Include="Views\Colaborador\Index.cshtml" />
+    <Content Include="Views\Colaborador\Form.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
