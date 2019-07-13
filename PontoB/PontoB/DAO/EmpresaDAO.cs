@@ -34,17 +34,16 @@ namespace PontoB.DAO
         }
 
 
-        public IPagedList<Empresa> Filtro(string coluna, string filtro, int? pagina)
+        public IList<Empresa> Filtro(string coluna, string filtro)
         {
-            int tamanhoPagina = 10;
-            int numeroPagina = pagina ?? 1;
+            
             using (var contexto = new PontoContex())
             {
                 var objFiltro = FiltroEmpresa.ObterFiltroColuna(coluna);
                 var result= objFiltro.Filtrar(contexto
                          .Empresa
                          .AsNoTracking(), filtro);
-                return result.ToPagedList(numeroPagina,tamanhoPagina);
+                return result;
                 
             }
         }

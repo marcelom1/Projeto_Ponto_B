@@ -11,8 +11,11 @@
     padding: 2%;
     width:95%;
     color: black;
-    
-    
+
+}
+
+.select2 {
+    width: 280px;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -21,6 +24,7 @@
 
 .select2-container .select2-selection--single {
     height: 38px;
+ 
 }
 .centro {
     position: absolute;

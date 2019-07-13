@@ -35,7 +35,7 @@ namespace PontoB.Controllers
         public ActionResult Filtro(string coluna, string texto, int pagina = 1)
         {
             //Faz a Busca do filtro
-            IPagedList<Empresa> filtro = dbEmpresa.Filtro(coluna, texto, pagina);
+            IPagedList<Empresa> filtro = dbEmpresa.Filtro(coluna, texto).ToPagedList(pagina,10);
 
             //Preenche as ViewBag com os resultado do filtro
             ViewBag.Empresas = filtro;

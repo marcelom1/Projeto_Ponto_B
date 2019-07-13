@@ -273,6 +273,7 @@
     <Content Include="Content\js\jquery-3.4.1.min.js" />
     <Content Include="Content\js\jquery.js" />
     <Content Include="Content\js\jquery.mask.min.js" />
+    <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\tooltipster.bundle.min.js" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
@@ -292,14 +293,22 @@
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAO\ColaboradorDAO.cs" />
     <Compile Include="DAO\EscalaDAO.cs" />
     <Compile Include="DAO\EscalaHorarioDAO.cs" />
+    <Compile Include="DAO\Mapeamento\ColaboradorMap.cs" />
     <Compile Include="DAO\Mapeamento\EmpresaMap.cs" />
     <Compile Include="DAO\Mapeamento\EnderecoMap.cs" />
     <Compile Include="DAO\EmpresaDAO.cs" />
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\EstadosUFDAO.cs" />
     <Compile Include="DAO\Mapeamento\EscalaMap.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaborador.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorEmpresa .cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorNome.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorCodigo.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorCPF.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorTodos .cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresa.cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresaCodigo.cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresaTodos .cs" />
@@ -329,6 +338,10 @@
     <Compile Include="Migrations\20190709201556_TotalEscala.cs" />
     <Compile Include="Migrations\20190709201556_TotalEscala.designer.cs">
       <DependentUpon>20190709201556_TotalEscala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190712135237_Colaborador.cs" />
+    <Compile Include="Migrations\20190712135237_Colaborador.designer.cs">
+      <DependentUpon>20190712135237_Colaborador.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Colaborador.cs" />

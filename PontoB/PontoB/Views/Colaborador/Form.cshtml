@@ -10,15 +10,15 @@
 
 }
 
-
-<form>
+@using (Html.BeginForm("Adiciona", "Colaborador", FormMethod.Post, new { @id = "CadastroColaborador", @name = "CadastroColaborador" }))
+{
     <h3 class="pb-3">Cadastro Colaborador</h3>
     <button type="button" class="btn botao_cor btn-sm">Novo</button>
     <div class="form-row pb-1 pt-4">
         <div class="form-group col-md-2">
             <label for="CodigoColaborador">Código</label>
             <div class="input-group mb-1">
-                <input type="text" class="form-control" placeholder="Ex 3321">
+                <input type="text" class="form-control" name="colaborador.Id" placeholder="Ex 3321">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" id="button_Matriculas"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
@@ -26,16 +26,15 @@
         </div>
         <div class="form-group col-md-6">
             <label for="NomeCompleto">Nome Completo</label>
-            <input type="text" class="form-control" id="NomeCompleto" placeholder="Ex: João da Silva">
+            <input type="text" class="form-control" id="colaborador.NomeCompleto" placeholder="Ex: João da Silva", name="colaborador.NomeCompleto">
         </div>
 
 
         <div class="form-group col-md-2">
             <div class="form-group col-md-1">
                 <label for="CodigoEmpresa">Empresa</label>
-                <select class="js-example-basic-single" name="state">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
+                <select class="js-example-basic-single select2" id="Select2_Empresa" name="colaborador.EmpresaColaborador.Id">
+                    <option></option>
                 </select>
             </div>
         </div>
@@ -43,15 +42,15 @@
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-3">
             <label for="Data_Admissao">Admissão</label>
-            <input type="date" class="form-control" id="Data_Admissao">
+            <input type="date" class="form-control" id="Data_Admissao" name="colaborador.DataAdmissao">
         </div>
         <div class="form-group col-md-3">
             <label for="Data_Demissao">Demissão</label>
-            <input type="date" class="form-control" id="Data_Demissao">
+            <input type="date" class="form-control" id="Data_Demissao" name="colaborador.DataDemissao">
         </div>
         <div class="form-group col-md-5">
             <label for="Cargo">Cargo</label>
-            <input type="text" class="form-control" id="Cargo">
+            <input type="text" class="form-control" id="Cargo" name="colaborador.Cargo">
         </div>
 
     </div>
@@ -59,44 +58,45 @@
     <div class="form-row pb-5 ">
         <div class="form-group col-md-4">
             <label for="CPF">CPF</label>
-            <input type="text" class="form-control" id="CPF" placeholder="CPF">
+            <input type="text" class="form-control" id="CPF" placeholder="CPF" name="colaborador.CPF">
+            <span class="erro" id="Erro_CPF">@Html.ValidationMessage("colaborador.CPF")</span>
         </div>
         <div class="form-group col-md-4">
             <label for="RG">RG</label>
-            <input type="text" class="form-control" id="RG" placeholder="RG">
+            <input type="text" class="form-control" id="RG" placeholder="RG" name="colaborador.RG">
         </div>
         <div class="form-group col-md-2">
             <label for="PIS">PIS</label>
-            <input type="text" class="form-control" id="PIS" placeholder="PIS">
+            <input type="text" class="form-control" id="PIS" placeholder="PIS" name="colaborador.PIS">
+            <span class="erro" id="Erro_PIS">@Html.ValidationMessage("colaborador.PIS")</span>
         </div>
     </div>
 
     <div class="form-row pb-2 ">
         <div class="form-group col-md-3">
             <label for="Telefone">Telefone</label>
-            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333">
+            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333" name="colaborador.Telefone">
         </div>
         <div class="form-group col-md-2">
             <label for="Data_Nascimento">Nascimento</label>
-            <input type="date" class="form-control" id="Data_Nascimento">
+            <input type="date" class="form-control" id="Data_Nascimento" name="colaborador.DataNascimento">
         </div>
         <div class="form-group col-md-2">
             <div class="form-group col-md-1">
                 <label for="CodigoEmpresa">Escalas</label>
-                <select class="js-example-basic-single" name="state">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
+                <select class="js-example-basic-single select2" id="Select2_Escalas" name="colaborador.EscalaColaborador.Id">
+                    <option></option>
                 </select>
             </div>
         </div>
     </div>
 
-    <input name="empresa.EnderecoEmpresa.Id" value="" class="IdEndereco" />
+    <input name="colaborador.EnderecoColaborador.Id" value="" class="IdEndereco" />
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2">
             <label for="inputCEP">CEP</label>
             <div class="input-group mb-1">
-                <input type="text" class="form-control" id="inputCEP" placeholder="CEP" name="empresa.EnderecoEmpresa.CEP" value="">
+                <input type="text" class="form-control" id="inputCEP" placeholder="CEP" name="colaborador.EnderecoColaborador.CEP" value="">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary tooltip" title="Buscando..." type="button" id="buscarCEP"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
@@ -107,89 +107,72 @@
     <div class="form-row pb-2">
         <div class="form-group col-md-5">
             <label for="Logradouro">Logradouro</label>
-            <input type="text" class="form-control" id="Logradouro" placeholder="Ex: Rua Exemplo XI">
+            <input type="text" class="form-control" id="Logradouro" placeholder="Ex: Rua Exemplo XI" name="colaborador.EnderecoColaborador.Logradouro">
         </div>
         <div class="form-group col-md-2">
             <label for="LogradouroNumero">Numero</label>
-            <input type="text" class="form-control" id="LogradouroNumero" placeholder="Ex: 1234">
+            <input type="text" class="form-control" id="LogradouroNumero" placeholder="Ex: 1234" name="colaborador.EnderecoColaborador.Numero">
         </div>
         <div class="form-group col-md-5">
             <label for="LogradouroComplemento">Complemento</label>
-            <input type="text" class="form-control" id="LogradouroComplemento" placeholder="Ex: Sala 02">
+            <input type="text" class="form-control" id="LogradouroComplemento" placeholder="Ex: Sala 02" name="colaborador.EnderecoColaborador.Complemento">
         </div>
     </div>
     <div class="form-row pb-2">
         <div class="form-group col-md-5">
             <label for="LogradouroBairro">Bairro</label>
-            <input type="text" class="form-control" id="LogradouroBairro" placeholder="Ex: Vila Formosa">
+            <input type="text" class="form-control" id="LogradouroBairro" placeholder="Ex: Vila Formosa" name="colaborador.EnderecoColaborador.Bairro">
         </div>
         <div class="form-group col-md-2">
             <label for="LogradouroEstado">Estado</label>
-            <select id="LogradouroEstado" class="form-control">
-                <option selected>Escolher...</option>
-                <option>AC</option>
-                <option>AL</option>
-                <option>AP</option>
-                <option>AM</option>
-                <option>BA</option>
-                <option>CE</option>
-                <option>DF</option>
-                <option>ES</option>
-                <option>GO</option>
-                <option>MA</option>
-                <option>MT</option>
-                <option>MS</option>
-                <option>MG</option>
-                <option>PA</option>
-                <option>PB</option>
-                <option>PR</option>
-                <option>PE</option>
-                <option>PI</option>
-                <option>RJ</option>
-                <option>RN</option>
-                <option>RS</option>
-                <option>RO</option>
-                <option>RR</option>
-                <option>SC</option>
-                <option>SP</option>
-                <option>SE</option>
-                <option>TO</option>
+            <select id="LogradouroEstado" name="colaborador.EnderecoColaborador.Estado.Id" class="form-control">
+                <option selected></option>
+                @foreach (var estado in ViewBag.EstadosUf)
+                {
+                    <option value="@estado.Id" selected="">@estado.Sigla</option>
+                }
             </select>
         </div>
         <div class="form-group col-md-5">
             <label for="LogradouroCidade">Cidade</label>
-            <input type="text" class="form-control" id="LogradouroCidade" placeholder="Ex: Blumenau">
+            <input type="text" class="form-control" id="LogradouroCidade" placeholder="Ex: Blumenau" name="colaborador.EnderecoColaborador.Cidade">
         </div>
     </div>
 
-    <div class="form-row">
-        <div class="form-group col-md-6">
+    <div class="form-row pt-4">
+        <div class="form-group col-md-4">
             <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="colaborador.Email">
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label for="inputPassword4">Senha</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
+            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha" name="colaborador.Senha">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputPassword4">Confirmação de Senha</label>
+            <input type="password" class="form-control" id="inputPassword5" placeholder="Confirmação de senha">
         </div>
 
     </div>
-    <button type="button" class="btn botao_cor_verde btn-lg">Salvar</button>
+
+    <button type="submit" id="Botao_Salvar" class="btn botao_cor_verde btn-lg">Salvar</button>
     <div class="form-row float-right">
         <div class="form-group col-md-1">
             <button type="button" class="btn botao_cor btn-lg">Excluir</button>
         </div>
     </div>
-</form>
-
-
-
-
-
-@section scripts{
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
-    <script src="~/Content/js/BuscarCep.js"></script>
-    <script src="~/Content/js/CadastroColaborador.js"></script>
-
-
 }
+
+
+
+
+
+    @section scripts{
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+        <script src="~/Content/js/pt-BR.js"></script>
+        <script src="~/Content/js/BuscarCep.js"></script>
+        <script src="~/Content/js/CadastroColaborador.js"></script>
+
+
+    }

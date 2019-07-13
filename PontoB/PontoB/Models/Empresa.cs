@@ -5,6 +5,7 @@ namespace PontoB.Models
 {
     public class Empresa
     {
+        
         public int Id { get;  set; }
 
         [Required(ErrorMessage = "Razão Social é um campo obrigatório.")]
