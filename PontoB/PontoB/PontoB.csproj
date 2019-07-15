@@ -339,9 +339,13 @@
     <Compile Include="Migrations\20190709201556_TotalEscala.designer.cs">
       <DependentUpon>20190709201556_TotalEscala.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190712135237_Colaborador.cs" />
-    <Compile Include="Migrations\20190712135237_Colaborador.designer.cs">
-      <DependentUpon>20190712135237_Colaborador.cs</DependentUpon>
+    <Compile Include="Migrations\20190713165014_Colaborador.cs" />
+    <Compile Include="Migrations\20190713165014_Colaborador.designer.cs">
+      <DependentUpon>20190713165014_Colaborador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190714180734_DataColaborador.cs" />
+    <Compile Include="Migrations\20190714180734_DataColaborador.designer.cs">
+      <DependentUpon>20190714180734_DataColaborador.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\Colaborador.cs" />

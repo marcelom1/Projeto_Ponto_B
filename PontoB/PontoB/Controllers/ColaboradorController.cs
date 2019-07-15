@@ -97,40 +97,53 @@ namespace PontoB.Controllers
             //Caso o Id for != de Zero é efetuado uma busca no banco para trazer os dados do colaborador
             if (id != 0)
             {
-                ViewBag.Colaborador = dbColaborador.BuscarPorId(id);
-                return View();
+                //ViewBag.Colaborador = ;
+                var pesquisa = dbColaborador.BuscarPorId(id);
+                
+                
+
+                return View(dbColaborador.BuscarPorId(id));
             }
 
             //Senão o colaborador é novo 
-            ViewBag.Colaborador = new Colaborador();
-            ViewBag.Colaborador.EnderecoColaborador = new Endereco();
-            ViewBag.Colaborador.EnderecoColaborador.Estado = new EstadosUF();
+            //ViewBag.Colaborador = new Colaborador();
+            //ViewBag.Colaborador.EnderecoColaborador = new Endereco();
+            // ViewBag.Colaborador.EnderecoColaborador.Estado = new EstadosUF();
+            var colaborador = new Colaborador
+            {
+                Empresa = new Empresa(),
+                Escala = new Escala(),
 
-            return View();
-
+                EnderecoColaborador = new Endereco
+                {
+                    Estado = new EstadosUF()
+                }
+            };
+            return View(colaborador);
         }
 
         [HttpPost]
         public ActionResult Adiciona(Colaborador colaborador)
         {
-            //Lista todas as UF
+           
             var pesquisa = dbColaborador.BuscarPorId(colaborador.Id);
-            IList<EstadosUF> estados = dbEstado.Lista();
+            
 
-            //Set os campos ViewBag com o que foi mandado pela View
+            //Lista todas as UF
+            IList <EstadosUF> estados = dbEstado.Lista();
             ViewBag.EstadosUf = estados;
-            ViewBag.Colaborador = colaborador;
-            ViewBag.Colaborador.EnderecoColaborador = colaborador.EnderecoColaborador;
-            ViewBag.Colaborador.EnderecoColaborador.Estado = colaborador.EnderecoColaborador.Estado;
+            //Set os campos ViewBag com o que foi mandado pela View
+            var model = colaborador;
+            model.EnderecoColaborador = colaborador.EnderecoColaborador;
+            model.EnderecoColaborador.Estado = colaborador.EnderecoColaborador.Estado;
+            //ViewBag.Colaborador = colaborador;
+            //ViewBag.Colaborador.EnderecoColaborador = colaborador.EnderecoColaborador;
+            //ViewBag.Colaborador.EnderecoColaborador.Estado = colaborador.EnderecoColaborador.Estado;
+           
 
 
             if (ModelState.IsValid)//Validação de Todos os Campos
             {
-
-                var pesquisarEstado = dbEstado.BuscarPorId(colaborador.EnderecoColaborador.Estado.Id);
-                colaborador.EnderecoColaborador.Estado = pesquisarEstado;
-
-
 
                 if (pesquisa != null)
                 {
@@ -139,19 +152,26 @@ namespace PontoB.Controllers
                 }
                 else
                 {
-                    try
+                    IList<Colaborador> registros = dbColaborador.Filtro("CPF", colaborador.CPF);
+                    if (registros.Count>0)
                     {
-                        dbColaborador.Adiciona(colaborador);
+                        foreach (var registro in registros )
+                        {
+                            if (!registro.DataDemissao.HasValue)
+                            {
+                                model.Id = 0;
+                                model.EnderecoColaborador.Id = 0;
+                                //ViewBag.Colaborador.Id = 0;
+                               // ViewBag.Colaborador.EnderecoColaborador.Id = 0;
+                                ModelState.AddModelError("colaborador.Cpf", "CPF já cadastrado e sem registro de demissão!");
+                                return View("Form");
+                            }
+                            
+                        }
                     }
-                    catch (Exception)
-                    {
-                        //Caso o CNPJ já esteja Cadastrado retorna para View com o erro
-                        ViewBag.Colaborador.Id = 0;
-                        ViewBag.Colaborador.EnderecoColaborador.Id = 0;
-                        ModelState.AddModelError("colaborador.Cpf", "CPF já consta cadastrado no banco de dados");
 
-                        return View("Form");
-                    }
+                    dbColaborador.Adiciona(colaborador);
+                    
 
                 }
                 return RedirectToAction("Index", "Colaborador");

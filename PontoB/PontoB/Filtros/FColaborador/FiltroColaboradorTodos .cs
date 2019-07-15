@@ -11,7 +11,7 @@ namespace PontoB.Filtros.FColaborador
     {
         public IList<Colaborador> Filtrar(IQueryable<Colaborador> query , string filtro)
         {
-            var resultado = query.Where(e => e.CPF.Contains(filtro) || e.NomeCompleto.Contains(filtro) || e.EmpresaColaborador.RazaoSocial.Contains(filtro)).ToList();
+            var resultado = query.Where(e => e.CPF.Contains(filtro) || e.NomeCompleto.Contains(filtro) || e.Empresa.RazaoSocial.Contains(filtro)).ToList();
 
             if (int.TryParse(filtro, out int numero))
             {

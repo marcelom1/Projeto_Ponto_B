@@ -11,7 +11,8 @@ namespace PontoB.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Descrição é um campo obrigatório.")]
         public string Descricao { get; set; }
-        public virtual IList<EscalaHorario> EscalasHorario { get; set; } 
+        public virtual IList<EscalaHorario> EscalasHorario { get; set; }
+        public virtual ICollection<Colaborador> Colaboradores { get; set; }
 
 
 

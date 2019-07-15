@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+   
+    
     $('#Select2_Empresa').select2({
         
         language: "pt-BR",
@@ -7,7 +9,7 @@
         minimumInputLength: 2,
         
         ajax: {
-            url: "getEmpresas",
+            url: "/Colaborador/getEmpresas",
             datatype: 'json',
             type: 'POST',
             
@@ -30,7 +32,8 @@
         
         
     });
-
+    
+    
 
     $('#Select2_Escalas').select2({
 
@@ -41,7 +44,7 @@
         
 
         ajax: {
-            url: "getEscala",
+            url: "/Colaborador/getEscala",
             datatype: 'json',
             type: 'POST',
            
@@ -83,7 +86,6 @@
 
 
 });
-
 
 //Ao fazer o click no botão excluir na tabela Index o click não se propagar para a tela de consulta
 $(".Botao_Excluir").click(function (e) {

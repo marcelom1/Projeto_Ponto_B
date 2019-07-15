@@ -11,7 +11,7 @@ namespace PontoB.Filtros.FColaborador
         public IList<Colaborador> Filtrar(IQueryable<Colaborador> query, string filtro)
         {
 
-            return query.OrderBy(e => e.NomeCompleto).Where(e => e.EmpresaColaborador.RazaoSocial.Contains(filtro)).ToList();
+            return query.OrderBy(e => e.NomeCompleto).Where(e => e.Empresa.RazaoSocial.Contains(filtro)).ToList();
         }
     }
 }

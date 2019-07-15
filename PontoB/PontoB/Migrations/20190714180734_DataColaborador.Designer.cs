@@ -10,8 +10,8 @@ using PontoB;
 namespace PontoB.Migrations
 {
     [DbContext(typeof(PontoContex))]
-    [Migration("20190712135237_Colaborador")]
-    partial class Colaborador
+    [Migration("20190714180734_DataColaborador")]
+    partial class DataColaborador
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,18 +35,18 @@ namespace PontoB.Migrations
 
                     b.Property<DateTime>("DataAdmissao");
 
-                    b.Property<DateTime>("DataDemissao");
+                    b.Property<DateTime?>("DataDemissao");
 
-                    b.Property<DateTime>("DataNascimento");
+                    b.Property<DateTime?>("DataNascimento");
 
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<int>("EmpresaColaboradorId");
+                    b.Property<int>("EmpresaId");
 
-                    b.Property<int>("EnderecoColaboradorId");
+                    b.Property<int?>("EnderecoColaboradorId");
 
-                    b.Property<int?>("EscalaColaboradorId");
+                    b.Property<int>("EscalaId");
 
                     b.Property<bool>("Master");
 
@@ -65,11 +65,11 @@ namespace PontoB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpresaColaboradorId");
+                    b.HasIndex("EmpresaId");
 
                     b.HasIndex("EnderecoColaboradorId");
 
-                    b.HasIndex("EscalaColaboradorId");
+                    b.HasIndex("EscalaId");
 
                     b.ToTable("Colaborador");
                 });
@@ -188,19 +188,19 @@ namespace PontoB.Migrations
 
             modelBuilder.Entity("PontoB.Models.Colaborador", b =>
                 {
-                    b.HasOne("PontoB.Models.Empresa", "EmpresaColaborador")
-                        .WithMany()
-                        .HasForeignKey("EmpresaColaboradorId")
+                    b.HasOne("PontoB.Models.Empresa", "Empresa")
+                        .WithMany("Colaboradores")
+                        .HasForeignKey("EmpresaId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PontoB.Models.Endereco", "EnderecoColaborador")
                         .WithMany()
-                        .HasForeignKey("EnderecoColaboradorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EnderecoColaboradorId");
 
-                    b.HasOne("PontoB.Models.Escala", "EscalaColaborador")
-                        .WithMany()
-                        .HasForeignKey("EscalaColaboradorId");
+                    b.HasOne("PontoB.Models.Escala", "Escala")
+                        .WithMany("Colaboradores")
+                        .HasForeignKey("EscalaId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PontoB.Models.Empresa", b =>

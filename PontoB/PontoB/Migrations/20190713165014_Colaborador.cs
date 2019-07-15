@@ -31,9 +31,9 @@ namespace PontoB.Migrations
                     DataDemissao = table.Column<DateTime>(nullable: false),
                     DataNascimento = table.Column<DateTime>(nullable: false),
                     Pis = table.Column<string>(nullable: false),
-                    EnderecoColaboradorId = table.Column<int>(nullable: false),
-                    EscalaColaboradorId = table.Column<int>(nullable: true),
-                    EmpresaColaboradorId = table.Column<int>(nullable: false),
+                    EnderecoColaboradorId = table.Column<int>(nullable: true),
+                    EscalaId = table.Column<int>(nullable: false),
+                    EmpresaId = table.Column<int>(nullable: false),
                     Senha = table.Column<string>(nullable: false),
                     Master = table.Column<bool>(nullable: false)
                 },
@@ -41,8 +41,8 @@ namespace PontoB.Migrations
                 {
                     table.PrimaryKey("PK_Colaborador", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Colaborador_Empresa_EmpresaColaboradorId",
-                        column: x => x.EmpresaColaboradorId,
+                        name: "FK_Colaborador_Empresa_EmpresaId",
+                        column: x => x.EmpresaId,
                         principalTable: "Empresa",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -51,19 +51,19 @@ namespace PontoB.Migrations
                         column: x => x.EnderecoColaboradorId,
                         principalTable: "Endereco",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Colaborador_Escala_EscalaColaboradorId",
-                        column: x => x.EscalaColaboradorId,
+                        name: "FK_Colaborador_Escala_EscalaId",
+                        column: x => x.EscalaId,
                         principalTable: "Escala",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Colaborador_EmpresaColaboradorId",
+                name: "IX_Colaborador_EmpresaId",
                 table: "Colaborador",
-                column: "EmpresaColaboradorId");
+                column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Colaborador_EnderecoColaboradorId",
@@ -71,9 +71,9 @@ namespace PontoB.Migrations
                 column: "EnderecoColaboradorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Colaborador_EscalaColaboradorId",
+                name: "IX_Colaborador_EscalaId",
                 table: "Colaborador",
-                column: "EscalaColaboradorId");
+                column: "EscalaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

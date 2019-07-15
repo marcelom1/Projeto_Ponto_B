@@ -17,14 +17,7 @@ namespace PontoB.DAO.Mapeamento
 
             builder.HasOne(c => c.EnderecoColaborador);
 
-            builder.HasOne(c => c.EscalaColaborador)
-                .WithMany();
-
-            builder.HasOne(c => c.EmpresaColaborador)
-                .WithMany();
-
-            builder.HasIndex(c => c.CPF)
-                   .IsUnique();
+          
 
             builder.ToTable("Colaborador");
         }

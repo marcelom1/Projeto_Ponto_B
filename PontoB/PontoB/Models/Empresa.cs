@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace PontoB.Models
@@ -18,6 +19,8 @@ namespace PontoB.Models
         public string Email { get;  set; }
         public string Telefone { get;  set; }
 
-        
+        public virtual ICollection<Colaborador> Colaboradores { get; set; }
+
+
     }
 }

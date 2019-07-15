@@ -1,4 +1,6 @@
-﻿@{
+﻿
+@model PontoB.Models.Colaborador
+@{
     ViewBag.Title = "Colaborador";
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
@@ -9,48 +11,54 @@
     <link rel="stylesheet" href="~/Content/CSS/cadastroColaborador.css">
 
 }
-
+<h3 class="pb-3">Cadastro Colaborador</h3>
+@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_cor btn-sm" })
 @using (Html.BeginForm("Adiciona", "Colaborador", FormMethod.Post, new { @id = "CadastroColaborador", @name = "CadastroColaborador" }))
 {
-    <h3 class="pb-3">Cadastro Colaborador</h3>
-    <button type="button" class="btn botao_cor btn-sm">Novo</button>
-    <div class="form-row pb-1 pt-4">
-        <div class="form-group col-md-2">
-            <label for="CodigoColaborador">Código</label>
-            <div class="input-group mb-1">
-                <input type="text" class="form-control" name="colaborador.Id" placeholder="Ex 3321">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button_Matriculas"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="NomeCompleto">Nome Completo</label>
-            <input type="text" class="form-control" id="colaborador.NomeCompleto" placeholder="Ex: João da Silva", name="colaborador.NomeCompleto">
-        </div>
 
-
-        <div class="form-group col-md-2">
-            <div class="form-group col-md-1">
-                <label for="CodigoEmpresa">Empresa</label>
-                <select class="js-example-basic-single select2" id="Select2_Empresa" name="colaborador.EmpresaColaborador.Id">
-                    <option></option>
-                </select>
+    
+<div class="form-row pb-1 pt-4">
+    <div class="form-group col-md-2">
+        <label for="CodigoColaborador">Código</label>
+        <div class="input-group mb-1">
+            <input type="text" class="form-control" value="@Model.Id" name="colaborador.Id" placeholder="Ex 3321">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button_Matriculas"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
             </div>
         </div>
     </div>
+    <div class="form-group col-md-6">
+        <label for="NomeCompleto">Nome Completo</label>
+        <input type="text" class="form-control" id="colaborador.NomeCompleto" placeholder="Ex: João da Silva" value="@Model.NomeCompleto" name="colaborador.NomeCompleto">
+    </div>
+
+    
+    <div class="form-group col-md-2">
+        <div class="form-group col-md-1">
+            <label for="CodigoEmpresa">Empresa</label>
+            <select class="js-example-basic-single select2" id="Select2_Empresa" name="colaborador.EmpresaId">
+              <option value="@Model.EmpresaId">@Model.Empresa.RazaoSocial</option>
+                
+            </select>
+        </div>
+    </div>
+</div>
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-3">
             <label for="Data_Admissao">Admissão</label>
-            <input type="date" class="form-control" id="Data_Admissao" name="colaborador.DataAdmissao">
+            @Html.TextBoxFor(m=> m.DataAdmissao, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "Data_Admissao",
+            @value = Model.DataAdmissao, @Name = "colaborador.DataAdmissao" })
+
         </div>
         <div class="form-group col-md-3">
             <label for="Data_Demissao">Demissão</label>
-            <input type="date" class="form-control" id="Data_Demissao" name="colaborador.DataDemissao">
+            @Html.TextBoxFor(m=> m.DataDemissao, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "Data_Demissao",
+           @value = Model.DataAdmissao, @Name = "colaborador.DataDemissao" })
+
         </div>
         <div class="form-group col-md-5">
             <label for="Cargo">Cargo</label>
-            <input type="text" class="form-control" id="Cargo" name="colaborador.Cargo">
+            <input type="text" class="form-control" id="Cargo" value="@Model.Cargo" name="colaborador.Cargo">
         </div>
 
     </div>
@@ -58,16 +66,16 @@
     <div class="form-row pb-5 ">
         <div class="form-group col-md-4">
             <label for="CPF">CPF</label>
-            <input type="text" class="form-control" id="CPF" placeholder="CPF" name="colaborador.CPF">
+            <input type="text" class="form-control" id="CPF" placeholder="CPF" value="@Model.CPF" name="colaborador.CPF">
             <span class="erro" id="Erro_CPF">@Html.ValidationMessage("colaborador.CPF")</span>
         </div>
         <div class="form-group col-md-4">
             <label for="RG">RG</label>
-            <input type="text" class="form-control" id="RG" placeholder="RG" name="colaborador.RG">
+            <input type="text" class="form-control" id="RG" placeholder="RG" value="@Model.RG" name="colaborador.RG">
         </div>
         <div class="form-group col-md-2">
             <label for="PIS">PIS</label>
-            <input type="text" class="form-control" id="PIS" placeholder="PIS" name="colaborador.PIS">
+            <input type="text" class="form-control" id="PIS" placeholder="PIS" value="@Model.Pis" name="colaborador.PIS">
             <span class="erro" id="Erro_PIS">@Html.ValidationMessage("colaborador.PIS")</span>
         </div>
     </div>
@@ -75,28 +83,29 @@
     <div class="form-row pb-2 ">
         <div class="form-group col-md-3">
             <label for="Telefone">Telefone</label>
-            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333" name="colaborador.Telefone">
+            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333" @Model.Telefone name="colaborador.Telefone">
         </div>
         <div class="form-group col-md-2">
             <label for="Data_Nascimento">Nascimento</label>
-            <input type="date" class="form-control" id="Data_Nascimento" name="colaborador.DataNascimento">
+            @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", htmlAttributes: new { @Name = "colaborador.DataDemissao", @class = "form-control", @type = "date", @id = "Data_Nascimento", @value = Model.DataAdmissao })
+
         </div>
         <div class="form-group col-md-2">
             <div class="form-group col-md-1">
                 <label for="CodigoEmpresa">Escalas</label>
-                <select class="js-example-basic-single select2" id="Select2_Escalas" name="colaborador.EscalaColaborador.Id">
-                    <option></option>
+                <select class="js-example-basic-single select2" id="Select2_Escalas" name="colaborador.EscalaId">
+                    <option value="@Model.EscalaId">@Model.Escala.Descricao</option>
                 </select>
             </div>
         </div>
     </div>
 
-    <input name="colaborador.EnderecoColaborador.Id" value="" class="IdEndereco" />
+    <input name="colaborador.EnderecoColaborador.Id" value="@Model.EnderecoColaborador.Id" class="IdEndereco" />
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2">
             <label for="inputCEP">CEP</label>
             <div class="input-group mb-1">
-                <input type="text" class="form-control" id="inputCEP" placeholder="CEP" name="colaborador.EnderecoColaborador.CEP" value="">
+                <input type="text" class="form-control" id="inputCEP" placeholder="CEP" name="colaborador.EnderecoColaborador.CEP" value="@Model.EnderecoColaborador.CEP">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary tooltip" title="Buscando..." type="button" id="buscarCEP"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
@@ -107,21 +116,21 @@
     <div class="form-row pb-2">
         <div class="form-group col-md-5">
             <label for="Logradouro">Logradouro</label>
-            <input type="text" class="form-control" id="Logradouro" placeholder="Ex: Rua Exemplo XI" name="colaborador.EnderecoColaborador.Logradouro">
+            <input type="text" class="form-control" id="Logradouro" placeholder="Ex: Rua Exemplo XI" value="@Model.EnderecoColaborador.Logradouro" name="colaborador.EnderecoColaborador.Logradouro">
         </div>
         <div class="form-group col-md-2">
             <label for="LogradouroNumero">Numero</label>
-            <input type="text" class="form-control" id="LogradouroNumero" placeholder="Ex: 1234" name="colaborador.EnderecoColaborador.Numero">
+            <input type="text" class="form-control" id="LogradouroNumero" placeholder="Ex: 1234" name="colaborador.EnderecoColaborador.Numero" value="@Model.EnderecoColaborador.Numero">
         </div>
         <div class="form-group col-md-5">
             <label for="LogradouroComplemento">Complemento</label>
-            <input type="text" class="form-control" id="LogradouroComplemento" placeholder="Ex: Sala 02" name="colaborador.EnderecoColaborador.Complemento">
+            <input type="text" class="form-control" id="LogradouroComplemento" placeholder="Ex: Sala 02" name="colaborador.EnderecoColaborador.Complemento" value="@Model.EnderecoColaborador.Complemento">
         </div>
     </div>
     <div class="form-row pb-2">
         <div class="form-group col-md-5">
             <label for="LogradouroBairro">Bairro</label>
-            <input type="text" class="form-control" id="LogradouroBairro" placeholder="Ex: Vila Formosa" name="colaborador.EnderecoColaborador.Bairro">
+            <input type="text" class="form-control" id="LogradouroBairro" placeholder="Ex: Vila Formosa" name="colaborador.EnderecoColaborador.Bairro" value="@Model.EnderecoColaborador.Bairro">
         </div>
         <div class="form-group col-md-2">
             <label for="LogradouroEstado">Estado</label>
@@ -129,28 +138,29 @@
                 <option selected></option>
                 @foreach (var estado in ViewBag.EstadosUf)
                 {
-                    <option value="@estado.Id" selected="">@estado.Sigla</option>
+                    <option value="@estado.Id" selected="@estado.Id.Equals(Model.EnderecoColaborador.Estado.Id)">@estado.Sigla</option>
                 }
+
             </select>
         </div>
         <div class="form-group col-md-5">
             <label for="LogradouroCidade">Cidade</label>
-            <input type="text" class="form-control" id="LogradouroCidade" placeholder="Ex: Blumenau" name="colaborador.EnderecoColaborador.Cidade">
+            <input type="text" class="form-control" id="LogradouroCidade" placeholder="Ex: Blumenau" name="colaborador.EnderecoColaborador.Cidade" value="@Model.EnderecoColaborador.Cidade">
         </div>
     </div>
 
     <div class="form-row pt-4">
         <div class="form-group col-md-4">
             <label for="inputEmail4">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="colaborador.Email">
+            <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="colaborador.Email" value="@Model.Email">
         </div>
         <div class="form-group col-md-4">
             <label for="inputPassword4">Senha</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha" name="colaborador.Senha">
+            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha" name="colaborador.Senha" value="@Model.Senha">
         </div>
         <div class="form-group col-md-4">
             <label for="inputPassword4">Confirmação de Senha</label>
-            <input type="password" class="form-control" id="inputPassword5" placeholder="Confirmação de senha">
+            <input type="password" class="form-control" id="inputPassword5" placeholder="Confirmação de senha" value="@Model.Senha">
         </div>
 
     </div>
@@ -167,12 +177,12 @@
 
 
 
-    @section scripts{
+@section scripts{
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
-        <script src="~/Content/js/pt-BR.js"></script>
-        <script src="~/Content/js/BuscarCep.js"></script>
-        <script src="~/Content/js/CadastroColaborador.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    <script src="~/Content/js/pt-BR.js"></script>
+    <script src="~/Content/js/BuscarCep.js"></script>
+    <script src="~/Content/js/CadastroColaborador.js"></script>
 
 
-    }
+}

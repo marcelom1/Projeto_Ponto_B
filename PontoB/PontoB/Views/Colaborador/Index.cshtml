@@ -52,11 +52,11 @@
             @foreach (var colaborador in Model)
             {
             <tr onclick="location.href = '@Url.Action("Form", "Colaborador", new { Id = colaborador.Id})';" style="cursor:Pointer">
-                <td><a href="@Url.Action("Excluir", "Colaborador", new { Id = colaborador.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @colaborador ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                <td><a href="@Url.Action("Excluir", "Colaborador", new { Id = colaborador.Id})" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @colaborador.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
                 <td>@colaborador.Id</td>
                 <td>@colaborador.NomeCompleto</td>
-                <td>@colaborador.EmpresaColaborador</td>
                 <td id="CPF">@colaborador.CPF</td>
+                <td></td>
 
             </tr>
             }

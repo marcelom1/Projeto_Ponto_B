@@ -10,11 +10,11 @@ namespace PontoB.Filtros.FColaborador
     {
         public static IFiltro<Colaborador> ObterFiltroColuna(string coluna)
         {
-            if (coluna.Equals("CNPJ", StringComparison.OrdinalIgnoreCase))
+            if (coluna.Equals("CPF", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorCPF();
-            else if (coluna.Equals("Razão Social", StringComparison.OrdinalIgnoreCase))
+            else if (coluna.Equals("Empresa", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorEmpresa();
-            else if (coluna.Equals("Nome Fantasia", StringComparison.OrdinalIgnoreCase))
+            else if (coluna.Equals("Nome", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorNome();
             else if (coluna.Equals("Código", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorCodigo();

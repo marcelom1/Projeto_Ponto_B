@@ -13,7 +13,11 @@ namespace PontoB.DAO
         {
             using (var context = new PontoContex())
             {
-                context.Entry(colaborador.EnderecoColaborador.Estado).State = EntityState.Unchanged;
+
+                colaborador.Escala = context.Escala.Find(colaborador.EscalaId);
+                colaborador.Empresa = context.Empresa.Find(colaborador.EmpresaId);
+                colaborador.EnderecoColaborador.Estado = context.EstadoUF.Find(colaborador.EnderecoColaborador.Estado.Id);
+                
                 context.Colaborador.Add(colaborador);
                 context.SaveChanges();
             }
@@ -34,11 +38,11 @@ namespace PontoB.DAO
             using (var contexto = new PontoContex())
             {
                 var objFiltro = FiltroColaborador.ObterFiltroColuna(coluna);
-                var result = objFiltro.Filtrar(contexto
+               
+
+                return objFiltro.Filtrar(contexto
                          .Colaborador
                          .AsNoTracking(), filtro);
-
-                return result;
 
             }
         }
@@ -62,7 +66,7 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                return contexto.Colaborador.Include(e => e.EnderecoColaborador).Include(e => e.EnderecoColaborador.Estado).Where(e => e.Id == id).FirstOrDefault();
+                return contexto.Colaborador.Include(e => e.EnderecoColaborador).Include(e=>e.Empresa).Include(e=>e.Escala).Include(e => e.EnderecoColaborador.Estado).Where(e => e.Id == id).FirstOrDefault();
             }
         }
         public void Atualiza(Colaborador colaborador)

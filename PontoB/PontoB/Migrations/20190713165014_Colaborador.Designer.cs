@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PontoB;
 
 namespace PontoB.Migrations
 {
     [DbContext(typeof(PontoContex))]
-    partial class PontoContexModelSnapshot : ModelSnapshot
+    [Migration("20190713165014_Colaborador")]
+    partial class Colaborador
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +35,9 @@ namespace PontoB.Migrations
 
                     b.Property<DateTime>("DataAdmissao");
 
-                    b.Property<DateTime?>("DataDemissao");
+                    b.Property<DateTime>("DataDemissao");
 
-                    b.Property<DateTime?>("DataNascimento");
+                    b.Property<DateTime>("DataNascimento");
 
                     b.Property<string>("Email")
                         .IsRequired();
