@@ -40,11 +40,11 @@ namespace PontoB.Models
         public Escala Escala { get; set; }
             
 
-        [Required(ErrorMessage = "1Empresa é um campo obrigatório.")]
+        [Required(ErrorMessage = "Empresa é um campo obrigatório.")]
         public int EmpresaId { get; set; }
         public Empresa Empresa { get; set; }
 
-        [Required(ErrorMessage = "1Senha é um campo obrigatório.")]
+       // [Required(ErrorMessage = "Senha é um campo obrigatório.")]
         public string Senha { get; set; }
 
         public bool Master { get; set; }

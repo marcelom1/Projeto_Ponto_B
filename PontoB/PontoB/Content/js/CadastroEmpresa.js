@@ -9,10 +9,24 @@ $("#Botao_Salvar").click(function () {
     var empresaId = $("#Empresa_id");
     empresaId.attr("disabled", false);
 });
-$("#Botao_Excluir_Formulario").click(function () {
-    var empresaId = $("#Empresa_id");
-    empresaId.attr("disabled", false);
-});
+$("#Botao_Excluir_Formulario_Empresa").click(ExcluirFormulario)
+
+
+function ExcluirFormulario() {
+
+    if (confirm("Confirma Exclusão do Registro " + $("#Empresa_id").val() + "?")) {
+        var formularioEscala = $("#CadastroEmpresa");
+        var EscalaId = $("#Empresa_id");
+        EscalaId.attr("disabled", false);
+        formularioEscala.attr("action", "/Empresa/Excluir");
+        formularioEscala.submit();
+    }
+};
+
+if ($("#Empresa_id").val() == 0) {
+    $("#Botao_Excluir_Formulario_Empresa").hide("slow");
+
+}
 
 
 //Limpar os campos do fomulário

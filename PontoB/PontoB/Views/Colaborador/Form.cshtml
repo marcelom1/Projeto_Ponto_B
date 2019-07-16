@@ -16,44 +16,47 @@
 @using (Html.BeginForm("Adiciona", "Colaborador", FormMethod.Post, new { @id = "CadastroColaborador", @name = "CadastroColaborador" }))
 {
 
-    
-<div class="form-row pb-1 pt-4">
-    <div class="form-group col-md-2">
-        <label for="CodigoColaborador">Código</label>
-        <div class="input-group mb-1">
-            <input type="text" class="form-control" value="@Model.Id" name="colaborador.Id" placeholder="Ex 3321">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="button_Matriculas"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+
+    <div class="form-row pb-1 pt-4">
+        <div class="form-group col-md-2">
+            <label for="CodigoColaborador">Código</label>
+            <div class="input-group mb-1">
+                <input type="text" class="form-control" id="colaborador_Id" value="@Model.Id" disabled name="colaborador.Id" placeholder="Ex 3321">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="location.href='@Url.Action("Index", "Colaborador")';" id="button_Matriculas"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="NomeCompleto">Nome Completo</label>
+            <input type="text" class="form-control" id="colaborador.NomeCompleto" placeholder="Ex: João da Silva" value="@Model.NomeCompleto" name="colaborador.NomeCompleto">
+            <span class="erro" id="Erro_NomeCompleto">@Html.ValidationMessage("colaborador.NomeCompleto")</span>
+        </div>
+
+
+        <div class="form-group col-md-2">
+            <div class="form-group col-md-1">
+                <label for="CodigoEmpresa">Empresa</label>
+                <select class="js-example-basic-single select2" id="Select2_Empresa" name="colaborador.EmpresaId">
+                    <option value="@Model.EmpresaId">@Model.Empresa.RazaoSocial</option>
+
+                </select>
+                <span class="erro" id="Erro_EmpresaId">@Html.ValidationMessage("colaborador.EmpresaId")</span>
             </div>
         </div>
     </div>
-    <div class="form-group col-md-6">
-        <label for="NomeCompleto">Nome Completo</label>
-        <input type="text" class="form-control" id="colaborador.NomeCompleto" placeholder="Ex: João da Silva" value="@Model.NomeCompleto" name="colaborador.NomeCompleto">
-    </div>
-
-    
-    <div class="form-group col-md-2">
-        <div class="form-group col-md-1">
-            <label for="CodigoEmpresa">Empresa</label>
-            <select class="js-example-basic-single select2" id="Select2_Empresa" name="colaborador.EmpresaId">
-              <option value="@Model.EmpresaId">@Model.Empresa.RazaoSocial</option>
-                
-            </select>
-        </div>
-    </div>
-</div>
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-3">
             <label for="Data_Admissao">Admissão</label>
             @Html.TextBoxFor(m=> m.DataAdmissao, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "Data_Admissao",
             @value = Model.DataAdmissao, @Name = "colaborador.DataAdmissao" })
-
+            <span class="erro" id="Erro_DataAdmissao">@Html.ValidationMessage("colaborador.DataAdmissao")</span>
         </div>
         <div class="form-group col-md-3">
             <label for="Data_Demissao">Demissão</label>
             @Html.TextBoxFor(m=> m.DataDemissao, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "Data_Demissao",
            @value = Model.DataAdmissao, @Name = "colaborador.DataDemissao" })
+            <span class="erro" id="Erro_DataDemissao">@Html.ValidationMessage("colaborador.DataDemissao")</span>
 
         </div>
         <div class="form-group col-md-5">
@@ -76,19 +79,19 @@
         <div class="form-group col-md-2">
             <label for="PIS">PIS</label>
             <input type="text" class="form-control" id="PIS" placeholder="PIS" value="@Model.Pis" name="colaborador.PIS">
-            <span class="erro" id="Erro_PIS">@Html.ValidationMessage("colaborador.PIS")</span>
+            <span class="erro" id="Erro_PIS">@Html.ValidationMessage("colaborador.Pis")</span>
         </div>
     </div>
 
     <div class="form-row pb-2 ">
         <div class="form-group col-md-3">
             <label for="Telefone">Telefone</label>
-            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333" @Model.Telefone name="colaborador.Telefone">
+            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333" value="@Model.Telefone"  name="colaborador.Telefone">
         </div>
         <div class="form-group col-md-2">
             <label for="Data_Nascimento">Nascimento</label>
-            @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", htmlAttributes: new { @Name = "colaborador.DataDemissao", @class = "form-control", @type = "date", @id = "Data_Nascimento", @value = Model.DataAdmissao })
-
+            @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", htmlAttributes: new { @Name = "colaborador.DataNascimento", @class = "form-control", @type = "date", @id = "Data_Nascimento", @value = Model.DataAdmissao })
+            <span class="erro" id="Erro_DataNascimento">@Html.ValidationMessage("colaborador.DataNascimento")</span>
         </div>
         <div class="form-group col-md-2">
             <div class="form-group col-md-1">
@@ -96,6 +99,7 @@
                 <select class="js-example-basic-single select2" id="Select2_Escalas" name="colaborador.EscalaId">
                     <option value="@Model.EscalaId">@Model.Escala.Descricao</option>
                 </select>
+                <span class="erro" id="Erro_EscalaId">@Html.ValidationMessage("colaborador.EscalaId")</span>
             </div>
         </div>
     </div>
@@ -149,26 +153,36 @@
         </div>
     </div>
 
-    <div class="form-row pt-4">
+    <div class="form-row pt-3">
         <div class="form-group col-md-4">
             <label for="inputEmail4">Email</label>
             <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="colaborador.Email" value="@Model.Email">
         </div>
         <div class="form-group col-md-4">
             <label for="inputPassword4">Senha</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha" name="colaborador.Senha" value="@Model.Senha">
+            <input type="password" class="form-control" id="ColaboradorSenha" placeholder="Senha" name="colaborador.Senha" value="">
+            <span class="erro" id="Erro_Senha">@Html.ValidationMessage("colaborador.Senha")</span>
+
         </div>
         <div class="form-group col-md-4">
             <label for="inputPassword4">Confirmação de Senha</label>
-            <input type="password" class="form-control" id="inputPassword5" placeholder="Confirmação de senha" value="@Model.Senha">
+            <input type="password" class="form-control" id="ConfirmaSenha" placeholder="Confirmação de senha" value="">
+            <span class="erro" id="Erro_ConfirmaSenha">@Html.ValidationMessage("colaborador.ConfirmaSenha")</span>
         </div>
 
     </div>
+    <div class="form-row pb-3 col-md-4">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" name="colaborador.Master" type="checkbox" id="Master" value="true" checked="@Model.Master">
+            <label class="form-check-label" for="Master">Usuário Master</label>
+        </div>
+    </div>
 
-    <button type="submit" id="Botao_Salvar" class="btn botao_cor_verde btn-lg">Salvar</button>
+    <button type="button" id="Botao_Salvar" class="btn botao_cor_verde btn-lg">Salvar</button>
     <div class="form-row float-right">
         <div class="form-group col-md-1">
-            <button type="button" class="btn botao_cor btn-lg">Excluir</button>
+            <input type="button" id="Botao_Excluir_Formulario_Colaborador" formaction="/Colaborador/Excluir" value="Excluir" class="btn botao_cor btn-lg">
+
         </div>
     </div>
 }

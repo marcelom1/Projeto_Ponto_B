@@ -136,6 +136,8 @@ namespace PontoB.Controllers
             var model = colaborador;
             model.EnderecoColaborador = colaborador.EnderecoColaborador;
             model.EnderecoColaborador.Estado = colaborador.EnderecoColaborador.Estado;
+            model.Empresa = dbEmpresa.BuscarPorId(colaborador.EmpresaId);
+            model.Escala = dbEscala.BuscarPorId(colaborador.EscalaId);
             //ViewBag.Colaborador = colaborador;
             //ViewBag.Colaborador.EnderecoColaborador = colaborador.EnderecoColaborador;
             //ViewBag.Colaborador.EnderecoColaborador.Estado = colaborador.EnderecoColaborador.Estado;
@@ -157,14 +159,25 @@ namespace PontoB.Controllers
                     {
                         foreach (var registro in registros )
                         {
-                            if (!registro.DataDemissao.HasValue)
+                            if ((!registro.DataDemissao.HasValue) )
                             {
                                 model.Id = 0;
                                 model.EnderecoColaborador.Id = 0;
                                 //ViewBag.Colaborador.Id = 0;
                                // ViewBag.Colaborador.EnderecoColaborador.Id = 0;
                                 ModelState.AddModelError("colaborador.Cpf", "CPF já cadastrado e sem registro de demissão!");
-                                return View("Form");
+                                return View("Form",model);
+                            }
+                            else
+                            {
+                                if (registro.DataDemissao > model.DataAdmissao)
+                                {
+                                    model.Id = 0;
+                                    model.EnderecoColaborador.Id = 0;
+                                    ModelState.AddModelError("colaborador.Cpf", "CPF já cadastrado e com registro de demissão maior que o novo registro de admissão!");
+                                    return View("Form", model);
+                                }
+
                             }
                             
                         }
@@ -179,7 +192,7 @@ namespace PontoB.Controllers
             else
             {
 
-                return View("Form");
+                return View("Form",model);
             }
         }
 

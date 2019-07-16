@@ -1,6 +1,127 @@
-﻿$(document).ready(function () {
-   
+﻿//Para enviar o ID do formulario preciso remover o Disabled.
+$("#Botao_Salvar").click(function () {
+   //verifica se existe espaços ou a senha está em branco ao adicionar novo colaborador
+    var senha = $("#ColaboradorSenha").val();
+    var confirmaSenha = $("#ConfirmaSenha").val();
+    var valorCPF = $("#CPF").val().replace(/[^\d]+/g, "");
+    var valorPIS = $("#PIS").val().replace(/[^\d]+/g, "");
+    var dataAdmissao = $("#Data_Admissao").val();
+    var dataDemissao = $("#Data_Demissao").val();
+    var dataNascimento = $("#Data_Nascimento").val();
+
+    var erro = 0
+    if ($("#colaborador_Id").val() == 0) {
+        if (ValidaSenhaEmBranco(senha)) {
+            erro = 1;
+        };
+        if (ValidaSenhaConfirmação(senha, confirmaSenha)) {
+            erro = 1;
+        }
+    }
+    if (!ValidaPIS(valorPIS)) {
+        $("#Erro_PIS").text("PIS Inválido").show();
+        erro = 1;
+    }
+    if (!TestaCPF(valorCPF)) {
+        $("#Erro_CPF").text("CPF Inválido").show();
+        erro = 1;
+    }
+    if (ValidaDataAdmissaoMaiorDataDemissao(dataAdmissao, dataDemissao)) {
+        erro = 1;
+    }
+    if (ValidaDataNascimentoMaiorDataAdmissao(dataAdmissao, dataNascimento)) {
+        erro = 1;
+    }
+    if (erro == 0) {
+        
+        SalvarFormulario();
+    }
     
+});
+
+function ValidaDataAdmissaoMaiorDataDemissao(admissao, demissao) {
+    if (demissao != "") {
+        if (admissao > demissao) {
+            $("#Erro_DataDemissao").text("Data de demissão menor que data de admissão").show();
+            console.log("Erro demissao");
+            return true;
+        }
+    }
+    return false
+};
+
+function ValidaDataNascimentoMaiorDataAdmissao(admissao, nascimento) {
+    if (nascimento != null) {
+        if (admissao < nascimento) {
+            $("#Erro_DataNascimento").text("Data de nascimento maior que data de admissão ").show();
+            console.log("Erro nascimento");
+            return true;
+        }
+    }
+    return false;
+};
+
+function ValidaSenhaEmBranco(senha) {
+    if ((senha.split(/\s+/).length > 1) || (senha == "")) {
+        $("#Erro_Senha").text("Campo senha não pode conter espaços ou ficar em branco!").show();
+        return true;
+    } else {
+        $("#Erro_Senha").hide();
+        return false;
+    }
+};
+
+function ValidaSenhaConfirmação(senha, confirmaSenha) {
+    
+    if (senha != confirmaSenha) {
+        $("#Erro_ConfirmaSenha").text("As senhas não coincidem!").show()
+        return true;
+    } else {
+        $("#Erro_ConfirmaSenha").hide();
+        return false;        
+    }
+}
+
+
+$("#ColaboradorSenha").blur(function () {
+    if ($("#colaborador_Id").val()==0)
+        ValidaSenhaEmBranco($("#ColaboradorSenha").val());
+});
+
+$("#ConfirmaSenha").blur(function () {
+    if ($("#colaborador_Id").val()==0)
+        ValidaSenhaConfirmação($("#ColaboradorSenha").val(), $("#ConfirmaSenha").val());
+});
+
+function SalvarFormulario() {
+    var formularioColaborador = $("#CadastroColaborador");
+    var colaboradorId = $("#colaborador_Id");
+    colaboradorId.attr("disabled", false);
+    formularioColaborador.submit()
+        
+};
+
+
+function ExcluirFormulario() {
+   
+    if (confirm("Confirma Exclusão do Registro " + $("#colaborador_Id").val() + "?")) {
+        var formularioEscala = $("#CadastroColaborador");
+        var EscalaId = $("#colaborador_Id");
+        EscalaId.attr("disabled", false);
+        formularioEscala.attr("action", "/Colaborador/Excluir");
+        formularioEscala.submit();
+    }
+};
+
+
+
+$(document).ready(function () {
+
+    if ($("#colaborador_Id").val() == 0) {
+        $("#Botao_Excluir_Formulario_Colaborador").hide("slow");
+        
+    }
+    $("#Botao_Excluir_Formulario_Colaborador").click(ExcluirFormulario)
     $('#Select2_Empresa').select2({
         
         language: "pt-BR",

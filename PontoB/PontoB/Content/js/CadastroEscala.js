@@ -1,5 +1,10 @@
 ﻿
 $(document).ready(function () {
+    if ($("#Escala_id").val() == 0) {
+        $("#Botao_Excluir_Formulario_Escala").hide("slow");
+        
+    }
+
 
     //Monitoramento de Click
     $("#Botao_Excluir_Formulario_Escala").click(ExcluirFormulario)

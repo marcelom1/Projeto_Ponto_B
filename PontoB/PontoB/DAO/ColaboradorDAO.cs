@@ -2,6 +2,7 @@
 using PagedList;
 using PontoB.Filtros.FColaborador;
 using PontoB.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,13 +12,15 @@ namespace PontoB.DAO
     {
         public void Adiciona(Colaborador colaborador)
         {
+            
             using (var context = new PontoContex())
             {
 
                 colaborador.Escala = context.Escala.Find(colaborador.EscalaId);
                 colaborador.Empresa = context.Empresa.Find(colaborador.EmpresaId);
                 colaborador.EnderecoColaborador.Estado = context.EstadoUF.Find(colaborador.EnderecoColaborador.Estado.Id);
-                
+                colaborador.Senha = Encrypt.Encrypt.getMD5Hash(colaborador.Senha);
+
                 context.Colaborador.Add(colaborador);
                 context.SaveChanges();
             }
@@ -27,7 +30,7 @@ namespace PontoB.DAO
             
             using (var contexto = new PontoContex())
             {
-                return contexto.Colaborador.OrderBy(p => p.NomeCompleto).ToList();
+                return contexto.Colaborador.Include(p=>p.Empresa).Include(p=>p.Escala).OrderBy(p => p.NomeCompleto).ToList();
             }
         }
 
@@ -42,6 +45,8 @@ namespace PontoB.DAO
 
                 return objFiltro.Filtrar(contexto
                          .Colaborador
+                         .Include(e=>e.Empresa)
+                         .Include(e=>e.Escala)
                          .AsNoTracking(), filtro);
 
             }
@@ -66,13 +71,21 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                return contexto.Colaborador.Include(e => e.EnderecoColaborador).Include(e=>e.Empresa).Include(e=>e.Escala).Include(e => e.EnderecoColaborador.Estado).Where(e => e.Id == id).FirstOrDefault();
+                return contexto.Colaborador.Include(e => e.EnderecoColaborador).Include(e=>e.EnderecoColaborador.Estado).Include(e=>e.Empresa).Include(e=>e.Escala).Include(e => e.EnderecoColaborador.Estado).Where(e => e.Id == id).FirstOrDefault();
             }
         }
         public void Atualiza(Colaborador colaborador)
         {
             using (var contexto = new PontoContex())
             {
+                colaborador.Escala = contexto.Escala.Find(colaborador.EscalaId);
+                colaborador.Empresa = contexto.Empresa.Find(colaborador.EmpresaId);
+                colaborador.EnderecoColaborador.Estado = contexto.EstadoUF.Find(colaborador.EnderecoColaborador.Estado.Id);
+                if (!string.IsNullOrEmpty(colaborador.Senha))
+                    colaborador.Senha = Encrypt.Encrypt.getMD5Hash(colaborador.Senha);
+                else
+                    colaborador.Senha = BuscarPorId(colaborador.Id).Senha;
+
                 contexto.Colaborador.Update(colaborador);
                 contexto.SaveChanges();
             }

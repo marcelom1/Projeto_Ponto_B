@@ -17,7 +17,8 @@ namespace PontoB.DAO.Mapeamento
 
             builder.HasOne(c => c.EnderecoColaborador);
 
-          
+            builder.Property(c=>c.Senha)
+                .IsRequired();
 
             builder.ToTable("Colaborador");
         }
