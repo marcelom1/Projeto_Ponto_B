@@ -126,6 +126,7 @@ $(document).ready(function () {
         
         language: "pt-BR",
         id: function (e) { return e.Id; },
+        placeholder: "",
         allowClear: true,
         minimumInputLength: 2,
         

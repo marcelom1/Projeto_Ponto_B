@@ -35,7 +35,7 @@ namespace PontoB.Models
        
         public virtual Endereco EnderecoColaborador { get; set; }
 
-       [Required(ErrorMessage = "Escala é um campo obrigatório.")]
+        [Required(ErrorMessage = "Escala é um campo obrigatório.")]
         public int EscalaId { get; set; }
         public Escala Escala { get; set; }
             

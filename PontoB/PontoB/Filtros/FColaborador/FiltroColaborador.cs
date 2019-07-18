@@ -14,7 +14,7 @@ namespace PontoB.Filtros.FColaborador
                 return new FiltroColaboradorCPF();
             else if (coluna.Equals("Empresa", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorEmpresa();
-            else if (coluna.Equals("Nome", StringComparison.OrdinalIgnoreCase))
+            else if (coluna.Equals("Nome Completo", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorNome();
             else if (coluna.Equals("Código", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorCodigo();

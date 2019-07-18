@@ -280,6 +280,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CSS\cadastroAusencia.css" />
     <Content Include="Content\CSS\cadastroColaborador.css" />
     <Content Include="Content\CSS\cadastroEmpresa.css" />
     <Content Include="Content\CSS\CadastroEscala.css" />
@@ -291,6 +292,7 @@
     <Content Include="Content\img\LogoB.gif" />
     <Content Include="Content\img\Lupa2.png" />
     <Content Include="Content\js\BuscarCep.js" />
+    <Content Include="Content\js\CadastroAusencia.js" />
     <Content Include="Content\js\CadastroColaborador.js" />
     <Content Include="Content\js\CadastroEmpresa.js" />
     <Content Include="Content\js\CadastroEscala.js" />
@@ -313,10 +315,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AusenciaController.cs" />
     <Compile Include="Controllers\ColaboradorController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
+    <Compile Include="DAO\AusenciaDAO.cs" />
     <Compile Include="DAO\ColaboradorDAO.cs" />
     <Compile Include="DAO\EscalaDAO.cs" />
     <Compile Include="DAO\EscalaHorarioDAO.cs" />
@@ -327,8 +332,21 @@
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\EstadosUFDAO.cs" />
     <Compile Include="DAO\Mapeamento\EscalaMap.cs" />
+    <Compile Include="DAO\MotivoAusenciaDAO.cs" />
     <Compile Include="Encrypt\Encrypt.cs" />
     <Compile Include="Encrypt\SenhaHasher.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusencia.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaColaborador.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaDataFim.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaDataInicio.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaEmpresa.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaGrupo.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaMotivo.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaTodos.cs" />
+    <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusencia.cs" />
+    <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaAbona.cs" />
+    <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaCodigo.cs" />
+    <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaDescricao.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaborador.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorEmpresa .cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorNome.cs" />
@@ -373,7 +391,13 @@
     <Compile Include="Migrations\20190714180734_DataColaborador.designer.cs">
       <DependentUpon>20190714180734_DataColaborador.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190716183413_Ausencia.cs" />
+    <Compile Include="Migrations\20190716183413_Ausencia.designer.cs">
+      <DependentUpon>20190716183413_Ausencia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
+    <Compile Include="Models\Ausencia.cs" />
+    <Compile Include="Models\AusenciaColaboradores.cs" />
     <Compile Include="Models\Colaborador.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />
@@ -381,6 +405,7 @@
     <Compile Include="Models\Escala.cs" />
     <Compile Include="Models\EscalaHorario.cs" />
     <Compile Include="Models\EstadosUF.cs" />
+    <Compile Include="Models\MotivoAusencia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -400,6 +425,8 @@
     <Content Include="Views\Escalas\Index.cshtml" />
     <Content Include="Views\Colaborador\Index.cshtml" />
     <Content Include="Views\Colaborador\Form.cshtml" />
+    <Content Include="Views\Ausencia\Index.cshtml" />
+    <Content Include="Views\Ausencia\Form.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

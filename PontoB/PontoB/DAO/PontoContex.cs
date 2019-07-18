@@ -20,6 +20,9 @@ namespace PontoB
         public DbSet<Escala> Escala { get; set; }
         public DbSet<EscalaHorario> EscalaHorario { get; set; }
         public DbSet<Colaborador> Colaborador { get; set; }
+        public DbSet<Ausencia> Ausencia { get; set; }
+        public DbSet<AusenciaColaboradores> AusenciaColaboradores { get; set; }
+        public DbSet<MotivoAusencia> MotivoAusencia { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

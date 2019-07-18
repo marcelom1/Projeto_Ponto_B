@@ -1,7 +1,7 @@
 ﻿
 $(document).ready(function () {
     if ($("#Escala_id").val() == 0) {
-        $("#Botao_Excluir_Formulario_Escala").hide("slow");
+        $("#Botao_Excluir_Formulario_Escala").hide();
         
     }
 

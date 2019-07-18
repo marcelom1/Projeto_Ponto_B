@@ -80,7 +80,7 @@ namespace PontoB.Controllers
             IPagedList<Colaborador> filtro = dbColaborador.Filtro(coluna, texto).ToPagedList(pagina,10);
 
             //Preenche as ViewBag com os resultado do filtro
-            ViewBag.Colaborador = filtro;
+          
             ViewBag.FiltroColuna = coluna;
             ViewBag.Filtro = texto;
 
