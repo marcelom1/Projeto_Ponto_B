@@ -144,6 +144,7 @@ namespace PontoB.Controllers
             if (pesquisa != null)
             {
                 dbEmpresa.ExcluirEmpresa(pesquisa);
+                dbEndereco.ExcluirEndereco(pesquisa.EnderecoEmpresa);
 
             }
             return RedirectToAction("Index", "Empresa");

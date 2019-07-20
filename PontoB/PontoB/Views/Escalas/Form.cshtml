@@ -126,6 +126,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Ação</th>
+                        <th scope="col">Código</th>
                         <th scope="col">Dia da Semana</th>
                         <th scope="col">Entrada</th>
                         <th scope="col">Saida</th>
@@ -143,6 +144,7 @@
 
                         <tr>
                             <td><a href="@Url.Action("ExcluirEscalaHorario", "Escalas", new { EscalaHorarioID = Escala.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @Escala.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                            <td>@Escala.Id</td>
                             <td>@Escala.DiaSemana</td>
                             <td>@Escala.EntradaHora.ToString("D2"):@Escala.EntradaMinuto.ToString("D2")</td>
                             <td>@Escala.SaidaHora.ToString("D2"):@Escala.SaidaMinuto.ToString("D2")</td>

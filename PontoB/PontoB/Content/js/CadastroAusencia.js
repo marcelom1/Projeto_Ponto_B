@@ -102,6 +102,11 @@ $("#EnvioEscala").click(function () {
     $("#CadastroAusencia").submit();
 });
 
+if ($("#Ausencia_id").val() == 0) {
+    $("#Botao_Excluir_Formulario_Ausencia").hide();
+
+}
+
 $("#Botao_Excluir_Formulario_Ausencia").click(function () {
     if (confirm("Confirma Exclusão do Registro " + $("#Ausencia_id").val() + "?")) {
         var formularioAusencia = $("#CadastroAusencia");
@@ -112,7 +117,7 @@ $("#Botao_Excluir_Formulario_Ausencia").click(function () {
     }
 });
 
-$("#NovaLinhaEscala").click(function () {
+$("#NovaLinhaAusencia").click(function () {
     var colaboradorId = $("#Select2_Colaborador").val();
     var empresaId = $("#Select2_Empresa").val();
     var DataInicio = $("#Data_inicio").val();
@@ -121,20 +126,67 @@ $("#NovaLinhaEscala").click(function () {
     var HoraFim = $("#hora_fim").val();
     var MotivoId = $("#Select2_MotivoAusencia").val();
     var erro = 0;
-    if (DataInicio > DataFim)
+   
+    if (DataInicio == "") {
         erro++;
-    if (DataInicio <= DataFim)
-        if (HoraInicio > HoraFim)
+        $("#Erro_Ausencia_DataInicio").text("Data inicial não pode ficar em branco").show();
+    } else
+        $("#Erro_Ausencia_DataInicio").hide();
+
+
+    if (DataFim == "") {
+        erro++;
+        $("#Erro_Ausencia_DataFim").text("Data final não pode ficar em branco").show();
+    } else
+        $("#Erro_Ausencia_DataFim").hide();
+
+    if (HoraInicio == "") {
+        erro++;
+        $("#Erro_Ausencia_HoraInicio").text("Hora inicial não pode ficar em branco").show();
+    } else
+        $("#Erro_Ausencia_HoraInicio").hide();
+
+    if (HoraFim == "") {
+        erro++;
+        $("#Erro_Ausencia_HoraFim").text("Hora final não pode ficar em branco").show();
+    } else
+        $("#Erro_Ausencia_HoraFim").hide();
+
+    if (DataInicio > DataFim){
+        erro++;
+        $("#Erro_Ausencia_DataInicio").text("Data inicial não pode ser maior que data final").show();
+    } else
+        $("#Erro_Ausencia_DataInicio").hide();
+
+    if (DataInicio == DataFim)
+        if (HoraInicio > HoraFim) {
             erro++;
-    if (MotivoId == null)
+            $("#Erro_Ausencia_DataInicio").text("Hora inicial não pode ser maior que hora final").show();
+        } else
+            $("#Erro_Ausencia_DataInicio").hide();
+
+    if (MotivoId == 0) {
         erro++;
+        $("#Erro_Ausencia_Motivo").text("Motivo é um campo obrigatório").show();
+    } else
+        $("#Erro_Ausencia_Motivo").hide();
+
     if ($("#TodosColaboradores").is(":checked") == false)
-        if (colaboradorId == null)
+        if (colaboradorId == 0) {
             erro++;
+            $("#Erro_Ausencia_Colaborador").text("Colaborador é um campo obrigatório").show();
+        } else
+            $("#Erro_Ausencia_Colaborador").hide();
+
     if ($("#TodosColaboradores").is(":checked") == true)
         if ($("#TodasEmpresas").is(":checked") == false)
-            if (empresaId == null)
+            if (empresaId == 0) {
                 erro++;
+                $("#Erro_Ausencia_EmpresaId").text("Empresa é um campo obrigatório").show();
+            }
+            else
+                $("#Erro_Ausencia_EmpresaId").hide();
+   
     if (erro == 0)
         $("#CadastroAusenciaColaborador").submit();
        
@@ -155,6 +207,8 @@ $("#TodosColaboradores").click(function () {
         $("#Select2_Colaborador").attr("disabled", false);
     $("#buscaEmpresa").toggleClass('Oculto');
 });
+
+
 
 //Habilita ou desabilita o select2 Empresa
 $("#TodasEmpresas").click(function () {

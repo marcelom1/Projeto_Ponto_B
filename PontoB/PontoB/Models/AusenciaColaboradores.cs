@@ -10,12 +10,16 @@ namespace PontoB.Models
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Data Inicio é um campo obrigatório.")]
-        public DateTime DataInicio { get; set; }
+        public DateTime? DataInicio { get; set; }
+        [Required(ErrorMessage = "Hora inicial é um campo obrigatório.")]
         public int HoraInicio { get; set; }
+        [Required(ErrorMessage = "Minuto inicial é um campo obrigatório.")]
         public int MinutoInicio { get; set; }
         [Required(ErrorMessage = "Data fim é um campo obrigatório.")]
-        public DateTime DataFim { get; set; }
+        public DateTime? DataFim { get; set; }
+        [Required(ErrorMessage = "Hora fim é um campo obrigatório.")]
         public int HoraFim { get; set; }
+        [Required(ErrorMessage = "Minuto fim é um campo obrigatório.")]
         public int MinutoFim { get; set; }
         public string Observacao { get; set; }
 

@@ -1,11 +1,13 @@
-﻿@model IList<PontoB.Models.AusenciaColaboradores>
+﻿@using PontoB.Models.ViewModels.VAusencia,
+
+@model AusenciaViewModels
 @{
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
 @section css{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Content/CSS/cadastroAusencia.css">
+    <link rel="stylesheet" href="~/Content/CSS/cadastroAusencia.css"/>
 
 }
 
@@ -17,7 +19,7 @@
         <div class="form-group col-md-2">
             <label for="CodigoEscala">Código</label>
             <div class="input-group mb-1">
-                <input type="text" class="form-control" id="Ausencia_id" disabled placeholder="Código" name="ausencia.Id" value="@ViewBag.Ausencia.Id">
+                <input type="text" class="form-control" id="Ausencia_id" disabled placeholder="Código" name="ausencia.Id" value="@Model.AusenciaColaboradores.Ausencia.Id"/>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" onclick="location.href='@Url.Action("Index", "Ausencia")';" type="button" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
                 </div>
@@ -25,131 +27,136 @@
         </div>
         <div class="form-group col-md-7">
             <label for="DescricaoEscala">Descrição</label>
-            <input type="text" class="form-control" id="DescricaoEscala" name="ausencia.Descricao" placeholder="Ex: Escala Geral" value="@ViewBag.Ausencia.Descricao">
+            <input type="text" class="form-control" id="DescricaoEscala" name="ausencia.Descricao" placeholder="Ex: Faltas em Junho/20XX" value="@Model.AusenciaColaboradores.Ausencia.Descricao"/>
             <span class="erro" id="Erro_DescricaoEscala">@Html.ValidationMessage("ausencia.Descricao")</span>
         </div>
     </div>
 }
-    <div class="" id="cadastroAusencia">
-        @using (Html.BeginForm("AdicionaAusenciaColaborador", "Ausencia", FormMethod.Post, new { @id = "CadastroAusenciaColaborador", @name = "CadastroAusenciaColaborador" }))
-        {
-            <div class="form-row pb-1 pt-4 ">
-                <div class="form-group col-md-3">
-                    <div class="form-check form-check-inline">
-                        <div class="pr-2">
-                            <label for="CodigoColaborador">Colaborador</label>
-                        </div>
-                        <input class="form-check-input" name="TodosColaboradores" type="checkbox" id="TodosColaboradores" value="true">
-                        <label class="form-check-label" for="TodosColaboradores">Todos</label>
-        
+<div class="" id="cadastroAusencia">
+    @using (Html.BeginForm("AdicionaAusenciaColaborador", "Ausencia", FormMethod.Post, new { @id = "CadastroAusenciaColaborador", @name = "CadastroAusenciaColaborador" }))
+    {
+        <div class="form-row pb-1 pt-4 ">
+            <div class="form-group col-md-3">
+                <div class="form-check form-check-inline">
+                    <div class="pr-2">
+                        <label for="CodigoColaborador">Colaborador</label>
                     </div>
-                    <div id="ColaboradorSelect2">
-                        <select class="js-example-basic-single select2" id="Select2_Colaborador" name="ausenciaColaboradores.ColaboradorId">
-                            <option value=""></option>
-                        </select>
-                        <span class="erro" id="Erro_Ausencia_Colaborador">@Html.ValidationMessage("ausenciaColaboradores.ColaboradorId")</span>
+                    <input class="form-check-input" name="TodosColaboradores" type="checkbox" selected="@Model.TodosColaboradores" id="TodosColaboradores" value="true">
+                    <label class="form-check-label" for="TodosColaboradores">Todos</label>
 
-                    </div> 
-               </div>
-                <div class="form-group col-md-3 Oculto" id="buscaEmpresa">
-                    <div class="form-check form-check-inline">
-                        <div class="pr-2">
-                            <label for="CodigoEmpresa">Empresa</label>
-                        </div>
-                        <input class="form-check-input" name="TodasEmpresas" type="checkbox" id="TodasEmpresas" value="true">
-                        <label class="form-check-label" for="TodasEmpresas">Todas</label>
-                    </div>
-                    <select class="js-example-basic-single select2" id="Select2_Empresa" name="ausenciaEmpresa.Id">
-                        <option value=""></option>
+                </div>
+                <div id="ColaboradorSelect2">
+                    <select class="js-example-basic-single select2" id="Select2_Colaborador" name="ausenciaColaboradores.ColaboradorId">
+                        <option value="@Model.AusenciaColaboradores.Colaborador.Id">@Model.AusenciaColaboradores.Colaborador.NomeCompleto</option>
                     </select>
-                    <span class="erro" id="Erro_Ausencia_EmpresaId">@Html.ValidationMessage("ausenciaEmpresa.Id")</span>
+                    <span class="erro" id="Erro_Ausencia_Colaborador">@Html.ValidationMessage("ausenciaColaboradores.ColaboradorId")</span>
 
                 </div>
             </div>
-
-
-            <div class="form-row pb-1 pt-4 ">
-                <div class="form-group col-md-3">
-                    <label for="Data_Admissao">Data Inicio</label>
-                    <input type="date" name="ausenciaColaboradores.DataInicio" class="form-control" id="Data_inicio">
-                    <span class="erro" id="Erro_Ausencia_DataInicio">@Html.ValidationMessage("ausenciaColaboradores.DataInicio")</span>
-
-                </div>
-                <div class="form-group col-md-1">
-                    <label for="Data_Admissao">Hora Inicio</label>
-                    <input type="time" name="HoraInicio" class="form-control" id="hora_inicio">
-                    <span class="erro" id="Erro_Ausencia_HoraInicio">@Html.ValidationMessage("HoraInicio")</span>
-
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="Data_Admissao">Data Fim</label>
-                    <input type="date" class="form-control" name="ausenciaColaboradores.DataFim" id="Data_fim">
-                    <span class="erro" id="Erro_Ausencia_DataFim">@Html.ValidationMessage("ausenciaColaboradores.DataFim")</span>
-
-                </div>
-                <div class="form-group col-md-1">
-                    <label for="Data_Admissao">Hora Fim</label>
-                    <input type="time" class="form-control" name="HoraFim" id="hora_fim">
-                    <span class="erro" id="Erro_Ausencia_HoraFim">@Html.ValidationMessage("HoraFim")</span>
-
-                </div>
-                <div class="form-group col-md-2">
-                    <div class="form-group col-md-3">
-                        <label for="CodigoTipoAusencia">Motivo</label>
-                        <select class="js-example-basic-single select2" id="Select2_MotivoAusencia" name="ausenciaColaboradores.MotivoAusenciaId">
-                            <option value=""></option>
-                        </select>
-                        <span class="erro" id="Erro_Ausencia_Motivo">@Html.ValidationMessage("ausenciaColaboradores.MotivoAusenciaId")</span>
-
+            <div class="form-group col-md-3 Oculto" id="buscaEmpresa">
+                <div class="form-check form-check-inline">
+                    <div class="pr-2">
+                        <label for="CodigoEmpresa">Empresa</label>
                     </div>
+                    <input class="form-check-input" name="TodasEmpresas" type="checkbox" id="TodasEmpresas" selected="@Model.TodasEmpresas" value="true">
+                    <label class="form-check-label" for="TodasEmpresas">Todas</label>
                 </div>
+                <select class="js-example-basic-single select2" id="Select2_Empresa" name="ausenciaEmpresa.Id">
+                    <option value="@Model.Empresa.Id">@Model.Empresa.RazaoSocial</option>
+                    
+                </select>
+                <span class="erro" id="Erro_Ausencia_EmpresaId">@Html.ValidationMessage("ausenciaEmpresa.Id")</span>
 
             </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Observação</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" name="ausenciaColaboradores.Observacao" rows="3" maxlength="280"></textarea>
-            </div>
-            <input name="ausenciaColaboradores.AusenciaId" value="@ViewBag.Ausencia.Id" class="Oculto" />
-            <div class="form-group pb-5">
-                <div class="form-group">
-                    <button type="button" id="NovaLinhaEscala" class="btn botao_adicionar btn-sm">Adicionar</button>
-                </div>
-            </div>
-        }
-        <div>
-            <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Código</th>
-                        <th scope="col">Motivo</th>
-                        <th scope="col">Colaborador</th>
-                        <th scope="col">Empresa</th>
-                        <th scope="col">Data Inicio</th>
-                        <th scope="col">Data Fim</th>
-                        <th scope="col">Observação</th>
-                        <th scope="col">Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var ausencia in Model)
-                    {
-                        <tr>
-                            <td>@ausencia.Id</td>
-                            <td>@ausencia.MotivoAusencia.Descricao </td>
-                            <td>@ausencia.Colaborador.NomeCompleto </td>
-                            <td>@ausencia.Colaborador.Empresa.RazaoSocial</td>
-                            <td>@ausencia.DataInicio.AddHours(ausencia.HoraInicio).AddMinutes(ausencia.MinutoInicio)</td>
-                            <td>@ausencia.DataFim.AddHours(ausencia.HoraFim).AddMinutes(ausencia.MinutoFim)</td>
-                            <td>@ausencia.Observacao</td>
-                            <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
-                        </tr>
-                    }
-
-                </tbody>
-            </table>
         </div>
+
+
+        <div class="form-row pb-1 pt-4 ">
+            <div class="form-group col-md-3">
+                <label for="Data_Admissao">Data Inicio</label>
+                @Html.TextBoxFor(m=> m.AusenciaColaboradores.DataInicio, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "Data_inicio",
+               @value = @Model.AusenciaColaboradores.DataInicio, @Name = "ausenciaColaboradores.DataInicio"})
+               
+                <span class="erro" id="Erro_Ausencia_DataInicio">@Html.ValidationMessage("ausenciaColaboradores.DataInicio")</span>
+
+            </div>
+            <div class="form-group col-md-offset-1">
+                <label for="Data_Admissao">Hora Inicio</label>
+                <input type="time" name="HoraInicio" class="form-control" id="hora_inicio" value="@Model.AusenciaColaboradores.DataInicio.GetValueOrDefault().ToString("HH:mm")">
+                <span class="erro" required id="Erro_Ausencia_HoraInicio">@Html.ValidationMessage("HoraInicio")</span>
+
+            </div>
+            <div class="form-group col-md-3">
+                <label for="Data_Admissao">Data Fim</label>
+                @Html.TextBoxFor(m=> m.AusenciaColaboradores.DataFim, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "Data_fim",
+               @value = @Model.AusenciaColaboradores.DataFim, @Name = "ausenciaColaboradores.DataFim"})
+                
+                <span class="erro" id="Erro_Ausencia_DataFim">@Html.ValidationMessage("ausenciaColaboradores.DataFim")</span>
+
+            </div>
+            <div class="form-group col-md-offset-1">
+                <label for="Data_Admissao">Hora Fim</label>
+                <input type="time" class="form-control" name="HoraFim" id="hora_fim" value="@Model.AusenciaColaboradores.DataFim.GetValueOrDefault().ToString("HH:mm")">
+                <span class="erro" required id="Erro_Ausencia_HoraFim">@Html.ValidationMessage("HoraFim")</span>
+
+            </div>
+            <div class="form-group col-md-3">
+                <div class="form-group col-md-offset-2">
+                    <label for="CodigoTipoAusencia">Motivo</label>
+                    <select class="js-example-basic-single select2" id="Select2_MotivoAusencia" name="ausenciaColaboradores.MotivoAusenciaId">
+                        <option value="@Model.AusenciaColaboradores.MotivoAusencia.Id">@Model.AusenciaColaboradores.MotivoAusencia.Descricao</option>
+                    </select>
+                    <span class="erro" id="Erro_Ausencia_Motivo">@Html.ValidationMessage("ausenciaColaboradores.MotivoAusenciaId")</span>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Observação</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="ausenciaColaboradores.Observacao" rows="3" maxlength="280">@Model.AusenciaColaboradores.Observacao</textarea>
+        </div>
+        <input name="ausenciaColaboradores.AusenciaId" value="@Model.AusenciaColaboradores.Ausencia.Id" class="Oculto" />
+        <div class="form-group pb-5">
+            <div class="form-group">
+                <button type="button" id="NovaLinhaAusencia" class="btn botao_adicionar btn-sm">Adicionar</button>
+            </div>
+        </div>
+    }
+    <div>
+        <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Motivo</th>
+                    <th scope="col">Colaborador</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">Data Inicio</th>
+                    <th scope="col">Data Fim</th>
+                    <th scope="col">Observação</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ausencia in Model.AusenciaColaboradoresLista)
+                {
+                    <tr>
+                        <td>@ausencia.Id</td>
+                        <td>@ausencia.MotivoAusencia.Descricao </td>
+                        <td>@ausencia.Colaborador.NomeCompleto </td>
+                        <td>@ausencia.Colaborador.Empresa.RazaoSocial</td>
+                        <td>@ausencia.DataInicio</td>
+                        <td>@ausencia.DataFim</td>
+                        <td>@ausencia.Observacao</td>
+                        <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id?')"><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
     </div>
+</div>
 <button type="submit" id="EnvioEscala" class="btn botao_cor_verde btn-lg">Salvar</button>
 <div class="form-row float-right">
     <div class="form-group col-md-1">

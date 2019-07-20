@@ -18,13 +18,13 @@
     <div class="form-row pb-1 pt-1">
         <div class="form-group col-md-2">
             <select id="OpcaoFiltro" class="form-control" name="coluna">
-                <option selected>Todos</option>
-                <option>Colaborador</option>
-                <option>Data Inicio</option>
-                <option>Data Fim</option>
-                <option>Empresa</option>
-                <option>Motivo</option>
-                <option>Grupo</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Todos")">Todos</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Colaborador")">Colaborador</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Data Inicio")">Data Inicio</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Data Fim")">Data Fim</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Empresa")">Empresa</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Motivo")">Motivo</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Grupo")">Grupo</option>
             </select>
         </div>
         <div class="form-group col-md-2">
@@ -61,8 +61,8 @@
                 <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
                 <td>@ausencia.Id</td>
                 <td>@ausencia.Colaborador.NomeCompleto</td>
-                <td>@ausencia.DataInicio.AddHours(ausencia.HoraInicio).AddMinutes(ausencia.MinutoInicio)</td>
-                <td>@ausencia.DataFim.AddHours(ausencia.HoraFim).AddMinutes(ausencia.MinutoFim)</td>
+                <td>@ausencia.DataInicio</td>
+                <td>@ausencia.DataFim</td>
                 <td>@ausencia.Colaborador.Empresa.RazaoSocial</td>
                 <td>@ausencia.MotivoAusencia.Descricao</td>
                 <td>@ausencia.Ausencia.Id</td>

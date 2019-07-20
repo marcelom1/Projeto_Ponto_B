@@ -18,20 +18,26 @@ $("#Botao_Salvar").click(function () {
             erro = 1;
         }
     }
+
     if (!ValidaPIS(valorPIS)) {
         $("#Erro_PIS").text("PIS Inválido").show();
         erro = 1;
     }
+
     if (!TestaCPF(valorCPF)) {
         $("#Erro_CPF").text("CPF Inválido").show();
         erro = 1;
     }
+
     if (ValidaDataAdmissaoMaiorDataDemissao(dataAdmissao, dataDemissao)) {
         erro = 1;
     }
+
     if (ValidaDataNascimentoMaiorDataAdmissao(dataAdmissao, dataNascimento)) {
         erro = 1;
     }
+
+    console.log(erro);
     if (erro == 0) {
         
         SalvarFormulario();

@@ -18,14 +18,14 @@
     <div class="form-row pb-1 pt-1">
         <div class="form-group col-md-2">
             <select id="OpcaoFiltro" class="form-control" name="coluna">
-                <option selected>Todos</option>
-                <option>Código</option>
-                <option>Descrição</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Todos")">Todos</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Código")">Código</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Descrição")">Descrição</option>
             </select>
         </div>
         <div class="form-group col-md-2">
             <div class="input-group mb-1">
-                <input type="text" class="form-control" name="texto" placeholder="Pesquisar">
+                <input type="text" class="form-control" name="texto" value="@ViewBag.Filtro" placeholder="Pesquisar">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
 

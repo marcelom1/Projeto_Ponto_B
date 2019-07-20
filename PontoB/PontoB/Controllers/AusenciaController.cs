@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using PontoB.DAO;
 using PontoB.Models;
+using PontoB.Models.ViewModels.VAusencia;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,7 @@ namespace PontoB.Controllers
         public JsonResult GetColaboradores(string searchTerm)
         {
             var empresa = dbColaborador.Filtro("Nome Completo", searchTerm);
+            
 
             var modifica = empresa.Select(x => new
             {
@@ -85,64 +87,113 @@ namespace PontoB.Controllers
 
 
         }
-
-        public ActionResult AdicionaAusenciaColaborador(AusenciaColaboradores ausenciaColaboradores, DateTime HoraInicio, DateTime HoraFim, int? empresa, bool TodosColaboradores = false, bool TodasEmpresas = false)
+        public bool ConflitoAusenciaDemissao(Colaborador colaborador, AusenciaColaboradores ausenciaColaborador)
         {
-            if (!DataInicioMaiorDataFinal(ausenciaColaboradores.DataInicio, HoraInicio.Hour, HoraInicio.Minute, ausenciaColaboradores.DataFim, HoraFim.Hour, HoraFim.Minute))
+            if (colaborador.DataDemissao >= ausenciaColaborador.DataFim && ((colaborador.DataDemissao >= ausenciaColaborador.DataFim) || colaborador.DataDemissao == null))
+                return false;
+            return true;
+        }
+
+        public ActionResult AdicionaAusenciaColaborador(AusenciaColaboradores ausenciaColaboradores, DateTime HoraInicio, DateTime HoraFim, int empresa = 0, bool TodosColaboradores = false, bool TodasEmpresas = false)
+        {
+            ausenciaColaboradores.HoraInicio = HoraInicio.Hour;
+            ausenciaColaboradores.MinutoInicio = HoraInicio.Minute;
+            ausenciaColaboradores.HoraFim = HoraFim.Hour;
+            ausenciaColaboradores.MinutoFim = HoraFim.Minute;
+            ausenciaColaboradores.DataInicio = ausenciaColaboradores.DataInicio.GetValueOrDefault().AddHours(HoraInicio.Hour).AddMinutes(HoraInicio.Minute);
+            ausenciaColaboradores.DataFim = ausenciaColaboradores.DataFim.GetValueOrDefault().AddHours(HoraFim.Hour).AddMinutes(HoraFim.Minute);
+            ausenciaColaboradores.Ausencia = dbAusencia.BuscarPorId(ausenciaColaboradores.AusenciaId);
+            ausenciaColaboradores.Colaborador = dbColaborador.BuscarPorId(ausenciaColaboradores.ColaboradorId);
+            ausenciaColaboradores.MotivoAusencia = dbMotivoAusencia.BuscarPorId(ausenciaColaboradores.MotivoAusenciaId);
+            ausenciaColaboradores.Colaborador = ausenciaColaboradores.Colaborador ?? new Colaborador();
+            var model = new AusenciaViewModels {
+                AusenciaColaboradores = ausenciaColaboradores,
+                TodosColaboradores = TodosColaboradores,
+                TodasEmpresas = TodasEmpresas,
+                Empresa = empresa!=0 ? dbEmpresa.BuscarPorId(empresa) : new Empresa()
+            };
+
+            if (ModelState.IsValid)
             {
-                ausenciaColaboradores.HoraInicio = HoraInicio.Hour;
-                ausenciaColaboradores.MinutoInicio = HoraInicio.Minute;
-                ausenciaColaboradores.HoraFim = HoraFim.Hour;
-                ausenciaColaboradores.MinutoFim = HoraFim.Minute;
-                if (TodosColaboradores)
+                if (!DataInicioMaiorDataFinal(ausenciaColaboradores.DataInicio, HoraInicio.Hour, HoraInicio.Minute, ausenciaColaboradores.DataFim, HoraFim.Hour, HoraFim.Minute))
                 {
-                    if (TodasEmpresas)
+                    if (TodosColaboradores)
                     {
-                        foreach (var colaborador in dbColaborador.Lista())
+                        if (TodasEmpresas)
                         {
-                            ausenciaColaboradores.Id = 0;
-                            ausenciaColaboradores.ColaboradorId = colaborador.Id;
-                            dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                            foreach (var colaborador in dbColaborador.Lista())
+                            {
+                                ausenciaColaboradores.Id = 0;
+                                ausenciaColaboradores.ColaboradorId = colaborador.Id;
+                                if (!ConflitoAusenciaDemissao(colaborador,ausenciaColaboradores))
+                                    dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                            }
+                            model = new AusenciaViewModels();
+                        }
+                        else
+                        {
+                            foreach (var colaborador in dbColaborador.Filtro("Empresa", empresa.ToString()))
+                            {
+                                ausenciaColaboradores.Id = 0;
+                                ausenciaColaboradores.ColaboradorId = colaborador.Id;
+                                if (!ConflitoAusenciaDemissao(colaborador, ausenciaColaboradores))
+                                    dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                            }
+                            model = new AusenciaViewModels();
                         }
                     }
                     else
                     {
-                        foreach (var colaborador in dbColaborador.Filtro("Empresa", empresa.ToString()))
+                        Colaborador buscaColaborador = (dbColaborador.BuscarPorId(ausenciaColaboradores.ColaboradorId));
+                        if (!ConflitoAusenciaDemissao(buscaColaborador, ausenciaColaboradores))
                         {
-                            ausenciaColaboradores.Id = 0;
-                            ausenciaColaboradores.ColaboradorId = colaborador.Id;
                             dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                            model = new AusenciaViewModels();
                         }
+                        else
+                            ModelState.AddModelError("ausenciaColaboradores.ColaboradorId", "Data de lançamento em conflito com a data de demissão do colaborador");
+
                     }
+
                 }
                 else
-                {
-                    dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
-                }
+                    
+                    ModelState.AddModelError("ausenciaColaboradores.DataInicio", "Data e hora inicial, não pode ser maior que Data e hora final!");
+
             }
+            model.AusenciaColaboradores.Ausencia = ausenciaColaboradores.Ausencia;
+            model.AusenciaColaboradoresLista = dbAusenciaColaborador.Lista(ausenciaColaboradores.Ausencia.Id);
+            return View("Form", model);
 
-
-            return RedirectToAction("Form", new { id = ausenciaColaboradores.AusenciaId });
         }
+
+
+
 
 
         public ActionResult Form(int id = 0)
         {
+            var model = new AusenciaViewModels
+            {
+                AusenciaColaboradoresLista = dbAusenciaColaborador.Lista(0)
+            };
+
             //Caso o Id for != de Zero é efetuado uma busca no banco para trazer os dados da ausência
             if (id != 0)
             {
-                ViewBag.Ausencia = dbAusencia.BuscarPorId(id);
-                var model = dbAusenciaColaborador.Lista(id);
+                model.AusenciaColaboradores.Ausencia = dbAusencia.BuscarPorId(id)?? new Ausencia();
+                model.AusenciaColaboradoresLista = dbAusenciaColaborador.Lista(id);
 
-                return View(model);
+                //return View(model);
             }
 
             //Senão a ausência é nova 
-            ViewBag.Ausencia = new Ausencia();
-            
-
-            return View(dbAusenciaColaborador.Lista(0));
+            return View(model);
         }
+
+
+
+
 
         [HttpPost]
         public ActionResult Adiciona(Ausencia ausencia)
@@ -150,8 +201,9 @@ namespace PontoB.Controllers
 
             //Busca se já existe a ausência
             var pesquisa = dbAusencia.BuscarPorId(ausencia.Id);
-            ViewBag.Ausencia = pesquisa;
-            var model = dbAusenciaColaborador.Lista(ausencia.Id);
+            var model = new AusenciaViewModels();
+            model.AusenciaColaboradores.Ausencia = pesquisa;
+            model.AusenciaColaboradoresLista = dbAusenciaColaborador.Lista(ausencia.Id);
 
             if (ModelState.IsValid)
             {
@@ -161,7 +213,7 @@ namespace PontoB.Controllers
                     dbAusencia.Atualiza(ausencia);
                     return RedirectToAction("Index", "Ausencia");
                 }
-                else //Senão é uma escala nova sendo adicionada
+                else //Senão é uma ausencia nova sendo adicionada
                 {
                     dbAusencia.Adiciona(ausencia);
                     return RedirectToAction("Form", new { id = ausencia.Id });
@@ -195,10 +247,10 @@ namespace PontoB.Controllers
 
             return RedirectToAction("Form", new { id = IdAusenciaColaborador });
         }
-        public bool DataInicioMaiorDataFinal(DateTime dataInicio, int horaInicio, int minutoInicio, DateTime dataFim, int horaFim, int minutoFim)
+        public bool DataInicioMaiorDataFinal(DateTime? dataInicio, int horaInicio, int minutoInicio, DateTime? dataFim, int horaFim, int minutoFim)
         {
-            dataInicio.AddHours(horaInicio).AddMinutes(minutoInicio);
-            dataFim.AddHours(horaFim).AddMinutes(minutoFim);
+            dataInicio.GetValueOrDefault().AddHours(horaInicio).AddMinutes(minutoInicio);
+            dataFim.GetValueOrDefault().AddHours(horaFim).AddMinutes(minutoFim);
             if (dataInicio > dataFim)
                 return true;
 

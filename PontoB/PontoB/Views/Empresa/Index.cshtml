@@ -17,11 +17,11 @@
     <div class="form-row pb-1 pt-1">
         <div class="form-group col-md-2">
             <select id="OpcaoFiltro" class="form-control" name="coluna">
-                <option selected>Todos</option>
-                <option>Código</option>
-                <option>Razão Social</option>
-                <option>Nome Fantasia</option>
-                <option>CNPJ</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Todos")">Todos</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Código")">Código</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Razão Social")">Razão Social</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("Nome Fantasia")">Nome Fantasia</option>
+                <option selected="@ViewBag.FiltroColuna.Equals("CNPJ")">CNPJ</option>
             </select>
         </div>
         <div class="form-group col-md-2">

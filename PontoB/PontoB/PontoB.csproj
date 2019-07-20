@@ -348,6 +348,7 @@
     <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaCodigo.cs" />
     <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaDescricao.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaborador.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorAtivoPorNome.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorEmpresa .cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorNome.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorCodigo.cs" />
@@ -406,6 +407,7 @@
     <Compile Include="Models\EscalaHorario.cs" />
     <Compile Include="Models\EstadosUF.cs" />
     <Compile Include="Models\MotivoAusencia.cs" />
+    <Compile Include="Models\ViewModels\VAusencia\AusenciaViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
