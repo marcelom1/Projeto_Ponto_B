@@ -154,16 +154,16 @@ $("#NovaLinhaAusencia").click(function () {
 
     if (DataInicio > DataFim){
         erro++;
-        $("#Erro_Ausencia_DataInicio").text("Data inicial não pode ser maior que data final").show();
+        $("#Erro_Ausencia_Datas").text("Data inicial não pode ser maior que data final").show();
     } else
-        $("#Erro_Ausencia_DataInicio").hide();
+        $("#Erro_Ausencia_Datas").hide();
 
     if (DataInicio == DataFim)
         if (HoraInicio > HoraFim) {
             erro++;
-            $("#Erro_Ausencia_DataInicio").text("Hora inicial não pode ser maior que hora final").show();
+            $("#Erro_Ausencia_Datas").text("Hora inicial não pode ser maior que hora final").show();
         } else
-            $("#Erro_Ausencia_DataInicio").hide();
+            $("#Erro_Ausencia_Datas").hide();
 
     if (MotivoId == 0) {
         erro++;
@@ -186,6 +186,8 @@ $("#NovaLinhaAusencia").click(function () {
             }
             else
                 $("#Erro_Ausencia_EmpresaId").hide();
+        else
+            $("#Erro_Ausencia_EmpresaId").hide();
    
     if (erro == 0)
         $("#CadastroAusenciaColaborador").submit();

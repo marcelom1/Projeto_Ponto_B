@@ -90,7 +90,7 @@ namespace PontoB.Controllers
         }
         public bool ConflitoAusenciaDemissao(Colaborador colaborador, AusenciaColaboradores ausenciaColaborador)
         {
-            if (colaborador.DataDemissao >= ausenciaColaborador.DataFim && ((colaborador.DataDemissao >= ausenciaColaborador.DataFim) || colaborador.DataDemissao == null))
+            if (colaborador.DataDemissao >= ausenciaColaborador.DataFim && (colaborador.DataDemissao >= ausenciaColaborador.DataFim) || colaborador.DataDemissao == null)
                 return false;
             return true;
         }
@@ -133,7 +133,7 @@ namespace PontoB.Controllers
                         }
                         else
                         {
-                            foreach (var colaborador in dbColaborador.Filtro("Empresa", empresa.ToString()))
+                            foreach (var colaborador in dbColaborador.Filtro("Empresa", model.Empresa.RazaoSocial))
                             {
                                 ausenciaColaboradores.Id = 0;
                                 ausenciaColaboradores.ColaboradorId = colaborador.Id;

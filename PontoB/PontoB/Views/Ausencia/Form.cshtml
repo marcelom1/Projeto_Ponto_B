@@ -61,7 +61,7 @@
                     <input class="form-check-input" name="TodasEmpresas" type="checkbox" id="TodasEmpresas" selected="@Model.TodasEmpresas" value="true">
                     <label class="form-check-label" for="TodasEmpresas">Todas</label>
                 </div>
-                <select class="js-example-basic-single select2" id="Select2_Empresa" name="ausenciaEmpresa.Id">
+                <select class="js-example-basic-single select2" id="Select2_Empresa" name="empresa">
                     <option value="@Model.Empresa.Id">@Model.Empresa.RazaoSocial</option>
                     
                 </select>
@@ -76,7 +76,7 @@
                 <label for="Data_Admissao">Data Inicio</label>
                 @Html.TextBoxFor(m=> m.AusenciaColaboradores.DataInicio, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "Data_inicio",
                @value = @Model.AusenciaColaboradores.DataInicio, @Name = "ausenciaColaboradores.DataInicio"})
-               
+                <span class="erro" id="Erro_Ausencia_Datas"></span>
                 <span class="erro" id="Erro_Ausencia_DataInicio">@Html.ValidationMessage("ausenciaColaboradores.DataInicio")</span>
 
             </div>
