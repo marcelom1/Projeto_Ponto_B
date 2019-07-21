@@ -74,6 +74,16 @@ namespace PontoB.DAO
                 return contexto.Colaborador.Include(e => e.EnderecoColaborador).Include(e=>e.EnderecoColaborador.Estado).Include(e=>e.Empresa).Include(e=>e.Escala).Include(e => e.EnderecoColaborador.Estado).Where(e => e.Id == id).FirstOrDefault();
             }
         }
+
+        public Colaborador BuscarEmail(string email)
+        {
+            using (var contexto = new PontoContex())
+            {
+                return contexto.Colaborador.Where(e => e.Email == email).FirstOrDefault();
+            }
+        }
+
+
         public void Atualiza(Colaborador colaborador)
         {
             using (var contexto = new PontoContex())
@@ -90,6 +100,14 @@ namespace PontoB.DAO
                 contexto.SaveChanges();
             }
         }
-    
+
+        public Colaborador ConfirmacaoAutenticacao(string login, string senha)
+        {
+            using (var contexto = new PontoContex())
+            {
+                return contexto.Colaborador.FirstOrDefault(a => a.Email == login && a.Senha == Encrypt.Encrypt.getMD5Hash(senha));
+            }
+        }
+
     }
 }

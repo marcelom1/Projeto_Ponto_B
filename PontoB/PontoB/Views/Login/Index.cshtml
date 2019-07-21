@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = null;
+
+}
+
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ponto B - Cartão Ponto</title>
+    <link rel="icon" href="~/Content/img/LogoB.gif">
+
+    <!-- Font Google Knewave CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Knewave&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!--CSS Próprio -->
+    <link rel="stylesheet" href="~/Content/CSS/login.css">
+
+
+
+</head>
+
+<body class="text-center Fundo">
+    @using (Html.BeginForm("Autentica", "Login", FormMethod.Post, new { @id = "LoginAutenticacao", @name = "LoginAutenticacao", @class = "form-signin FundoLogin" }))
+    {
+       
+            <img class="mb-4" src="~/Content/img/LogoB.gif" alt="" width="153" height="141">
+            <h1 class="h3 mb-3 font-weight-normal texto">Identifique-se</h1>
+            <label for="inputEmail" class="sr-only">Endereço de email</label>
+            <input type="email" id="inputEmail" name="login" class="form-control" placeholder="Seu email" required autofocus>
+            <label for="inputPassword" class="sr-only">Senha</label>
+            <input type="password" id="inputPassword" name="senha" class="form-control" placeholder="Senha" required>
+            <label class="erro">@ViewBag.Erro</label>
+            <div class="checkbox mb-3">
+            </div>
+            <button class="btn btn-lg btn-block botao_cor" type="submit">Login</button>
+            <p class="mt-5 mb-3 text-muted">&copy; Ponto B - 2019</p>
+       
+    }
+</body>
+</html>

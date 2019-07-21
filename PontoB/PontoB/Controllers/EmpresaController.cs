@@ -7,6 +7,7 @@ using PagedList;
 
 namespace PontoB.Controllers
 {
+    [Authorize(Roles = "Master")]
     public class EmpresaController : Controller
     {
         private EmpresaDAO dbEmpresa = new EmpresaDAO();

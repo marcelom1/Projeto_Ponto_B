@@ -11,6 +11,7 @@ using System.Web.Services;
 
 namespace PontoB.Controllers
 {
+   // [Authorize(Roles = "Master")]
     public class ColaboradorController : Controller
     {
         
@@ -223,5 +224,7 @@ namespace PontoB.Controllers
             }
             return RedirectToAction("Index", "Colaborador");
         }
+
+       
     }
 }

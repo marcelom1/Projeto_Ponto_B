@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace PontoB.Controllers
 {
+    [Authorize(Roles = "Master")]
     public class EscalasController : Controller
     {
         

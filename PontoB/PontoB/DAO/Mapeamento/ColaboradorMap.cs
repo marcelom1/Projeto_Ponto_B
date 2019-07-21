@@ -20,6 +20,9 @@ namespace PontoB.DAO.Mapeamento
             builder.Property(c=>c.Senha)
                 .IsRequired();
 
+            builder.HasIndex(c => c.Email)
+                   .IsUnique();
+
             builder.ToTable("Colaborador");
         }
     }

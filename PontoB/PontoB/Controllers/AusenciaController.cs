@@ -12,6 +12,7 @@ using System.Web.Services;
 
 namespace PontoB.Controllers
 {
+    [Authorize(Roles = "Master")]
     public class AusenciaController : Controller
     {
         private AusenciaDAO dbAusencia = new AusenciaDAO();
