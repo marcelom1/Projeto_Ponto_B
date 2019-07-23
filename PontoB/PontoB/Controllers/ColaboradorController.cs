@@ -11,7 +11,7 @@ using System.Web.Services;
 
 namespace PontoB.Controllers
 {
-   // [Authorize(Roles = "Master")]
+    [Authorize(Roles = "Master")]
     public class ColaboradorController : Controller
     {
         
@@ -20,7 +20,6 @@ namespace PontoB.Controllers
         private EscalaDAO dbEscala = new EscalaDAO();
         private EnderecoDAO dbEndereco = new EnderecoDAO();
         private EstadosUFDAO dbEstado = new EstadosUFDAO();
-
 
 
         public ActionResult Index(int pagina = 1, string coluna = "", string filtro = "")

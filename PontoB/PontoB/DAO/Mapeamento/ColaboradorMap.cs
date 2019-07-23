@@ -12,10 +12,7 @@ namespace PontoB.DAO.Mapeamento
     {
         public void Configure(EntityTypeBuilder<Colaborador> builder)
         {
-            builder.Property(c => c.Id)
-                   .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
-
-            builder.HasOne(c => c.EnderecoColaborador);
+            
 
             builder.Property(c=>c.Senha)
                 .IsRequired();
