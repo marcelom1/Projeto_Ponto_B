@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PontoB.Business.Utils;
 
 namespace PontoB.Controllers
 {
@@ -87,29 +88,46 @@ namespace PontoB.Controllers
 
             IList<RegistroPonto> filtro = dbRegistroPonto.Filtro("Colaborador", colaboradorLogado.Id.ToString());
 
-            var model = ListaPontoRegistroViewModel(filtro);
+            var Lista = ListaPontoRegistroViewModel(filtro);
+            var model = new HistoricoRegistroPontoComFiltro
+            {
+                HistoricoRegistroPonto = Lista.ToPagedList(pagina, 10),
+                FiltroDataInicio = dataInicio,
+                FiltroDataFim = dataFim
+            };
 
 
-            return View(model.ToPagedList(pagina, 10));
+            return View(model);
            
         }
 
-        public ActionResult Filtro(DateTime dataInicio, DateTime dataFim, int pagina = 1)
+        public ActionResult Filtro(DateTime? dataInicio, DateTime? dataFim, int pagina = 1)
         {
-
             var colaboradorLogado = dbColaborador.BuscarEmail(User.Identity.Name);
-            var texto = dataInicio.ToShortDateString() + "|" + dataFim.ToShortDateString() + "|" + colaboradorLogado.Id;
+
+            var valores = new FiltroPeriodoValores
+            {
+                Inicio = dataInicio,
+                Fim = dataFim,
+                ColaboradorId = colaboradorLogado.Id
+
+            };
+            var texto = valores.ToString();
+                        
 
             //Faz a Busca do filtro
             IList<RegistroPonto> filtro = dbRegistroPonto.Filtro("RegistroPontoEntreDatas",texto);
 
-            var model = ListaPontoRegistroViewModel(filtro);
+            var Lista = ListaPontoRegistroViewModel(filtro);
+            var model = new HistoricoRegistroPontoComFiltro
+            {
+                HistoricoRegistroPonto = Lista.ToPagedList(pagina, 10),
+                FiltroDataInicio = dataInicio,
+                FiltroDataFim = dataFim
+            };
 
             //Preenche as ViewBag com os resultado do filtro
-            ViewBag.DataInicio = dataInicio;
-            ViewBag.DataFim = dataFim;
-
-            return View("Historico", model.ToPagedList(pagina, 10));
+            return View("Historico", model);
         }
 
         public List<HistoricoRegistroPontoViewModels> ListaPontoRegistroViewModel(IList<RegistroPonto> filtro)

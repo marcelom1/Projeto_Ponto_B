@@ -1,6 +1,6 @@
 ﻿@using PagedList.Mvc
 @using System.Linq
-@model PagedList.IPagedList<PontoB.Models.ViewModels.VRegistroPonto.HistoricoRegistroPontoViewModels>
+@model PontoB.Models.ViewModels.VRegistroPonto.HistoricoRegistroPontoComFiltro
 @{
     ViewBag.Title = "Histórico Ponto";
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
@@ -12,17 +12,19 @@
     <link rel="stylesheet" href="">
 }
 
-<h2 class="pb-3">Histórico Ponto - @Model[0].colaborador.NomeCompleto</h2>
+<h2 class="pb-3">Histórico Ponto - @Model.HistoricoRegistroPonto[0].colaborador.NomeCompleto</h2>
 <h4 class="pt-1">Filtrar</h4>
 @using (Html.BeginForm("Filtro", "RegistroPonto", FormMethod.Get, new { @id = "FiltroRegistroPonto", @name = "FiltroRegistroPonto" }))
 {
     <div class="form-row pb-1 pt-1">
         <div class="form-group col-md-5">
             <div class="input-group mb-2">
-           
-                <input type="date" class="form-control" name="dataInicio" value="" placeholder="Pesquisar">
+                @Html.TextBoxFor(m=> m.FiltroDataInicio, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "dataInicio",
+                @value = Model.FiltroDataInicio, @Name = "dataInicio" })
                 <label class=" pt-1 px-3"> Até </label>
-                <input type="date" class="form-control" name="dataFim" value="" placeholder="Pesquisar">
+                @Html.TextBoxFor(m=> m.FiltroDataFim, "{0:yyyy-MM-dd}", htmlAttributes: new  { @class = "form-control", @type = "date" , @id = "dataFim",
+               @value = Model.FiltroDataFim, @Name = "dataFim"
+           })
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
 
@@ -40,7 +42,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var registro in Model)
+            @foreach(var registro in Model.HistoricoRegistroPonto)
             {
                 <tr>
                     <td>@registro.Data</td>
@@ -50,7 +52,7 @@
             </tbody>
     </table>
     <br />
-    @Html.PagedListPager(Model, page => Url.Action("Historico", new { pagina = page, dataInicio = ViewBag.DataInicio, dataFim = ViewBag.DataFim }), new PagedListRenderOptions
+    @Html.PagedListPager(Model.HistoricoRegistroPonto, page => Url.Action("Historico", new { pagina = page, dataInicio = ViewBag.DataInicio, dataFim = ViewBag.DataFim }), new PagedListRenderOptions
 {
 FunctionToTransformEachPageLink = (liTag, aTag) =>
 {

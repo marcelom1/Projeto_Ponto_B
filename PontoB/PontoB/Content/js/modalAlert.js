@@ -14,8 +14,6 @@
         $(window.document.location).attr('href', acaobotao2);
     });
 
-
-    var modal2 = $(this);
     $('.modal-title').text(titulo);
     $('#conteudoModal').html(frase);
 

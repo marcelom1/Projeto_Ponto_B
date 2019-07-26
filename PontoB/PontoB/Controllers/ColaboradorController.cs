@@ -106,9 +106,7 @@ namespace PontoB.Controllers
             }
 
             //Senão o colaborador é novo 
-            //ViewBag.Colaborador = new Colaborador();
-            //ViewBag.Colaborador.EnderecoColaborador = new Endereco();
-            // ViewBag.Colaborador.EnderecoColaborador.Estado = new EstadosUF();
+           
             var colaborador = new Colaborador
             {
                 Empresa = new Empresa(),

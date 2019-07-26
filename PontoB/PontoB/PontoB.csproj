@@ -346,6 +346,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Utils\FiltroPeriodoValores.cs" />
+    <Compile Include="Business\Utils\NullableDateTimeExtensions.cs" />
     <Compile Include="Controllers\AusenciaController.cs" />
     <Compile Include="Controllers\ColaboradorController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
@@ -454,6 +456,7 @@
     <Compile Include="Models\MotivoAusencia.cs" />
     <Compile Include="Models\RegistroPontoModels\RegistroPonto.cs" />
     <Compile Include="Models\ViewModels\VAusencia\AusenciaViewModels.cs" />
+    <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoComFiltro.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
