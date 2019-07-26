@@ -5,13 +5,14 @@
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 }
 @section css{
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/Content/CSS/select2.min.css">
     <link rel="stylesheet" href="~/Content/CSS/cadastroAusencia.css">
 
 }
 
-<h3 class="pb-3">Cadastro Ausência</h3>
-@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_cor btn-sm" })
+<h2 class="pb-3">Cadastro Ausência</h2>
+@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_padrao btn-sm" })
 <h5 class="pt-1">Filtrar</h5>
 @using (Html.BeginForm("Filtro", "Ausencia", FormMethod.Get, new { @id = "FiltroAusencia", @name = "FiltroAusencia" }))
 {
@@ -55,19 +56,19 @@
         <tbody>
             @foreach (var ausencia in Model)
             {
-               
 
-            <tr onclick="location.href = '@Url.Action("Form", "Ausencia", new { Id = ausencia.Ausencia.Id})';" style="cursor:Pointer">
-                <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
-                <td>@ausencia.Id</td>
-                <td>@ausencia.Colaborador.NomeCompleto</td>
-                <td>@ausencia.DataInicio</td>
-                <td>@ausencia.DataFim</td>
-                <td>@ausencia.Colaborador.Empresa.RazaoSocial</td>
-                <td>@ausencia.MotivoAusencia.Descricao</td>
-                <td>@ausencia.Ausencia.Id</td>
 
-            </tr>
+                <tr onclick="location.href = '@Url.Action("Form", "Ausencia", new { Id = ausencia.Ausencia.Id})';" style="cursor:Pointer">
+                    <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                    <td>@ausencia.Id</td>
+                    <td>@ausencia.Colaborador.NomeCompleto</td>
+                    <td>@ausencia.DataInicio</td>
+                    <td>@ausencia.DataFim</td>
+                    <td>@ausencia.Colaborador.Empresa.RazaoSocial</td>
+                    <td>@ausencia.MotivoAusencia.Descricao</td>
+                    <td>@ausencia.Ausencia.Descricao</td>
+
+                </tr>
             }
         </tbody>
     </table>
@@ -88,7 +89,7 @@
 
 @section scripts{
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    <script src="~/Content/js/select2.min.js"></script>
     <script src="~/Content/js/pt-BR.js"></script>
     <script src="~/Content/js/CadastroAusencia.js"></script>
 

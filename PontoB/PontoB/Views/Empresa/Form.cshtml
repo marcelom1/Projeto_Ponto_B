@@ -8,12 +8,12 @@
 @section css{
     <link rel="stylesheet" href="~/Content/CSS/cadastroEmpresa.css">
 }
-<h3 class="pb-3">Cadastro Empresa</h3>
+<h2 class="pb-3">Cadastro Empresa</h2>
 <!--
 <form action="/Empresa/Adiciona" method="post">-->
 @using (Html.BeginForm("Adiciona", "Empresa", FormMethod.Post, new { @id = "CadastroEmpresa", @name = "CadastroEmpresa" }))
 {
-    <input type="button" id="Botao_Nova_Empresa" class="btn botao_cor btn-sm" value="Novo">
+    <input type="button" id="Botao_Nova_Empresa" class="btn botao_padrao btn-sm" value="Novo">
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2">
             <label for="CodigoEmpresa">Código</label>

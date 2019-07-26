@@ -25,6 +25,11 @@
     margin: auto;
 }
 
+.tabela {
+    text-align: center;
+    margin: auto !important;
+}
+
 .form-signin .checkbox {
     font-weight: 400;
 }

@@ -9,6 +9,6 @@ namespace PontoB.Filtros
 {
     public interface IFiltro<T>
     {
-        IList<T> Filtrar(IQueryable<T> query,string filtro);
+        IList<T> Filtrar(IQueryable<T> query, string filtro);
     }
 }

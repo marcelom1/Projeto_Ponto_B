@@ -8,7 +8,7 @@ namespace PontoB.Filtros.FAusencia
     {
         public IList<AusenciaColaboradores> Filtrar(IQueryable<AusenciaColaboradores> query, string filtro)
         {
-            return query.OrderBy(e => e.Ausencia.Id).Where(e => e.Ausencia.Id.Equals(filtro)).ToList();
+            return query.OrderByDescending(e => e.DataInicio).Where(e => e.Ausencia.Descricao.Equals(filtro)).ToList();
 
         }
     }

@@ -9,8 +9,8 @@
 }
 
 
-<h3 class="pb-3">Cadastro Escala</h3>
-@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_cor btn-sm" })
+<h2 class="pb-3">Cadastro Escala</h2>
+@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_padrao btn-sm" })
 @using (Html.BeginForm("Adiciona", "Escalas", FormMethod.Post, new { @id = "CadastroEscala", @name = "CadastroEscala" }))
 {
     <div class="form-row pb-1 pt-4 ">

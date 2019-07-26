@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PontoB.Filtros.FRegistroPonto;
+using PontoB.Models;
 using PontoB.Models.RegistroPontoModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,9 +48,24 @@ namespace PontoB.DAO
             }
         }
 
+       /* public IList<RegistroPonto> Filtro(DateTime dataInicio, DateTime dataFim, Colaborador colaborador)
+        {
+            using (var contexto = new PontoContex())
+            {
+                var objFiltro = new FiltroRegistroPontoEntreDataColaborador();
 
 
-        public void ExcluirRegistroPonto(RegistroPonto registro)
+                return objFiltro.Filtrar(contexto
+                         .RegistroPonto
+                         .AsNoTracking(),dataInicio, dataFim,colaborador );
+
+            }
+
+        }*/
+
+
+
+            public void ExcluirRegistroPonto(RegistroPonto registro)
         {
             using (var contexto = new PontoContex())
             {

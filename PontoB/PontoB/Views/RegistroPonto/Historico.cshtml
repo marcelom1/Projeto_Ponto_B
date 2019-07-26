@@ -1,0 +1,75 @@
+﻿@using PagedList.Mvc
+@using System.Linq
+@model PagedList.IPagedList<PontoB.Models.ViewModels.VRegistroPonto.HistoricoRegistroPontoViewModels>
+@{
+    ViewBag.Title = "Histórico Ponto";
+    Layout = "~/Views/Shared/_LayoutAdm.cshtml";
+}
+
+
+
+@section css{
+    <link rel="stylesheet" href="">
+}
+
+<h2 class="pb-3">Histórico Ponto - @Model[0].colaborador.NomeCompleto</h2>
+<h4 class="pt-1">Filtrar</h4>
+@using (Html.BeginForm("Filtro", "RegistroPonto", FormMethod.Get, new { @id = "FiltroRegistroPonto", @name = "FiltroRegistroPonto" }))
+{
+    <div class="form-row pb-1 pt-1">
+        <div class="form-group col-md-5">
+            <div class="input-group mb-2">
+           
+                <input type="date" class="form-control" name="dataInicio" value="" placeholder="Pesquisar">
+                <label class=" pt-1 px-3"> Até </label>
+                <input type="date" class="form-control" name="dataFim" value="" placeholder="Pesquisar">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><img src="~/Content/img/Lupa2.png" width="20" height="20" alt=""></button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm tabela">
+        <thead class="thead-dark">
+            <tr>
+                <th>Data</th>
+                <th>Registros</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var registro in Model)
+            {
+                <tr>
+                    <td>@registro.Data</td>
+                    <td>@registro.Registros</td>
+                </tr>
+            }
+            </tbody>
+    </table>
+    <br />
+    @Html.PagedListPager(Model, page => Url.Action("Historico", new { pagina = page, dataInicio = ViewBag.DataInicio, dataFim = ViewBag.DataFim }), new PagedListRenderOptions
+{
+FunctionToTransformEachPageLink = (liTag, aTag) =>
+{
+    aTag.Attributes.Add("class", "page-link");
+    liTag.InnerHtml = aTag.ToString();
+    return liTag;
+},
+LiElementClasses = new[] { "page-item" },
+UlElementClasses = new[] { "pagination justify-content-center" }
+})
+
+</div>
+
+
+
+
+
+@section scripts{
+
+    <script src=""></script>
+
+}

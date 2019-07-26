@@ -1,10 +1,11 @@
-
+var registro = true;
 $(document).ready(function () {
     ExibirHoraAtual();
     $("#registrar").click(EnviarRegistro);
+   
 });
 function ExibirHoraAtual() {
-  
+    registro = true;
     $.ajax({
         type: "POST",
         url: "/RegistroPonto/DataHoraAtual",
@@ -17,8 +18,22 @@ function ExibirHoraAtual() {
     });
 }
 
+function UltimoRegistro() {
+    $.ajax({
+        type: "POST",
+        url: "/RegistroPonto/UltimoRegistro",
+        data: "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function(resposta) {
+            $("#ultimoRegistro").text("\u00daltimo Registro: " + resposta);
+
+        }
+    });
+}
+
 function EnviarRegistro() {
-    console.log("test");
+   
     $.ajax({
         type: "POST",
         url: "/RegistroPonto/Registro",
@@ -26,33 +41,30 @@ function EnviarRegistro() {
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (resposta) {
-            if (alert("Registrado com sucesso!"))
+          
+            if (resposta == "True") {
+                ModalAlert("Hist\u00f3rico", "Sair", "Registrado com sucesso! Deseja visualizar o hist\u00f3rico ou sair?", "/RegistroPonto/Historico", "/Login/Logout", "Registro");
+                UltimoRegistro();
+            } else {
+                ModalAlert("", "Ok", resposta, "", "", "Erro");
+            }
 
         },
         error: function (json) {
-            console.log(json);
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
         }
     });
 };
 
-function ExibirHoraAtual() {
 
-    $.ajax({
-        type: "POST",
-        url: "/RegistroPonto/DataHoraAtual",
-        data: "a",
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
-        success: atualizaRelogio,
 
-    });
-}
 
 function atualizaRelogio(hora) {
 
 
-        var momentoAtual = new Date(moment(new Date(hora)).add(1, 'seconds').format('YYYY MM DD h:mm:ss'));
-    
+        var momentoAtual = new Date(moment(new Date(hora)).add(1, 'seconds').format('YYYY MM DD H:mm:ss'));
+   
         var vhora = momentoAtual.getHours();
         var vminuto = momentoAtual.getMinutes();
         var vsegundo = momentoAtual.getSeconds();
@@ -71,9 +83,9 @@ function atualizaRelogio(hora) {
         horaFormat = vhora + " : " + vminuto + " : " + vsegundo;
 
         document.getElementById("data").innerHTML = dataFormat;
-    document.getElementById("hora").innerHTML = horaFormat;
+        document.getElementById("hora").innerHTML = horaFormat;
+
+    if (registro==true)
+        setTimeout(function () { atualizaRelogio(momentoAtual) }, 1000);
     
-    setTimeout(function () { atualizaRelogio(momentoAtual) }, 1000);
-   
-   
 }

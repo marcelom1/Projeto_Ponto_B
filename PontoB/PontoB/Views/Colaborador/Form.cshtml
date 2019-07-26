@@ -7,12 +7,13 @@
 
 
 @section css{
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/Content/CSS/select2.min.css">
     <link rel="stylesheet" href="~/Content/CSS/cadastroColaborador.css">
 
 }
-<h3 class="pb-3">Cadastro Colaborador</h3>
-@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_cor btn-sm" })
+<h2 class="pb-3">Cadastro Colaborador</h2>
+@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_padrao btn-sm" })
 @using (Html.BeginForm("Adiciona", "Colaborador", FormMethod.Post, new { @id = "CadastroColaborador", @name = "CadastroColaborador" }))
 {
 
@@ -86,7 +87,7 @@
     <div class="form-row pb-2 ">
         <div class="form-group col-md-3">
             <label for="Telefone">Telefone</label>
-            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333" value="@Model.Telefone"  name="colaborador.Telefone">
+            <input type="text" class="form-control" id="Telefone" placeholder="473333-3333" value="@Model.Telefone" name="colaborador.Telefone">
         </div>
         <div class="form-group col-md-2">
             <label for="Data_Nascimento">Nascimento</label>
@@ -193,7 +194,8 @@
 
 @section scripts{
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    
+    <script src="~/Content/js/select2.min.js"></script>
     <script src="~/Content/js/pt-BR.js"></script>
     <script src="~/Content/js/BuscarCep.js"></script>
     <script src="~/Content/js/CadastroColaborador.js"></script>

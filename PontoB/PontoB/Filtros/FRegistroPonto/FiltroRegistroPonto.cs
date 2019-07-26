@@ -13,11 +13,12 @@ namespace PontoB.Filtros.FRegistroPonto
         {
             if (coluna.Equals("Código", StringComparison.OrdinalIgnoreCase))
                 return new FiltroRegistroPontoCodigo();
-          /*  else if (coluna.Equals("Descrição", StringComparison.OrdinalIgnoreCase))
-                return new FiltroEscalaDescricao();
-            else if (coluna.Equals("Todos", StringComparison.OrdinalIgnoreCase))
-                return new FiltroEscalaTodos();
-           */
+            else if (coluna.Equals("UltimoRegistroDia", StringComparison.OrdinalIgnoreCase))
+                return new FiltroRegistroPontoUltimoREgistro();
+            else if (coluna.Equals("Colaborador", StringComparison.OrdinalIgnoreCase))
+                return new FiltroRegistroPontoColaborador();
+            else if (coluna.Equals("RegistroPontoEntreDatas", StringComparison.OrdinalIgnoreCase))
+                return new FiltroRegistroPontoEntreDataColaborador();
 
             return null;
 

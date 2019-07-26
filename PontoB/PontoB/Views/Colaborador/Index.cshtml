@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="~/Content/CSS/cadastroColaborador.css">
 }
 
-<h3 class="pb-3">Cadastro Colaborador</h3>
-@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_cor btn-sm" })
+<h2 class="pb-3">Cadastro Colaborador</h2>
+@Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_padrao btn-sm" })
 <h5 class="pt-1">Filtrar</h5>
 @using (Html.BeginForm("Filtro", "Colaborador", FormMethod.Get, new { @id = "FiltroColaborador", @name = "FiltroColaborador" }))
 {

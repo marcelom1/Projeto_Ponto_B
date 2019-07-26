@@ -246,8 +246,10 @@ namespace PontoB.Controllers
             if (pesquisa != null)
                 dbAusenciaColaborador.ExcluirAusenciaColaboradores(pesquisa);
 
+            
             return RedirectToAction("Form", new { id = IdAusenciaColaborador });
         }
+
         public bool DataInicioMaiorDataFinal(DateTime? dataInicio, int horaInicio, int minutoInicio, DateTime? dataFim, int horaFim, int minutoFim)
         {
             dataInicio.GetValueOrDefault().AddHours(horaInicio).AddMinutes(minutoInicio);
