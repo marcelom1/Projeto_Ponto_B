@@ -1,4 +1,4 @@
-﻿@using PontoB.Models.ViewModels.VAusencia,
+﻿@using PontoB.Models.ViewModels.VAusencia
 
 @model AusenciaViewModels
 @{
@@ -150,7 +150,7 @@
                         <td>@ausencia.DataInicio</td>
                         <td>@ausencia.DataFim</td>
                         <td>@ausencia.Observacao</td>
-                        <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id?')"><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                        <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id, ViewOrigem = "Form" })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id?')"><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
                     </tr>
                 }
 

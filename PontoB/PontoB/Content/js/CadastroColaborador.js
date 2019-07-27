@@ -200,6 +200,10 @@ $(document).ready(function () {
     $('#inputCEP').mask('00000-000');
     $('#PIS').mask('000.00000.00-0', { reverse: false });
     $('#Select2_Empresa')
+    $('#Data_Admissao').mask("99/99/9999");
+    $('#Data_Demissao').mask("99/99/9999");
+    $('#Data_Nascimento').mask("99/99/9999");
+
 
     //Máscara Telefone
     var SPMaskBehavior = function (val) {

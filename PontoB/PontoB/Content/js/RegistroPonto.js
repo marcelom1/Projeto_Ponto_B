@@ -1,5 +1,7 @@
 var registro = true;
 $(document).ready(function () {
+    $('#dataInicio').mask("99/99/9999");
+    $('#dataFim').mask("99/99/9999");
     ExibirHoraAtual();
     $("#registrar").click(EnviarRegistro);
    
@@ -62,8 +64,8 @@ function EnviarRegistro() {
 
 function atualizaRelogio(hora) {
 
-
-        var momentoAtual = new Date(moment(new Date(hora)).add(1, 'seconds').format('YYYY MM DD H:mm:ss'));
+        var teste = moment(new Date(hora)).add(1, 'seconds').format('YYYY/MM/DD H:mm:ss')
+        var momentoAtual = new Date(moment(new Date(hora)).add(1, 'seconds').format('YYYY/MM/DD H:mm:ss'));
    
         var vhora = momentoAtual.getHours();
         var vminuto = momentoAtual.getMinutes();
@@ -77,8 +79,8 @@ function atualizaRelogio(hora) {
         if (vmes < 10) { vmes = "0" + vmes; }
         if (vhora < 10) { vhora = "0" + vhora; }
         if (vminuto < 10) { vminuto = "0" + vminuto; }
-        if (vsegundo < 10) { vsegundo = "0" + vsegundo; }
-
+    if (vsegundo < 10) { vsegundo = "0" + vsegundo; }
+   
         dataFormat = vdia + " / " + vmes + " / " + vano;
         horaFormat = vhora + " : " + vminuto + " : " + vsegundo;
 

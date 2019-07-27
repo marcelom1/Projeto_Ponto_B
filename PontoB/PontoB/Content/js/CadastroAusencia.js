@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    $('#Data_inicio').mask("99/99/9999");
+    $('#hora_inicio').mask("99:99");
+    $('#Data_fim').mask("99/99/9999");
+    $('#hora_fim').mask("99:99");
+
     $('#Select2_MotivoAusencia').select2({
 
         language: "pt-BR",

@@ -236,7 +236,7 @@ namespace PontoB.Controllers
             return View("Index", filtro);
         }
 
-        public ActionResult ExcluirAusenciaColaborador(int AusenciaColaboradorId)
+        public ActionResult ExcluirAusenciaColaborador(int AusenciaColaboradorId, string ViewOrigem)
         {
             //Antes de excluir é feito a verificação se o horario existe 
             var pesquisa = dbAusenciaColaborador.BuscarPorId(AusenciaColaboradorId);
@@ -245,9 +245,9 @@ namespace PontoB.Controllers
             //Caso encontre algo, exluir o registro
             if (pesquisa != null)
                 dbAusenciaColaborador.ExcluirAusenciaColaboradores(pesquisa);
-
             
-            return RedirectToAction("Form", new { id = IdAusenciaColaborador });
+            
+            return RedirectToAction(ViewOrigem, new { id = IdAusenciaColaborador });
         }
 
         public bool DataInicioMaiorDataFinal(DateTime? dataInicio, int horaInicio, int minutoInicio, DateTime? dataFim, int horaFim, int minutoFim)

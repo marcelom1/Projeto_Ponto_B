@@ -1,5 +1,10 @@
 ﻿
 $(document).ready(function () {
+   
+    $('#NovoHoraEntrada').mask("99:99");
+    $('#NovoHoraSaida').mask("99:99");
+
+
     if ($("#Escala_id").val() == 0) {
         $("#Botao_Excluir_Formulario_Escala").hide();
         

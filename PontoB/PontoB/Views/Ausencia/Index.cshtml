@@ -59,7 +59,7 @@
 
 
                 <tr onclick="location.href = '@Url.Action("Form", "Ausencia", new { Id = ausencia.Ausencia.Id})';" style="cursor:Pointer">
-                    <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
+                    <td><a href="@Url.Action("ExcluirAusenciaColaborador", "Ausencia", new { AusenciaColaboradorId = ausencia.Id, ViewOrigem = "Index" })" class="Botao_Excluir" onclick="return confirm('Confirma Exclusão do Registro @ausencia.Id ? ') "><img type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></a></td>
                     <td>@ausencia.Id</td>
                     <td>@ausencia.Colaborador.NomeCompleto</td>
                     <td>@ausencia.DataInicio</td>
