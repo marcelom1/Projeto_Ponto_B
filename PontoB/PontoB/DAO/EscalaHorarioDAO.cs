@@ -13,13 +13,15 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                var filtro = contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana== "Segunda").OrderBy(p=>p.EntradaHora).OrderBy(p=>p.EntradaMinuto).ToList();
+                var filtro = contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Domingo").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList();
+                filtro.AddRange(contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Segunda").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList());
                 filtro.AddRange(contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Terça").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList());
                 filtro.AddRange(contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Quarta").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList());
                 filtro.AddRange(contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Quinta").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList());
                 filtro.AddRange(contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Sexta").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList());
                 filtro.AddRange(contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Sábado").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList());
-                filtro.AddRange(contexto.EscalaHorario.Where(p => p.EscalaId.Equals(IdEscala) && p.DiaSemana == "Domingo").OrderBy(p => p.EntradaHora).OrderBy(p => p.EntradaMinuto).ToList());
+                
+                
                 return filtro;
  
             }

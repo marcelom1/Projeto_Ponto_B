@@ -139,7 +139,7 @@ namespace PontoB.Controllers
             {
                 model.Add(new HistoricoRegistroPontoViewModels
                 {
-                    Data = @registro.Date.ToShortDateString(),
+                    Data = registro.Date.ToShortDateString(),
                     Registros = string.Join(" - ", filtro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.Date).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),
                     colaborador = colaboradorLogado
                 });

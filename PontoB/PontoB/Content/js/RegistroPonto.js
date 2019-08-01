@@ -64,7 +64,7 @@ function EnviarRegistro() {
 
 function atualizaRelogio(hora) {
 
-        var teste = moment(new Date(hora)).add(1, 'seconds').format('YYYY/MM/DD H:mm:ss')
+       
         var momentoAtual = new Date(moment(new Date(hora)).add(1, 'seconds').format('YYYY/MM/DD H:mm:ss'));
    
         var vhora = momentoAtual.getHours();

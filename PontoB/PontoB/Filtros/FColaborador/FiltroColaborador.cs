@@ -20,8 +20,10 @@ namespace PontoB.Filtros.FColaborador
                 return new FiltroColaboradorCodigo();
             else if (coluna.Equals("Todos", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorTodos();
-            else if (coluna.Equals("ColaboradorAtivo",StringComparison.OrdinalIgnoreCase))
+            else if (coluna.Equals("ColaboradorAtivo", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorAtivoPorNome();
+            else if (coluna.Equals("EmpresaId", StringComparison.OrdinalIgnoreCase))
+                return new FiltroColaboradorEmpresaID();
 
 
             return null;

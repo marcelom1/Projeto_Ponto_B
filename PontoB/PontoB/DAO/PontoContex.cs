@@ -24,6 +24,7 @@ namespace PontoB
         public DbSet<AusenciaColaboradores> AusenciaColaboradores { get; set; }
         public DbSet<MotivoAusencia> MotivoAusencia { get; set; }
         public DbSet<RegistroPonto> RegistroPonto { get; set; }
+        public DbSet<CalculoPonto> CalculoPonto { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

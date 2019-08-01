@@ -34,5 +34,10 @@ namespace PontoB.Models
         [Required(ErrorMessage = "Motivo é um campo obrigatório.")]
         public int AusenciaId { get; set; }
         public Ausencia Ausencia { get; set; }
+
+        public AusenciaColaboradores()
+        {
+        }
+       
     }
 }

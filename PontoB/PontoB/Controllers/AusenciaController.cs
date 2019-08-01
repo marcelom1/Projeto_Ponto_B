@@ -1,4 +1,5 @@
 ﻿using PagedList;
+using PontoB.Controllers.RegrasDeNegocios.RAusencia;
 using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.ViewModels.VAusencia;
@@ -20,7 +21,8 @@ namespace PontoB.Controllers
         private AusenciaColaboradoresDAO dbAusenciaColaborador = new AusenciaColaboradoresDAO();
         private ColaboradorDAO dbColaborador = new ColaboradorDAO();
         private EmpresaDAO dbEmpresa = new EmpresaDAO();
-        
+        private RegrasAusencia RegrasAusencia = new RegrasAusencia();
+
         // GET: Ausencia
         public ActionResult Index(int pagina = 1, string coluna = "", string filtro = "")
         {
@@ -72,6 +74,8 @@ namespace PontoB.Controllers
 
 
         }
+
+
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public JsonResult GetEmpresas(string searchTerm)
@@ -88,25 +92,12 @@ namespace PontoB.Controllers
 
 
         }
-        public bool ConflitoAusenciaDemissao(Colaborador colaborador, AusenciaColaboradores ausenciaColaborador)
-        {
-            if (colaborador.DataDemissao >= ausenciaColaborador.DataFim && (colaborador.DataDemissao >= ausenciaColaborador.DataFim) || colaborador.DataDemissao == null)
-                return false;
-            return true;
-        }
+       
 
         public ActionResult AdicionaAusenciaColaborador(AusenciaColaboradores ausenciaColaboradores, DateTime HoraInicio, DateTime HoraFim, int empresa = 0, bool TodosColaboradores = false, bool TodasEmpresas = false)
         {
-            ausenciaColaboradores.HoraInicio = HoraInicio.Hour;
-            ausenciaColaboradores.MinutoInicio = HoraInicio.Minute;
-            ausenciaColaboradores.HoraFim = HoraFim.Hour;
-            ausenciaColaboradores.MinutoFim = HoraFim.Minute;
-            ausenciaColaboradores.DataInicio = ausenciaColaboradores.DataInicio.GetValueOrDefault().AddHours(HoraInicio.Hour).AddMinutes(HoraInicio.Minute);
-            ausenciaColaboradores.DataFim = ausenciaColaboradores.DataFim.GetValueOrDefault().AddHours(HoraFim.Hour).AddMinutes(HoraFim.Minute);
-            ausenciaColaboradores.Ausencia = dbAusencia.BuscarPorId(ausenciaColaboradores.AusenciaId);
-            ausenciaColaboradores.Colaborador = dbColaborador.BuscarPorId(ausenciaColaboradores.ColaboradorId);
-            ausenciaColaboradores.MotivoAusencia = dbMotivoAusencia.BuscarPorId(ausenciaColaboradores.MotivoAusenciaId);
-            ausenciaColaboradores.Colaborador = ausenciaColaboradores.Colaborador ?? new Colaborador();
+            ausenciaColaboradores = RegrasAusencia.MontarAusenciaColaboradores(ausenciaColaboradores, HoraInicio, HoraFim);
+
             var model = new AusenciaViewModels {
                 AusenciaColaboradores = ausenciaColaboradores,
                 TodosColaboradores = TodosColaboradores,
@@ -116,49 +107,37 @@ namespace PontoB.Controllers
 
             if (ModelState.IsValid)
             {
-                if (!DataInicioMaiorDataFinal(ausenciaColaboradores.DataInicio, HoraInicio.Hour, HoraInicio.Minute, ausenciaColaboradores.DataFim, HoraFim.Hour, HoraFim.Minute))
+                if (!RegrasAusencia.DataInicioMaiorDataFinal(ausenciaColaboradores.DataInicio, HoraInicio.Hour, HoraInicio.Minute, ausenciaColaboradores.DataFim, HoraFim.Hour, HoraFim.Minute))
                 {
                     if (TodosColaboradores)
                     {
                         if (TodasEmpresas)
                         {
-                            foreach (var colaborador in dbColaborador.Lista())
-                            {
-                                ausenciaColaboradores.Id = 0;
-                                ausenciaColaboradores.ColaboradorId = colaborador.Id;
-                                if (!ConflitoAusenciaDemissao(colaborador,ausenciaColaboradores))
-                                    dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
-                            }
+                            RegrasAusencia.AdicionarEmTodosOsColaboradoresDeTodasAsEmpresas(ausenciaColaboradores);
                             model = new AusenciaViewModels();
                         }
                         else
                         {
-                            foreach (var colaborador in dbColaborador.Filtro("Empresa", model.Empresa.RazaoSocial))
-                            {
-                                ausenciaColaboradores.Id = 0;
-                                ausenciaColaboradores.ColaboradorId = colaborador.Id;
-                                if (!ConflitoAusenciaDemissao(colaborador, ausenciaColaboradores))
-                                    dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
-                            }
+                            RegrasAusencia.AdicionarEmTodosColaboradoresEmUmaDeterminadaEmpresa(ausenciaColaboradores, model.Empresa);
                             model = new AusenciaViewModels();
                         }
                     }
                     else
                     {
-                        Colaborador buscaColaborador = (dbColaborador.BuscarPorId(ausenciaColaboradores.ColaboradorId));
-                        if (!ConflitoAusenciaDemissao(buscaColaborador, ausenciaColaboradores))
+                        try
                         {
-                            dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                            RegrasAusencia.AdicionarAusenciaEmUmColaborador(ausenciaColaboradores);
                             model = new AusenciaViewModels();
                         }
-                        else
-                            ModelState.AddModelError("ausenciaColaboradores.ColaboradorId", "Data de lançamento em conflito com a data de demissão do colaborador");
+                        catch (Exception e)
+                        {
 
+                            ModelState.AddModelError("ausenciaColaboradores.ColaboradorId", e.Message);
+                        }
                     }
 
                 }
                 else
-                    
                     ModelState.AddModelError("ausenciaColaboradores.DataInicio", "Data e hora inicial, não pode ser maior que Data e hora final!");
 
             }
@@ -168,8 +147,25 @@ namespace PontoB.Controllers
 
         }
 
+       
+        public ActionResult DetalhesAusencia(int id = 0)
+        {
+            var model = new AusenciaViewModels
+            {
+                AusenciaColaboradoresLista = dbAusenciaColaborador.Lista(0)
+            };
 
+            //Caso o Id for != de Zero é efetuado uma busca no banco para trazer os dados da ausência
+            if (id != 0)
+            {
+                model.AusenciaColaboradores.Ausencia = dbAusencia.BuscarPorId(id) ?? new Ausencia();
+                model.AusenciaColaboradoresLista = dbAusenciaColaborador.Lista(id);
 
+                //return View(model);
+            }
+
+            return PartialView(model);
+        }
 
 
         public ActionResult Form(int id = 0)
@@ -238,31 +234,11 @@ namespace PontoB.Controllers
 
         public ActionResult ExcluirAusenciaColaborador(int AusenciaColaboradorId, string ViewOrigem)
         {
-            //Antes de excluir é feito a verificação se o horario existe 
-            var pesquisa = dbAusenciaColaborador.BuscarPorId(AusenciaColaboradorId);
-            var IdAusenciaColaborador = pesquisa.AusenciaId;
-
-            //Caso encontre algo, exluir o registro
-            if (pesquisa != null)
-                dbAusenciaColaborador.ExcluirAusenciaColaboradores(pesquisa);
-            
-            
-            return RedirectToAction(ViewOrigem, new { id = IdAusenciaColaborador });
+            return RedirectToAction(ViewOrigem, new { id = RegrasAusencia.ExcluirAusencia(AusenciaColaboradorId) });
         }
 
-        public bool DataInicioMaiorDataFinal(DateTime? dataInicio, int horaInicio, int minutoInicio, DateTime? dataFim, int horaFim, int minutoFim)
-        {
-            dataInicio.GetValueOrDefault().AddHours(horaInicio).AddMinutes(minutoInicio);
-            dataFim.GetValueOrDefault().AddHours(horaFim).AddMinutes(minutoFim);
-            if (dataInicio > dataFim)
-                return true;
-
-            return false;
-        }
-        
-
-        
-       [HttpPost]
+       
+        [HttpPost]
         public ActionResult Excluir(Ausencia ausencia)
         {
             //Antes de excluir é feito a verificação se a escala existe 

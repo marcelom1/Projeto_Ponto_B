@@ -303,22 +303,28 @@
     <Content Include="Content\CSS\cadastroColaborador.css" />
     <Content Include="Content\CSS\cadastroEmpresa.css" />
     <Content Include="Content\CSS\CadastroEscala.css" />
+    <Content Include="Content\CSS\CalculoPonto.css" />
     <Content Include="Content\CSS\fontknewave.css" />
     <Content Include="Content\CSS\login.css" />
     <Content Include="Content\CSS\menuAdm.css" />
     <Content Include="Content\CSS\RegistroPonto.css" />
     <Content Include="Content\CSS\select2.min.css" />
     <Content Include="Content\CSS\tooltipster.bundle.min.css" />
+    <Content Include="Content\img\ausencia.svg" />
     <Content Include="Content\img\Fundo2.jpg" />
+    <Content Include="Content\img\lapis2.svg" />
     <Content Include="Content\img\lixeira.png" />
     <Content Include="Content\img\LogoB.gif" />
     <Content Include="Content\img\Lupa2.png" />
+    <Content Include="Content\img\x.svg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\BuscarCep.js" />
     <Content Include="Content\js\CadastroAusencia.js" />
     <Content Include="Content\js\CadastroColaborador.js" />
     <Content Include="Content\js\CadastroEmpresa.js" />
     <Content Include="Content\js\CadastroEscala.js" />
+    <Content Include="Content\js\CalculoPonto.js" />
+    <Content Include="Content\js\DetalhesAusencia.js" />
     <Content Include="Content\js\jquery-3.3.1.slim.min.js" />
     <Content Include="Content\js\jquery-3.4.1.min.js" />
     <Content Include="Content\js\jquery.js" />
@@ -349,14 +355,17 @@
     <Compile Include="Business\Utils\FiltroPeriodoValores.cs" />
     <Compile Include="Business\Utils\NullableDateTimeExtensions.cs" />
     <Compile Include="Controllers\AusenciaController.cs" />
+    <Compile Include="Controllers\CalculoPontoController.cs" />
     <Compile Include="Controllers\ColaboradorController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistroPontoController.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RAusencia\RegrasAusencia.cs" />
     <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
     <Compile Include="DAO\AusenciaDAO.cs" />
+    <Compile Include="DAO\CalculoPontoDAO.cs" />
     <Compile Include="DAO\ColaboradorDAO.cs" />
     <Compile Include="DAO\EscalaDAO.cs" />
     <Compile Include="DAO\EscalaHorarioDAO.cs" />
@@ -373,6 +382,7 @@
     <Compile Include="Encrypt\SenhaHasher.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusencia.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusenciaColaborador.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaColaboradorEntreData.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusenciaDataFim.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusenciaDataInicio.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusenciaEmpresa.cs" />
@@ -385,6 +395,7 @@
     <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaDescricao.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaborador.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorAtivoPorNome.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorEmpresaID .cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorEmpresa .cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorNome.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorCodigo.cs" />
@@ -446,6 +457,7 @@
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\Ausencia.cs" />
     <Compile Include="Models\AusenciaColaboradores.cs" />
+    <Compile Include="Models\CalculoPonto.cs" />
     <Compile Include="Models\Colaborador.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />
@@ -453,9 +465,12 @@
     <Compile Include="Models\Escala.cs" />
     <Compile Include="Models\EscalaHorario.cs" />
     <Compile Include="Models\EstadosUF.cs" />
+    <Compile Include="Models\ManutencaoPonto.cs" />
     <Compile Include="Models\MotivoAusencia.cs" />
     <Compile Include="Models\RegistroPontoModels\RegistroPonto.cs" />
     <Compile Include="Models\ViewModels\VAusencia\AusenciaViewModels.cs" />
+    <Compile Include="Models\ViewModels\VCalculoPonto\IndexCalculoPontoViewModels.cs" />
+    <Compile Include="Models\ViewModels\VCalculoPonto\TabelaCalculoViewModels.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoComFiltro.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -482,6 +497,10 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\RegistroPonto\Index.cshtml" />
     <Content Include="Views\RegistroPonto\Historico.cshtml" />
+    <Content Include="Views\CalculoPonto\Index.cshtml" />
+    <Content Include="Views\CalculoPonto\TabelaCalculo.cshtml" />
+    <Content Include="Views\CalculoPonto\ModalTabelaCalculo.cshtml" />
+    <Content Include="Views\Ausencia\DetalhesAusencia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

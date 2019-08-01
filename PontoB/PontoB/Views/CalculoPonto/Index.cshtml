@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "Cálculo Ponto";
+    Layout = "~/Views/Shared/_LayoutAdm.cshtml";
+}
+
+@section css{
+
+    <link rel="stylesheet" href="~/Content/CSS/select2.min.css" />
+    <link rel="stylesheet" href="~/Content/CSS/CalculoPonto.css" />
+    <link rel="stylesheet" href="~/Content/CSS/cadastroAusencia.css" />
+
+
+}
+
+
+<h2 class="pb-3">Manutenção Ponto</h2>
+<div class="form-row pb-1 pt-4 ">
+    <div class="form-group col-md-2">
+        <label for="CodigoEscala">Código Empresa</label>
+        <div class="input-group mb-1">
+            <input type="text" class="form-control" id="Empresa_id" disabled placeholder="Código" name="Empresa.Id" value="">
+        </div>
+    </div>
+    <div class="form-group col-md-3 mr-2">
+        <div class="pr-2">
+            <label for="CodigoEmpresa">Empresa</label>
+        </div>
+        <select class="js-example-basic-single select2" id="Select2Empresa" name="empresa">
+            <option value=""></option>
+
+        </select>
+        <span class="erro" id="Erro_Ausencia_EmpresaId"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="DescricaoEscala">Data Inicial</label>
+        <input type="date" class="form-control" id="dataInicio" name="" value="">
+    </div>
+    <div class="form-group col-md-2">
+        <label for="DescricaoEscala">Data Final</label>
+        <input type="date" class="form-control" id="dataFim" name="" value="">
+    </div>
+    <div class="form-group col-md-2">
+        <div class="form-group pt-4 mt-2">
+            <button type="button" class="btn btn-secondary botao_cor btn-sm">Buscar</button>
+        </div>
+    </div>
+</div>
+<div class="form-row pb-1 pt-4 pr-2 ">
+    <div class="form-group col-md-2">
+        <label for="CodigoEscala">Código Colaborador</label>
+        <div class="input-group mb-1">
+            <input type="text" class="form-control" id="Colaborador_id" disabled placeholder="Código" name="Empresa.Id" value="">
+        </div>
+    </div>
+    <div class="form-group col-md-3 mr-3">
+        <div class="form-check form-check-inline">
+            <div class="pr-2">
+                <label for="CodigoColaborador">Colaborador</label>
+            </div>
+        </div>
+        <div id="ColaboradorSelect2">
+            <select class="js-example-basic-single select2" id="Select2Colaborador" name="ausenciaColaboradores.ColaboradorId">
+                <option value=""></option>
+            </select>
+            <span class="erro" id="Erro_Ausencia_Colaborador"></span>
+
+        </div>
+    </div>
+    <div class="btn-group pt-4 mt-2" role="group" aria-label="Exemplo básico">
+        <button type="button" class="btn btn-secondary botao_cor BotaoProximoAnterior">Anterior</button>
+        <button type="button" class="btn btn-secondary botao_cor BotaoProximoAnterior">Prôximo</button>
+    </div>
+
+
+</div>
+<div class="form-row pb-4 pt-4">
+    <div class="btn-group" role="group" aria-label="Exemplo básico">
+        <button type="button" class="btn btn-secondary botao_cor btn-sm">Cálcular</button>
+        <button type="button" class="btn btn-secondary botao_cor btn-sm">Visualizar Cálculo</button>
+    </div>
+</div>
+<div>
+    <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Dia da Semana</th>
+                <th scope="col">Data</th>
+                <th scope="col">Registros</th>
+                <th scope="col">Motivo Ausência</th>
+                <th scope="col">Horas Previstas</th>
+                <th scope="col">Horas Realizadas</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Ação</th>
+            </tr>
+        </thead>
+        <tbody id="ParcialViewTabelaCalculo"></tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="TituloModalLongoExemplo" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="ModalTabelaCalculo">
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script src="~/Content/js/select2.min.js"></script>
+    <script src="~/Content/js/pt-BR.js"></script>
+    <script src="~/Content/js/CalculoPonto.js"></script>
+    <script src="~/Content/js/DetalhesAusencia.js"></script>
+    <script src="~/Content/js/moment.js"></script>
+
+
+}
