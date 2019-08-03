@@ -316,6 +316,7 @@
     <Content Include="Content\img\lixeira.png" />
     <Content Include="Content\img\LogoB.gif" />
     <Content Include="Content\img\Lupa2.png" />
+    <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\img\x.svg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\BuscarCep.js" />

@@ -73,19 +73,51 @@
     });
 });
 
+function buscaTabela() {
+    var EmpresaId = $("#Select2Empresa").val();
+    var colaboradorId = $("#Select2Colaborador").val();
+    var dataInicial = $("#dataInicio").val();
+    var dataFinal = $("#dataFim").val();
 
+    
+    
+    if (colaboradorId != null && EmpresaId != null && dataInicial != '' && dataFinal!='') {
+        $("#spninner").removeClass("Oculto");
+        $("#ParcialViewTabelaCalculo").load("/CalculoPonto/TabelaCalculo/", { idColaborador: colaboradorId, dataInicio: dataInicial, dataFim: dataFinal }, function () {
+            $("#spninner").addClass("Oculto");
+        });
+    } else {
+        $("#ParcialViewTabelaCalculo").html("");
+    }
+};
+
+var AntesEmpresaSelect2 = '';
 $("#Select2Empresa").on('select2:close', function () {
-    $("#Empresa_id").val($("#Select2Empresa").val());
+
+
+    var EmpresaId = $("#Select2Empresa").val();
+    if (EmpresaId != AntesEmpresaSelect2) {
+        $("#Select2Colaborador").val("").text("");
+        $("#Colaborador_id").val("");
+    }
+    if (EmpresaId) {
+        
+        $("#Empresa_id").val(EmpresaId);
+        AntesEmpresaSelect2 = $("#Empresa_id").val();
+    } else {
+        $("#Empresa_id").val("");
+    }
+    
+    buscaTabela();
 });
 
 $("#Select2Colaborador").on('select2:close', function () {
     var colaboradorId = $("#Select2Colaborador").val();
-    if (colaboradorId == '')
-        colaboradorId = 0;
-    var dataInicial = $("#dataInicio").val();
-    var dataFinal = $("#dataFim").val();
-    $("#Colaborador_id").val(colaboradorId);
-    $("#ParcialViewTabelaCalculo").load("/CalculoPonto/TabelaCalculo/", { idColaborador: colaboradorId, dataInicio: dataInicial, dataFim: dataFinal});
+    if (colaboradorId)
+        $("#Colaborador_id").val(colaboradorId);
+    else
+        $("#Colaborador_id").val("");
+    buscaTabela();
 });
 
 $(document).on('click', '.EditarRegistroPonto', function () {
@@ -96,8 +128,31 @@ $(document).on('click', '.EditarRegistroPonto', function () {
     });
 });
 
+$("#dataInicio").blur(function () {
+    var datafim = $("#dataFim").val();
+    var datainicio = $("#dataInicio").val()
+    if (datafim)
+        if (datafim < datainicio) {
+            $("#Erro_DataInicio").text("Data final não pode ser menor que data inicial!").show();
+        } else {
+            $("#Erro_DataInicio").hide();
+            buscaTabela();
+        }
+});
 
-
+$("#dataFim").blur(function () {
+    var datafim = $("#dataFim").val();
+    var datainicio = $("#dataInicio").val()
+    if (datainicio)
+        if (datafim < datainicio) {
+            $("#Erro_DataFim").text("Data final não pode ser menor que data inicial!").show();
+        }
+        else
+        {
+            $("#Erro_DataFim").hide();
+            buscaTabela();
+        }
+    });
 
 $(document).on('click', '#AddAusencia', function () {
     var data = $(this).closest('tr').find('td[data-dia]').data('dia');
@@ -163,8 +218,13 @@ function EnviaFormulario() {
 };
 
 function AtualizaAusencia(data) {
+
+    $("#spninner").removeClass("Oculto");
     var idColaborador = $("#Select2Colaborador").val();
-    $("#GridAusencia").load("/Ausencia/TabelaAusenciaPorDia", { data: data, colaboradorId: idColaborador });
+    $("#GridAusencia").load("/Ausencia/TabelaAusenciaPorDia", { data: data, colaboradorId: idColaborador }, function () {
+        $("#spninner").addClass("Oculto");
+
+    });
     $("#Select2_Colaborador").attr("disabled", true);
     $("#Select2_MotivoAusencia").val("").text("");
     $("#hora_inicio").val("00:00");

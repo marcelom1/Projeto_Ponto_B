@@ -35,10 +35,12 @@
     <div class="form-group col-md-2">
         <label for="DescricaoEscala">Data Inicial</label>
         <input type="date" class="form-control" id="dataInicio" name="" value="">
+        <span class="erro" id="Erro_DataInicio"></span>
     </div>
     <div class="form-group col-md-2">
         <label for="DescricaoEscala">Data Final</label>
         <input type="date" class="form-control" id="dataFim" name="" value="">
+        <span class="erro" id="Erro_DataFim"></span>
     </div>
     <div class="form-group col-md-2">
         <div class="form-group pt-4 mt-2">
@@ -96,6 +98,7 @@
         </thead>
         <tbody id="ParcialViewTabelaCalculo"></tbody>
     </table>
+    <img id="spninner" src="~/Content/img/spinner.gif" class="Oculto" width="20" height="20" />
 </div>
 
 <!-- Modal -->
