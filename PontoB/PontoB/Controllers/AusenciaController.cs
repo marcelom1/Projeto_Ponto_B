@@ -1,4 +1,5 @@
 ﻿using PagedList;
+using PontoB.Business.Utils;
 using PontoB.Controllers.RegrasDeNegocios.RAusencia;
 using PontoB.DAO;
 using PontoB.Models;
@@ -107,39 +108,16 @@ namespace PontoB.Controllers
 
             if (ModelState.IsValid)
             {
-                if (!RegrasAusencia.DataInicioMaiorDataFinal(ausenciaColaboradores.DataInicio, HoraInicio.Hour, HoraInicio.Minute, ausenciaColaboradores.DataFim, HoraFim.Hour, HoraFim.Minute))
+                try
                 {
-                    if (TodosColaboradores)
-                    {
-                        if (TodasEmpresas)
-                        {
-                            RegrasAusencia.AdicionarEmTodosOsColaboradoresDeTodasAsEmpresas(ausenciaColaboradores);
-                            model = new AusenciaViewModels();
-                        }
-                        else
-                        {
-                            RegrasAusencia.AdicionarEmTodosColaboradoresEmUmaDeterminadaEmpresa(ausenciaColaboradores, model.Empresa);
-                            model = new AusenciaViewModels();
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            RegrasAusencia.AdicionarAusenciaEmUmColaborador(ausenciaColaboradores);
-                            model = new AusenciaViewModels();
-                        }
-                        catch (Exception e)
-                        {
-
-                            ModelState.AddModelError("ausenciaColaboradores.ColaboradorId", e.Message);
-                        }
-                    }
+                    model = RegrasAusencia.ValidacaoRegraNegocio(ausenciaColaboradores, HoraInicio, HoraFim, TodosColaboradores, TodasEmpresas, model);
 
                 }
-                else
-                    ModelState.AddModelError("ausenciaColaboradores.DataInicio", "Data e hora inicial, não pode ser maior que Data e hora final!");
-
+                catch (ArgumentException e)
+                {
+                    ModelState.AddModelError(e.ParamName, e.Message);
+                    
+                }
             }
             model.AusenciaColaboradores.Ausencia = ausenciaColaboradores.Ausencia;
             model.AusenciaColaboradoresLista = dbAusenciaColaborador.Lista(ausenciaColaboradores.Ausencia.Id);
@@ -147,7 +125,37 @@ namespace PontoB.Controllers
 
         }
 
-       
+
+
+        public void AdicionaAusenciaColaboradorPelaManutencao(AusenciaColaboradores ausenciaColaboradores, DateTime HoraInicio, DateTime HoraFim)
+        {
+            ausenciaColaboradores = RegrasAusencia.MontarAusenciaColaboradores(ausenciaColaboradores, HoraInicio, HoraFim);
+
+            var model = new AusenciaViewModels
+            {
+                AusenciaColaboradores = ausenciaColaboradores,
+            };
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    model = RegrasAusencia.ValidacaoRegraNegocio(ausenciaColaboradores, HoraInicio, HoraFim, false, false, model);
+
+                }
+                catch (ArgumentException e)
+                {
+                    ModelState.AddModelError(e.ParamName, e.Message);
+                    
+                    
+
+                }
+
+            }
+        }
+
+
+
         public ActionResult DetalhesAusencia(int id = 0)
         {
             var model = new AusenciaViewModels
@@ -188,7 +196,27 @@ namespace PontoB.Controllers
             return View(model);
         }
 
+        public ActionResult TabelaAusenciaPorDia(DateTime? data, int colaboradorId)
+        {
 
+            var valores = new FiltroPeriodoValores
+            {
+                Inicio = data,
+                Fim = data,
+                ColaboradorId = colaboradorId
+
+            };
+            var texto = valores.ToString();
+
+            var resultado = dbAusencia.Filtro("ColaboradorEntreData", texto);
+
+            var model = new AusenciaViewModels
+            {
+                AusenciaColaboradoresLista = resultado
+            };
+
+            return PartialView(model);
+        }
 
 
 
@@ -232,8 +260,12 @@ namespace PontoB.Controllers
             return View("Index", filtro);
         }
 
-        public ActionResult ExcluirAusenciaColaborador(int AusenciaColaboradorId, string ViewOrigem)
+        public ActionResult ExcluirAusenciaColaborador(int AusenciaColaboradorId, string ViewOrigem, DateTime? data, int? idColaborador)
         {
+            if (ViewOrigem.Equals("TabelaAusenciaPorDia")) {
+                RegrasAusencia.ExcluirAusencia(AusenciaColaboradorId);
+                return RedirectToAction(ViewOrigem, new { data, colaboradorId = idColaborador });
+            }
             return RedirectToAction(ViewOrigem, new { id = RegrasAusencia.ExcluirAusencia(AusenciaColaboradorId) });
         }
 

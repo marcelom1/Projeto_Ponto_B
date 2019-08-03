@@ -91,7 +91,7 @@ $("#Select2Colaborador").on('select2:close', function () {
 $(document).on('click', '.EditarRegistroPonto', function () {
     var id = $(this).data("value");
     $("#ModalTabelaCalculo").load("/CalculoPonto/ModalTabelaCalculo/" + id, function () {
-        console.log("2");
+       
         $("#ModalEditar").modal("show");
     });
 });
@@ -110,18 +110,18 @@ function AddAusencia(id, data) {
  
     $.ajax({
         type: "POST",
-        url: "/Ausencia/DetalhesAusencia/"+id,
+        url: "/Ausencia/DetalhesAusencia/",
         data: "",
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (resposta) {
 
-            ModalAlert("", "Ok", resposta, "", "", data);
+            ModalAlert("", "", resposta, "", "", data);
             $("#labelTodosColaboradores").addClass("Oculto");
             $(".divData").addClass("Oculto");
            
-            $("#Data_inicio").val(new Date(moment(new Date(data)).format('YYYY/MM/DD H:mm:ss'))).addClass("Oculto");
-            $("#Data_fim").val(new Date(moment(new Date(data)).format('YYYY/MM/DD H:mm:ss'))).addClass("Oculto");
+            $("#Data_inicio").val(moment(data,"DD/MM/YYYY").format('YYYY-MM-DD')).addClass("Oculto");
+            $("#Data_fim").val(moment(data, "DD/MM/YYYY").format('YYYY-MM-DD')).addClass("Oculto");
             $("#TodosColaboradores").attr("disabled", true).addClass("Oculto");
             $("#Select2_Colaborador").attr("disabled", true);
             $("#TodasEmpresas").attr("disabled", true);
@@ -129,11 +129,65 @@ function AddAusencia(id, data) {
             $("#SelectColaborador").val(idColaborador).text(nomeColaborador);
             
             DetalhesAusencia();
+            AtualizaAusencia(data)
 
         },
         error: function (json) {
             alert("Erro de conexão com o servidor!");
             Console.log(json);
+        }
+    });
+};
+
+function EnviaFormulario() {
+    
+    var data = moment($("#Data_inicio").val()).format('DD/MM/YYYY');
+    
+    
+    $.ajax({
+        type: "POST",
+        url: "/CalculoPonto/AdicionarGrupoAusencia/",
+        data: JSON.stringify({ data: data}),
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (resposta) {
+            $("#ID_Ausencia").val(resposta);
+            EnvioFormularioAusencia(data);
+
+        },
+        error: function (json) {
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
+        }
+    });
+};
+
+function AtualizaAusencia(data) {
+    var idColaborador = $("#Select2Colaborador").val();
+    $("#GridAusencia").load("/Ausencia/TabelaAusenciaPorDia", { data: data, colaboradorId: idColaborador });
+    $("#Select2_Colaborador").attr("disabled", true);
+    $("#Select2_MotivoAusencia").val("").text("");
+    $("#hora_inicio").val("00:00");
+    $("#hora_fim").val("00:00");
+    $("#Observacao").val("");
+
+    
+};
+
+function EnvioFormularioAusencia(data) {
+    $("#Select2_Colaborador").attr("disabled", false);
+    var formularioDetalheAusencia = $("#CadastroAusenciaColaborador");
+    var form_data = new FormData(formularioDetalheAusencia[0]);
+
+    $.ajax({
+        type: "POST",
+        url: "/Ausencia/AdicionaAusenciaColaboradorPelaManutencao",
+        processData: false,
+        contentType: false,
+        data: form_data,
+        dataType: "html",
+        success: function (resposta) {
+            AtualizaAusencia(data);
         }
     });
 };

@@ -1,0 +1,35 @@
+﻿@using PontoB.Models.ViewModels.VAusencia
+@model AusenciaViewModels
+
+<table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Motivo</th>
+            <th scope="col">Colaborador</th>
+            <th scope="col">Empresa</th>
+            <th scope="col">Data Inicio</th>
+            <th scope="col">Data Fim</th>
+            <th scope="col">Observação</th>
+            <th scope="col">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ausencia in Model.AusenciaColaboradoresLista)
+        {
+            <tr>
+                <td>@ausencia.Id</td>
+                <td>@ausencia.MotivoAusencia.Descricao </td>
+                <td>@ausencia.Colaborador.NomeCompleto </td>
+                <td>@ausencia.Colaborador.Empresa.RazaoSocial</td>
+                <td>@ausencia.DataInicio</td>
+                <td>@ausencia.DataFim</td>
+                <td>@ausencia.Observacao</td>
+                <td><img id="botaoExcluirLinha" data-id="@ausencia.Id" type="button" src="~/Content/img/lixeira.png" width="20" height="20" /></td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+

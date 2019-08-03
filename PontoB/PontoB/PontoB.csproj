@@ -501,6 +501,7 @@
     <Content Include="Views\CalculoPonto\TabelaCalculo.cshtml" />
     <Content Include="Views\CalculoPonto\ModalTabelaCalculo.cshtml" />
     <Content Include="Views\Ausencia\DetalhesAusencia.cshtml" />
+    <Content Include="Views\Ausencia\TabelaAusenciaPorDia.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

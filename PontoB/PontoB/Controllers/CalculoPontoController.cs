@@ -136,6 +136,26 @@ namespace PontoB.Controllers
             return PartialView(model);
         }
 
+        public int AdicionarGrupoAusencia(string data)
+        {
+            var ausencia = new Ausencia{
+                Descricao = "Lançamento Manual - "+data
+            };
+
+            try
+            {
+                dbAusencia.Adiciona(ausencia);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+            return ausencia.Id;
+        }
+
+
         private static string GetDiaDaSemana(DateTime dataInicio)
         {
             switch ((int)dataInicio.DayOfWeek)

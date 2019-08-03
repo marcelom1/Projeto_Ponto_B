@@ -16,7 +16,36 @@ namespace PontoB.Controllers.RegrasDeNegocios.RAusencia
         private AusenciaColaboradoresDAO dbAusenciaColaborador = new AusenciaColaboradoresDAO();
         private ColaboradorDAO dbColaborador = new ColaboradorDAO();
         private EmpresaDAO dbEmpresa = new EmpresaDAO();
+        public AusenciaViewModels ValidacaoRegraNegocio(AusenciaColaboradores ausenciaColaboradores, DateTime HoraInicio, DateTime HoraFim, bool TodosColaboradores, bool TodasEmpresas, AusenciaViewModels model)
+        {
+            if (!DataInicioMaiorDataFinal(ausenciaColaboradores.DataInicio, HoraInicio.Hour, HoraInicio.Minute, ausenciaColaboradores.DataFim, HoraFim.Hour, HoraFim.Minute))
+            {
+                if (TodosColaboradores)
+                {
+                    if (TodasEmpresas)
+                    {
+                        AdicionarEmTodosOsColaboradoresDeTodasAsEmpresas(ausenciaColaboradores);
+                        model = new AusenciaViewModels();
+                    }
+                    else
+                    {
+                        AdicionarEmTodosColaboradoresEmUmaDeterminadaEmpresa(ausenciaColaboradores, model.Empresa);
+                        model = new AusenciaViewModels();
+                    }
+                }
+                else
+                {
+                   
+                    AdicionarAusenciaEmUmColaborador(ausenciaColaboradores);
+                    model = new AusenciaViewModels();
+                   
+                }
 
+            }
+            else
+                throw new System.ArgumentException("Data e hora inicial, não pode ser maior que Data e hora final!", "HoraInicio");
+            return model;
+        }
         public bool ConflitoAusenciaDemissao(Colaborador colaborador, AusenciaColaboradores ausenciaColaborador)
         {
             if (colaborador.DataDemissao >= ausenciaColaborador.DataFim && (colaborador.DataDemissao >= ausenciaColaborador.DataFim) || colaborador.DataDemissao == null)
@@ -81,7 +110,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.RAusencia
 
             }
             else
-                throw new System.ArgumentException("Data de lançamento em conflito com a data de demissão do colaborador");
+                throw new System.ArgumentException("Data de lançamento em conflito com a data de demissão do colaborador", "ausenciaColaboradores.DataInicio");
                 
         }
 

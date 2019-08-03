@@ -44,7 +44,9 @@
 });
 
 
-
+function EnviaFormulario() {
+    $("#CadastroAusenciaColaborador").submit();
+};
 
 
 

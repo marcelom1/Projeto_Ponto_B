@@ -39,7 +39,6 @@
             </div>
         </div>
 
-
         <div class="form-row pb-1 pt-4 ">
             <div class="form-group col-md-3 divData">
                 <label for="Data_Admissao" id="LabelDataInicio">Data Inicio</label>
@@ -84,16 +83,16 @@
 
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Observação</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" name="ausenciaColaboradores.Observacao" rows="3" maxlength="280">@Model.AusenciaColaboradores.Observacao</textarea>
+            <textarea class="form-control" id="Observacao" name="ausenciaColaboradores.Observacao" rows="3" maxlength="280">@Model.AusenciaColaboradores.Observacao</textarea>
         </div>
-        <input name="ausenciaColaboradores.AusenciaId" value="@Model.AusenciaColaboradores.Ausencia.Id" class="Oculto" />
+        <input name="ausenciaColaboradores.AusenciaId" id="ID_Ausencia" value="@Model.AusenciaColaboradores.Ausencia.Id" class="Oculto" />
         <div class="form-group pb-5">
             <div class="form-group">
                 <button type="button" id="NovaLinhaAusencia" class="btn botao_adicionar btn-sm">Adicionar</button>
             </div>
         </div>
     }
-    <div>
+    <div id="GridAusencia">
         <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
             <thead class="thead-dark">
                 <tr>

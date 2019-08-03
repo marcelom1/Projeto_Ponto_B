@@ -47,9 +47,9 @@
         if (DataInicio == DataFim)
             if (HoraInicio > HoraFim) {
                 erro++;
-                $("#Erro_Ausencia_Datas").text("Hora inicial não pode ser maior que hora final").show();
+                $("#Erro_Ausencia_HoraInicio").text("Hora inicial não pode ser maior que hora final").show();
             } else
-                $("#Erro_Ausencia_Datas").hide();
+                $("#Erro_Ausencia_HoraInicio").hide();
 
         if (MotivoId == 0) {
             erro++;
@@ -76,7 +76,8 @@
                 $("#Erro_Ausencia_EmpresaId").hide();
 
         if (erro == 0)
-            $("#CadastroAusenciaColaborador").submit();
+            EnviaFormulario();//Cada página deve implementar o enviar Formulário com a rota de envio desejada.
+            
 
     });
 
@@ -214,3 +215,13 @@
         e.stopPropagation();
     });
 }
+
+$(document).on('click', '#botaoExcluirLinha', function () {
+    var id = $(this).data("id");
+    var idColaborador = $("#Select2Colaborador").val();
+    var data = moment($("#Data_inicio").val()).format('DD/MM/YYYY');
+    if (confirm('Confirma Exclusão do Registro ' + id + "?")) {
+        $("#GridAusencia").load("/Ausencia/ExcluirAusenciaColaborador", { AusenciaColaboradorId: id, ViewOrigem: "TabelaAusenciaPorDia", data, idColaborador: idColaborador });
+    }
+
+});
