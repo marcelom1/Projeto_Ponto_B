@@ -3,6 +3,7 @@ using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.RegistroPontoModels;
 using PontoB.Models.ViewModels.VCalculoPonto;
+using PontoB.Models.ViewModels.VManutencaoPonto;
 using PontoB.Models.ViewModels.VRegistroPonto;
 using System;
 using System.Collections.Generic;
@@ -96,7 +97,10 @@ namespace PontoB.Controllers
                 model.Add(new TabelaCalculoViewModels
                 {
                     DiaDaSemana = diasemana,
-                    Data = dataInicio
+                    Data = dataInicio,
+                    ColaboradorId = Colaborador.Id,
+                    EscalaId = EscalaColaborador.Id
+                    
 
 
                 });
@@ -119,13 +123,6 @@ namespace PontoB.Controllers
                     }
 
                 }
-
-                foreach (var ausencia in AusenciaColaborador)
-                {
-                    if (item.Data.Date >= ausencia.DataInicio && item.Data.Date <= ausencia.DataFim)
-                        item.Ausencia.Add(ausencia);
-                }
-
                 foreach (var escala in EscalaTotalDiaSemana.Where(x=>x.DiaSemana==item.DiaDaSemana))
                 {
                     item.TotalEscalaMinutos = escala.TotalEmMinutos;
@@ -182,9 +179,6 @@ namespace PontoB.Controllers
 
         private static IList<EscalaHorario> GetHorasDiaDaSemana(Escala EscalaColaborador)
         {
-
-
-
             IList<EscalaHorario> EscalaTotalDiaSemana = new List<EscalaHorario>();
             foreach (var diaSemana in EscalaColaborador.EscalasHorario.Select(x => x.DiaSemana).Distinct())
             {
@@ -199,15 +193,39 @@ namespace PontoB.Controllers
             return EscalaTotalDiaSemana;
         }
 
-        public ActionResult ModalTabelaCalculo(int? idColaborador, DateTime? dataInicial, DateTime? dataFim)
-        {
+        
 
-            return PartialView();
+        public ActionResult ModalTabelaCalculo(int idColaborador, int idEscala, DateTime data)
+        {
+            var escala = dbEscala.BuscarPorId(idEscala).EscalasHorario.OrderBy(e=>e.EntradaMinuto).ThenBy(e=>e.EntradaHora).Where(e=>e.DiaSemana.Equals(GetDiaDaSemana(data)));
+            
+
+            var valores = new FiltroPeriodoValores
+            {
+                Inicio = data,
+                Fim = data,
+                ColaboradorId = idColaborador
+
+            };
+            var texto = valores.ToString();
+            //Faz a Busca do filtro
+            var filtro = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto).OrderBy(e=>e.DataRegistro);
+
+            var model = new ManutencaoPontoViewModel {
+                EscalaHorario = StringEscalaViewModel(escala),
+                DiaDaSemana = GetDiaDaSemana(data),
+                Dia = data,
+                Registros = filtro
+            };
+            
+
+
+            return PartialView(model);
         }
 
         public List<HistoricoRegistroPontoViewModels> ListaPontoRegistroViewModel(IList<RegistroPonto> filtro)
         {
-            var colaboradorLogado = dbColaborador.BuscarEmail(User.Identity.Name);
+           
             List<HistoricoRegistroPontoViewModels> model = new List<HistoricoRegistroPontoViewModels>();
 
             foreach (var registro in filtro.OrderByDescending(d => d.DataRegistro).Select(x => x.DataRegistro.Date).Distinct())
@@ -216,11 +234,21 @@ namespace PontoB.Controllers
                 {
                     Data = registro.Date.ToShortDateString(),
                     Registros = string.Join(" - ", filtro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.Date).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),
-                    colaborador = colaboradorLogado
+                    colaborador = filtro[0].Colaborador
                 });
             }
 
             return model;
+
+        }
+
+        public string StringEscalaViewModel(IEnumerable<EscalaHorario> filtro)
+        {
+            string resultado = "";
+
+            resultado = string.Join(" - ", filtro.Select(x => x.EntradaHora.ToString("00") + ":" + x.EntradaMinuto.ToString("00") + " - " + x.SaidaHora.ToString("00") + x.SaidaMinuto.ToString("00")));
+            
+            return resultado;
 
         }
     }

@@ -16,7 +16,7 @@ namespace PontoB.Filtros.FEscala
                 return new FiltroEscalaDescricao();
             else if (coluna.Equals("Todos", StringComparison.OrdinalIgnoreCase))
                 return new FiltroEscalaTodos();
-           
+            
 
             return null;
 

@@ -472,6 +472,7 @@
     <Compile Include="Models\ViewModels\VAusencia\AusenciaViewModels.cs" />
     <Compile Include="Models\ViewModels\VCalculoPonto\IndexCalculoPontoViewModels.cs" />
     <Compile Include="Models\ViewModels\VCalculoPonto\TabelaCalculoViewModels.cs" />
+    <Compile Include="Models\ViewModels\VManutencaoPonto\ManutencaoPontoViewModel.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoComFiltro.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

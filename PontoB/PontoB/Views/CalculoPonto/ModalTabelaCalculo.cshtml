@@ -1,12 +1,14 @@
-﻿<div class="modal-header">
-    <h3 class="modal-title" id="TituloModalLongoExemplo">Segunda - 22/07/2019</h3>
+﻿@model PontoB.Models.ViewModels.VManutencaoPonto.ManutencaoPontoViewModel
+
+<div class="modal-header">
+    <h3 class="modal-title" id="TituloModalLongoExemplo">@Model.DiaDaSemana - @Model.Dia.ToShortDateString()</h3>
     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
     <h5>Escala Prevista</h5>
-    <p>08:00 - 12:00 - 13:00 - 17:00</p>
+    <p>@Model.EscalaHorario</p>
 
 
     <h5 class=" pt-3">Adicionar Horario</h5>
@@ -19,8 +21,6 @@
                 <button type="button" class="btn btn-secondary botao_cor btn-sm">Adicionar</button>
             </div>
         </div>
-
-
     </div>
 
 
@@ -35,61 +35,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    </div>
-                </td>
-                <td>
-                    <input type="text" disabled class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Observação" value="">
-                </td>
-                <td>08:00</td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" checked value="" id="defaultCheck1">
-                    </div>
-                </td>
-                <td>
-                    <input type="text" class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Empresa" value="MARCAÇÃO DUPLICADA">
-                </td>
-                <td>08:05</td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    </div>
-                </td>
-                <td>
-                    <input type="text" disabled class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Observação" value="">
-                </td>
-                <td>11:00</td>
+            @foreach (var registro in Model.Registros)
+            {
 
-            </tr>
-            <tr>
-                <td>
-                    <a class="Botao_Excluir"><img type="button" data-target="#ModalLongoExemplo" data-toggle="modal" src="~/Content/img/x.svg" width="28" height="30" /></a>
-                </td>
-                <td>
-                    <input type="text" disabled class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Observação" value="">
-                </td>
-                <td>13:00</td>
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" disabled class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Observação" value="">
+                    </td>
+                    <td>@registro.DataRegistro.ToShortTimeString()</td>
+                </tr>
 
-            <tr>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                    </div>
-                </td>
-                <td>
-                    <input type="text" disabled class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Observação" value="">
-                </td>
-                <td>17:00</td>
-
-            </tr>
+            }
 
         </tbody>
     </table>

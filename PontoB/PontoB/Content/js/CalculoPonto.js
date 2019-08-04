@@ -121,9 +121,10 @@ $("#Select2Colaborador").on('select2:close', function () {
 });
 
 $(document).on('click', '.EditarRegistroPonto', function () {
-    var id = $(this).data("value");
-    $("#ModalTabelaCalculo").load("/CalculoPonto/ModalTabelaCalculo/" + id, function () {
-       
+    var idColaborador = $(this).data("colaborador");
+    var idEscala = $(this).data("escala");
+    var data = $(this).data("dia");
+    $("#ModalTabelaCalculo").load("/CalculoPonto/ModalTabelaCalculo/", { data, idEscala, idColaborador }, function () {
         $("#ModalEditar").modal("show");
     });
 });
