@@ -72,6 +72,29 @@ namespace PontoB.Migrations
                     b.ToTable("AusenciaColaboradores");
                 });
 
+            modelBuilder.Entity("PontoB.Models.CalculoPonto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ColaboradorId");
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<int>("SaldoEmMinutos");
+
+                    b.Property<int>("TotalPrevistoEmMinutos");
+
+                    b.Property<int>("TotalRealizadoEmMinutos");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColaboradorId");
+
+                    b.ToTable("CalculoPonto");
+                });
+
             modelBuilder.Entity("PontoB.Models.Colaborador", b =>
                 {
                     b.Property<int>("Id")
@@ -265,9 +288,15 @@ namespace PontoB.Migrations
 
                     b.Property<DateTime>("DataRegistro");
 
+                    b.Property<bool>("DesconsiderarMarcacao");
+
                     b.Property<int>("HoraRegistro");
 
                     b.Property<int>("MinutoRegistro");
+
+                    b.Property<string>("Observacao");
+
+                    b.Property<bool>("RegistroManual");
 
                     b.HasKey("Id");
 
@@ -291,6 +320,14 @@ namespace PontoB.Migrations
                     b.HasOne("PontoB.Models.MotivoAusencia", "MotivoAusencia")
                         .WithMany("AusenciaColaboradores")
                         .HasForeignKey("MotivoAusenciaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PontoB.Models.CalculoPonto", b =>
+                {
+                    b.HasOne("PontoB.Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

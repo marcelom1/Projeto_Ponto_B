@@ -59,6 +59,8 @@ namespace PontoB.Controllers
                     registro.DataRegistro = DateTime.Now;
                     registro.HoraRegistro = registro.DataRegistro.Hour;
                     registro.MinutoRegistro = registro.DataRegistro.Minute;
+                    registro.DesconsiderarMarcacao = false;
+                    registro.RegistroManual = false;
                     dbRegistroPonto.Adiciona(registro);
                     return "True";
                 }

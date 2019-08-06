@@ -1,0 +1,35 @@
+﻿@model PontoB.Models.ViewModels.VManutencaoPonto.ManutencaoPontoViewModel
+
+    @{ int i = 0;}
+    @foreach (var registro in Model.Registros)
+    {
+<tr>
+    <td class="Oculto"><input value="@registro.Id" name="registroId" /> </td>
+    <td>@registro.DataRegistro.ToShortTimeString()</td>
+    @{
+        if (registro.RegistroManual)
+        {
+            <td>
+                <a id="ExcluirRegistroPontoManualmente" data-id="@registro.Id" data-idColaborador="@registro.ColaboradorId" data-data="@registro.DataRegistro.ToShortDateString()" ><img class="PonteiroClick" src="~/Content/img/x.svg" width="28" height="30" /></a>
+            </td>
+        }
+        else
+        {
+            <td>
+                <div class="form-check">
+                    <input class="form-check-input" name="desconsidera" type="checkbox" id="desconsidera" checked="@registro.DesconsiderarMarcacao" data-id="@i" value="@registro.Id" />
+                    
+                </div>
+            </td>
+        }
+    }
+    <td>
+        <input type="text" class="form-control check-@i" disabled="@(!registro.DesconsiderarMarcacao)" required="@registro.DesconsiderarMarcacao" id="Observacao" name="observacao" placeholder="Observação" value="@registro.Observacao" />
+        
+    </td>
+
+</tr>
+        i++;
+    }
+
+

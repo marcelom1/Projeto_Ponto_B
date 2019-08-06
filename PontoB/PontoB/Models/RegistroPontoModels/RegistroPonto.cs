@@ -13,5 +13,8 @@ namespace PontoB.Models.RegistroPontoModels
         public DateTime DataRegistro { get; set; }
         public int HoraRegistro { get; set; }
         public int MinutoRegistro { get; set; }
+        public bool RegistroManual { get; set; }
+        public string Observacao { get; set; }
+        public bool DesconsiderarMarcacao { get; set; }
     }
 }

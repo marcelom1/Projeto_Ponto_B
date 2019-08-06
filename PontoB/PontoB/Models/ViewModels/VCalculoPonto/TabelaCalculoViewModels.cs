@@ -23,7 +23,7 @@ namespace PontoB.Models.ViewModels.VCalculoPonto
         public IList<AusenciaColaboradores> Ausencia  { get; set; }
         public int TotalEscalaMinutos { get; set; }
         public CalculoPonto CalculoPonto { get; set; }
-        public ManutencaoPonto ManutencaoPonto { get; set; }
+      
         public int EscalaId { get; set; }
         public int ColaboradorId { get; set; }
     }

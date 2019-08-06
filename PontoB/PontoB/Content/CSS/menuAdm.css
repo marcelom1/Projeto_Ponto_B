@@ -62,6 +62,9 @@ h6 {
     min-width: 300px;
 }
 
+.PonteiroClick {
+    cursor: pointer;
+}
 .tabela {
     text-align: center;
     margin: auto !important;

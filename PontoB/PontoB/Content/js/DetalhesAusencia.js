@@ -13,26 +13,26 @@
         var MotivoId = $("#Select2_MotivoAusencia").val();
         var erro = 0;
 
-        if (DataInicio == "") {
+        if (DataInicio=='') {
             erro++;
             $("#Erro_Ausencia_DataInicio").text("Data inicial não pode ficar em branco").show();
         } else
             $("#Erro_Ausencia_DataInicio").hide();
 
 
-        if (DataFim == "") {
+        if (DataFim=='') {
             erro++;
             $("#Erro_Ausencia_DataFim").text("Data final não pode ficar em branco").show();
         } else
             $("#Erro_Ausencia_DataFim").hide();
 
-        if (HoraInicio == "") {
+        if (HoraInicio=='') {
             erro++;
             $("#Erro_Ausencia_HoraInicio").text("Hora inicial não pode ficar em branco").show();
         } else
             $("#Erro_Ausencia_HoraInicio").hide();
 
-        if (HoraFim == "") {
+        if (HoraFim=='') {
             erro++;
             $("#Erro_Ausencia_HoraFim").text("Hora final não pode ficar em branco").show();
         } else
@@ -221,7 +221,7 @@ $(document).on('click', '#botaoExcluirLinha', function () {
     var idColaborador = $("#Select2Colaborador").val();
     var data = moment($("#Data_inicio").val()).format('DD/MM/YYYY');
     if (confirm('Confirma Exclusão do Registro ' + id + "?")) {
-        $("#GridAusencia").load("/Ausencia/ExcluirAusenciaColaborador", { AusenciaColaboradorId: id, ViewOrigem: "TabelaAusenciaPorDia", data, idColaborador: idColaborador });
+        $("#GridAusencia").load("/Ausencia/ExcluirAusenciaColaborador", { AusenciaColaboradorId: id, ViewOrigem: "TabelaAusenciaPorDia", data: data, idColaborador: idColaborador });
     }
 
 });

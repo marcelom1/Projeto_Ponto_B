@@ -16,11 +16,15 @@
 
     }
 </td>
-<td><a class="s" id="AddAusencia" data-value="@i"><img type="button" src="~/Content/img/ausencia.svg" width="28" height="30" /></a></td>
+<td><a id="AddAusencia" data-value="@i"><img class="PonteiroClick" src="~/Content/img/ausencia.svg" width="28" height="30" /></a></td>
 <td>@((calculo.TotalEscalaMinutos / 60).ToString("D2") + ":" + (calculo.TotalEscalaMinutos % 60).ToString("D2"))</td>
 <td></td>
 <td></td>
-<td><a class="EditarRegistroPonto" data-value="@i" data-dia="@calculo.Data.ToShortDateString()" data-Escala="@calculo.EscalaId" data-Colaborador="@calculo.ColaboradorId"><img type="button" src="~/Content/img/lapis2.svg" width="28" height="30" /></a></td>
+<td>
+    <a class="AdicionarRegistroPonto" data-value="@i" data-dia="@calculo.Data.ToShortDateString()" data-Escala="@calculo.EscalaId" data-Colaborador="@calculo.ColaboradorId"><img class="PonteiroClick" src="~/Content/img/adicionar.svg" width="28" height="30" /></a>
+    <a class="EditarRegistroPonto" data-value="@i" data-dia="@calculo.Data.ToShortDateString()" data-Escala="@calculo.EscalaId" data-Colaborador="@calculo.ColaboradorId"><img class="PonteiroClick" src="~/Content/img/lapis2.svg" width="28" height="30" /></a>
+
+</td>
 </tr>
     i++;
     

@@ -65,15 +65,18 @@ namespace PontoB.DAO
 
 
 
-            public void ExcluirRegistroPonto(RegistroPonto registro)
+        public bool ExcluirRegistroPonto(RegistroPonto registro)
         {
             using (var contexto = new PontoContex())
             {
 
-
-                contexto.RegistroPonto.Remove(registro);
-                contexto.SaveChanges();
-
+                if (registro.RegistroManual)
+                {
+                    contexto.RegistroPonto.Remove(registro);
+                    contexto.SaveChanges();
+                    return true;
+                }
+                return false;
             }
 
 

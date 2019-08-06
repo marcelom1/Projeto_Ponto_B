@@ -10,52 +10,26 @@
     <h5>Escala Prevista</h5>
     <p>@Model.EscalaHorario</p>
 
-
-    <h5 class=" pt-3">Adicionar Horario</h5>
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <input type="time" class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Ex: Escala Geral" value="">
-        </div>
-        <div class="form-group col-md-2">
-            <div class="form-group">
-                <button type="button" class="btn btn-secondary botao_cor btn-sm">Adicionar</button>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
-        <thead class="thead-dark">
-            <tr>
-                <th colspan="2" scope="col">Desconsiderar Marcação</th>
-                <th scope="col">Registro</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var registro in Model.Registros)
-            {
-
+    @using (Html.BeginForm("DesconsiderarMarcacao", "CalculoPonto", FormMethod.Post, new { @id = "TabelaManutencaoMarcacao", @name = "TabelaManutencaoMarcacao" }))
+    {
+        <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
+            <thead class="thead-dark">
                 <tr>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="text" disabled class="form-control" id="DescricaoEscala" name="escala.Descricao" placeholder="Observação" value="">
-                    </td>
-                    <td>@registro.DataRegistro.ToShortTimeString()</td>
+                    <th scope="col">Registro</th>
+                    <th colspan="2" scope="col">Desconsiderar Marcação</th>
+
+
                 </tr>
+            </thead>
 
-            }
 
-        </tbody>
-    </table>
-</div>
+            <tbody id="TabelaManutencao"></tbody>
+            
+        </table>
+    }
+    </div>
+<span class="form-control-feedback glyphicon erro" id="erro"></span>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-    <button type="button" class="btn btn-secondary botao_cor_verde">Salvar mudanças</button>
+    <button id="EnvioFormularioManutencao" type="submit" class="btn btn-secondary botao_cor_verde">Salvar mudanças</button>
 </div>

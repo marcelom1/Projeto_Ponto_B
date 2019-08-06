@@ -16,6 +16,7 @@ using System.Web.Services;
 
 namespace PontoB.Controllers
 {
+    [Authorize(Roles = "Master")]
     public class CalculoPontoController : Controller
     {
         private ColaboradorDAO dbColaborador        = new ColaboradorDAO();
@@ -24,6 +25,7 @@ namespace PontoB.Controllers
         private RegistroPontoDAO dbRegistroPonto    = new RegistroPontoDAO();
         private AusenciaDAO dbAusencia              = new AusenciaDAO();
         private EscalaDAO dbEscala                  = new EscalaDAO();
+      
 
         // GET: CalculoPonto
         public ActionResult Index()
@@ -199,7 +201,22 @@ namespace PontoB.Controllers
         {
             var escala = dbEscala.BuscarPorId(idEscala).EscalasHorario.OrderBy(e=>e.EntradaMinuto).ThenBy(e=>e.EntradaHora).Where(e=>e.DiaSemana.Equals(GetDiaDaSemana(data)));
             
+            var model = new ManutencaoPontoViewModel {
+                EscalaHorario = StringEscalaViewModel(escala),
+                DiaDaSemana = GetDiaDaSemana(data),
+                Dia = data,
+                colaboradorId = idColaborador
+                
+            };
+            
 
+
+            return PartialView(model);
+        }
+
+        public ActionResult TabelaManutencao(int idColaborador, DateTime data)
+        {
+            
             var valores = new FiltroPeriodoValores
             {
                 Inicio = data,
@@ -209,19 +226,86 @@ namespace PontoB.Controllers
             };
             var texto = valores.ToString();
             //Faz a Busca do filtro
-            var filtro = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto).OrderBy(e=>e.DataRegistro);
+            var filtro = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto).OrderBy(e => e.DataRegistro);
 
-            var model = new ManutencaoPontoViewModel {
-                EscalaHorario = StringEscalaViewModel(escala),
-                DiaDaSemana = GetDiaDaSemana(data),
-                Dia = data,
+            var model = new ManutencaoPontoViewModel
+            {
                 Registros = filtro
             };
-            
-
 
             return PartialView(model);
         }
+
+        public ActionResult AdicionarRegistroManualmente(int idColaborador, int idEscala, DateTime data)
+        {
+            var escala = dbEscala.BuscarPorId(idEscala).EscalasHorario.OrderBy(e => e.EntradaMinuto).ThenBy(e => e.EntradaHora).Where(e => e.DiaSemana.Equals(GetDiaDaSemana(data)));
+
+            var model = new ManutencaoPontoViewModel
+            {
+                EscalaHorario = StringEscalaViewModel(escala),
+                DiaDaSemana = GetDiaDaSemana(data),
+                Dia = data,
+                colaboradorId = idColaborador
+
+            };
+
+            return PartialView(model);
+        }
+
+        public string DesconsiderarMarcacao(IList<string> desconsidera, IList<string> observacao, IList<int> registroId)
+        {
+           
+            foreach (var id in registroId)
+            {
+                var registro = dbRegistroPonto.BuscarPorId(id);
+                registro.DesconsiderarMarcacao = false;
+                registro.Observacao = null;
+                dbRegistroPonto.Atualiza(registro);
+            }
+            if (desconsidera != null) { 
+                for (int i = 0; i < desconsidera.Count(); i++)
+                {
+                    var registro = dbRegistroPonto.BuscarPorId(Convert.ToInt32(desconsidera[i]));
+                    registro.DesconsiderarMarcacao = true;
+                    registro.Observacao = observacao[i];
+                    dbRegistroPonto.Atualiza(registro);
+                }
+            }
+            return "True";
+
+
+        }
+        
+        public bool RemoverRegistroManual(int idRegistro)
+        {
+            var registro = dbRegistroPonto.BuscarPorId(idRegistro);
+            if (dbRegistroPonto.ExcluirRegistroPonto(registro))
+                return true;
+
+            return false;
+        }
+        
+        public bool AdicionarRegistroManutencao(DateTime data, DateTime hora, int colaboradorId, string motivo)
+        {
+
+            data = data.AddHours(hora.Hour).AddMinutes(hora.Minute);
+            var registro = new RegistroPonto
+            {
+                ColaboradorId = colaboradorId,
+                DataRegistro = data,
+                HoraRegistro = hora.Hour,
+                MinutoRegistro = hora.Minute,
+                Observacao = motivo,
+                DesconsiderarMarcacao = false,
+                RegistroManual = true
+               
+
+            };
+            dbRegistroPonto.Adiciona(registro);
+
+            return false;
+        }
+
 
         public List<HistoricoRegistroPontoViewModels> ListaPontoRegistroViewModel(IList<RegistroPonto> filtro)
         {

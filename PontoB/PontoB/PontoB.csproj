@@ -310,6 +310,7 @@
     <Content Include="Content\CSS\RegistroPonto.css" />
     <Content Include="Content\CSS\select2.min.css" />
     <Content Include="Content\CSS\tooltipster.bundle.min.css" />
+    <Content Include="Content\img\adicionar.svg" />
     <Content Include="Content\img\ausencia.svg" />
     <Content Include="Content\img\Fundo2.jpg" />
     <Content Include="Content\img\lapis2.svg" />
@@ -454,6 +455,10 @@
     <Compile Include="Migrations\20190722231158_RegistroPonto.designer.cs">
       <DependentUpon>20190722231158_RegistroPonto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190805171621_ManutencaoPonto.cs" />
+    <Compile Include="Migrations\20190805171621_ManutencaoPonto.designer.cs">
+      <DependentUpon>20190805171621_ManutencaoPonto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\Ausencia.cs" />
@@ -466,7 +471,6 @@
     <Compile Include="Models\Escala.cs" />
     <Compile Include="Models\EscalaHorario.cs" />
     <Compile Include="Models\EstadosUF.cs" />
-    <Compile Include="Models\ManutencaoPonto.cs" />
     <Compile Include="Models\MotivoAusencia.cs" />
     <Compile Include="Models\RegistroPontoModels\RegistroPonto.cs" />
     <Compile Include="Models\ViewModels\VAusencia\AusenciaViewModels.cs" />
@@ -504,6 +508,8 @@
     <Content Include="Views\CalculoPonto\ModalTabelaCalculo.cshtml" />
     <Content Include="Views\Ausencia\DetalhesAusencia.cshtml" />
     <Content Include="Views\Ausencia\TabelaAusenciaPorDia.cshtml" />
+    <Content Include="Views\CalculoPonto\TabelaManutencao.cshtml" />
+    <Content Include="Views\CalculoPonto\AdicionarRegistroManualmente.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

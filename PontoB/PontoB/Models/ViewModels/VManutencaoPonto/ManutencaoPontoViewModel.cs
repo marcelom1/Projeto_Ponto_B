@@ -12,6 +12,7 @@ namespace PontoB.Models.ViewModels.VManutencaoPonto
         public DateTime Dia { get; set; }
         public string DiaDaSemana { get; set; }
         public IOrderedEnumerable <RegistroPonto> Registros { get; set; }
+        public int colaboradorId { get; set; }
 
     }
 }
