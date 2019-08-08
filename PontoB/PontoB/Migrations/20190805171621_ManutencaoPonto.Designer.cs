@@ -74,7 +74,7 @@ namespace PontoB.Migrations
                     b.ToTable("AusenciaColaboradores");
                 });
 
-            modelBuilder.Entity("PontoB.Models.CalculoPonto", b =>
+            modelBuilder.Entity("PontoB.Models.ManutencaoPonto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +94,7 @@ namespace PontoB.Migrations
 
                     b.HasIndex("ColaboradorId");
 
-                    b.ToTable("CalculoPonto");
+                    b.ToTable("ManutencaoPonto");
                 });
 
             modelBuilder.Entity("PontoB.Models.Colaborador", b =>
@@ -325,7 +325,7 @@ namespace PontoB.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PontoB.Models.CalculoPonto", b =>
+            modelBuilder.Entity("PontoB.Models.ManutencaoPonto", b =>
                 {
                     b.HasOne("PontoB.Models.Colaborador", "Colaborador")
                         .WithMany()

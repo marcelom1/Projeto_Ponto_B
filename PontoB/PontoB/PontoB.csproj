@@ -303,7 +303,7 @@
     <Content Include="Content\CSS\cadastroColaborador.css" />
     <Content Include="Content\CSS\cadastroEmpresa.css" />
     <Content Include="Content\CSS\CadastroEscala.css" />
-    <Content Include="Content\CSS\CalculoPonto.css" />
+    <Content Include="Content\CSS\ManutencaoPonto.css" />
     <Content Include="Content\CSS\fontknewave.css" />
     <Content Include="Content\CSS\login.css" />
     <Content Include="Content\CSS\menuAdm.css" />
@@ -325,12 +325,15 @@
     <Content Include="Content\js\CadastroColaborador.js" />
     <Content Include="Content\js\CadastroEmpresa.js" />
     <Content Include="Content\js\CadastroEscala.js" />
-    <Content Include="Content\js\CalculoPonto.js" />
+    <Content Include="Content\js\ManutencaoPonto\ManutencaoPonto.js" />
     <Content Include="Content\js\DetalhesAusencia.js" />
     <Content Include="Content\js\jquery-3.3.1.slim.min.js" />
     <Content Include="Content\js\jquery-3.4.1.min.js" />
     <Content Include="Content\js\jquery.js" />
     <Content Include="Content\js\jquery.mask.min.js" />
+    <Content Include="Content\js\ManutencaoPonto\Ausencia.js" />
+    <Content Include="Content\js\ManutencaoPonto\Pagincacao.js" />
+    <Content Include="Content\js\ManutencaoPonto\Registro.js" />
     <Content Include="Content\js\modalAlert.js" />
     <Content Include="Content\js\moment.js" />
     <Content Include="Content\js\popper.min.js" />
@@ -357,17 +360,19 @@
     <Compile Include="Business\Utils\FiltroPeriodoValores.cs" />
     <Compile Include="Business\Utils\NullableDateTimeExtensions.cs" />
     <Compile Include="Controllers\AusenciaController.cs" />
-    <Compile Include="Controllers\CalculoPontoController.cs" />
+    <Compile Include="Controllers\ManutencaoPontoController.cs" />
     <Compile Include="Controllers\ColaboradorController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OcorrenciaDiaController.cs" />
     <Compile Include="Controllers\RegistroPontoController.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RAusencia\RegrasAusencia.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\ROcorrenciaDia\RegrasOcorrenciaDia.cs" />
     <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
     <Compile Include="DAO\AusenciaDAO.cs" />
-    <Compile Include="DAO\CalculoPontoDAO.cs" />
+    <Compile Include="DAO\ManutencaoPontoDAO.cs" />
     <Compile Include="DAO\ColaboradorDAO.cs" />
     <Compile Include="DAO\EscalaDAO.cs" />
     <Compile Include="DAO\EscalaHorarioDAO.cs" />
@@ -378,7 +383,9 @@
     <Compile Include="DAO\EnderecoDAO.cs" />
     <Compile Include="DAO\EstadosUFDAO.cs" />
     <Compile Include="DAO\Mapeamento\EscalaMap.cs" />
+    <Compile Include="DAO\Mapeamento\OcorrenciaDiaMap.cs" />
     <Compile Include="DAO\MotivoAusenciaDAO.cs" />
+    <Compile Include="DAO\OcorrenciaDiaDAO.cs" />
     <Compile Include="DAO\RegistroPontoDAO.cs" />
     <Compile Include="Encrypt\Encrypt.cs" />
     <Compile Include="Encrypt\SenhaHasher.cs" />
@@ -459,11 +466,15 @@
     <Compile Include="Migrations\20190805171621_ManutencaoPonto.designer.cs">
       <DependentUpon>20190805171621_ManutencaoPonto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190808115729_OcorrenciaDia.cs" />
+    <Compile Include="Migrations\20190808115729_OcorrenciaDia.designer.cs">
+      <DependentUpon>20190808115729_OcorrenciaDia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\Ausencia.cs" />
     <Compile Include="Models\AusenciaColaboradores.cs" />
-    <Compile Include="Models\CalculoPonto.cs" />
+    <Compile Include="Models\ManutencaoPonto.cs" />
     <Compile Include="Models\Colaborador.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />
@@ -472,6 +483,7 @@
     <Compile Include="Models\EscalaHorario.cs" />
     <Compile Include="Models\EstadosUF.cs" />
     <Compile Include="Models\MotivoAusencia.cs" />
+    <Compile Include="Models\OcorrenciaDia.cs" />
     <Compile Include="Models\RegistroPontoModels\RegistroPonto.cs" />
     <Compile Include="Models\ViewModels\VAusencia\AusenciaViewModels.cs" />
     <Compile Include="Models\ViewModels\VCalculoPonto\IndexCalculoPontoViewModels.cs" />
@@ -503,13 +515,13 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\RegistroPonto\Index.cshtml" />
     <Content Include="Views\RegistroPonto\Historico.cshtml" />
-    <Content Include="Views\CalculoPonto\Index.cshtml" />
-    <Content Include="Views\CalculoPonto\TabelaCalculo.cshtml" />
-    <Content Include="Views\CalculoPonto\ModalTabelaCalculo.cshtml" />
+    <Content Include="Views\ManutencaoPonto\Index.cshtml" />
+    <Content Include="Views\ManutencaoPonto\TabelaCalculo.cshtml" />
+    <Content Include="Views\ManutencaoPonto\ModalTabelaCalculo.cshtml" />
     <Content Include="Views\Ausencia\DetalhesAusencia.cshtml" />
     <Content Include="Views\Ausencia\TabelaAusenciaPorDia.cshtml" />
-    <Content Include="Views\CalculoPonto\TabelaManutencao.cshtml" />
-    <Content Include="Views\CalculoPonto\AdicionarRegistroManualmente.cshtml" />
+    <Content Include="Views\ManutencaoPonto\TabelaManutencao.cshtml" />
+    <Content Include="Views\ManutencaoPonto\AdicionarRegistroManualmente.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -519,6 +531,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\OcorrenciaDia\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

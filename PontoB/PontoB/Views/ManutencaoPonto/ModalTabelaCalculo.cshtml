@@ -1,0 +1,35 @@
+﻿@model PontoB.Models.ViewModels.VManutencaoPonto.ManutencaoPontoViewModel
+
+<div class="modal-header">
+    <h3 class="modal-title" id="TituloModalLongoExemplo">@Model.DiaDaSemana - @Model.Dia.ToShortDateString()</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <h5>Escala Prevista</h5>
+    <p>@Model.EscalaHorario</p>
+
+    @using (Html.BeginForm("DesconsiderarMarcacao", "CalculoPonto", FormMethod.Post, new { @id = "TabelaManutencaoMarcacao", @name = "TabelaManutencaoMarcacao" }))
+    {
+        <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Registro</th>
+                    <th colspan="2" scope="col">Desconsiderar Marcação</th>
+
+
+                </tr>
+            </thead>
+
+
+            <tbody id="TabelaManutencao"></tbody>
+            
+        </table>
+    }
+    </div>
+<span class="form-control-feedback glyphicon erro" id="erro"></span>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+    <button id="EnvioFormularioManutencao" type="submit" class="btn btn-secondary botao_cor_verde">Salvar mudanças</button>
+</div>

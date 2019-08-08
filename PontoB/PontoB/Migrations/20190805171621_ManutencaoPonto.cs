@@ -26,7 +26,7 @@ namespace PontoB.Migrations
                 defaultValue: false);
 
             migrationBuilder.CreateTable(
-                name: "CalculoPonto",
+                name: "ManutencaoPonto",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -50,14 +50,14 @@ namespace PontoB.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_CalculoPonto_ColaboradorId",
-                table: "CalculoPonto",
+                table: "ManutencaoPonto",
                 column: "ColaboradorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CalculoPonto");
+                name: "ManutencaoPonto");
 
             migrationBuilder.DropColumn(
                 name: "DesconsiderarMarcacao",

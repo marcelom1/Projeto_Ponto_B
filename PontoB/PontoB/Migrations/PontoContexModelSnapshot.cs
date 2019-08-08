@@ -72,29 +72,6 @@ namespace PontoB.Migrations
                     b.ToTable("AusenciaColaboradores");
                 });
 
-            modelBuilder.Entity("PontoB.Models.CalculoPonto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ColaboradorId");
-
-                    b.Property<DateTime>("Data");
-
-                    b.Property<int>("SaldoEmMinutos");
-
-                    b.Property<int>("TotalPrevistoEmMinutos");
-
-                    b.Property<int>("TotalRealizadoEmMinutos");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColaboradorId");
-
-                    b.ToTable("CalculoPonto");
-                });
-
             modelBuilder.Entity("PontoB.Models.Colaborador", b =>
                 {
                     b.Property<int>("Id")
@@ -263,6 +240,29 @@ namespace PontoB.Migrations
                     b.ToTable("EstadoUF");
                 });
 
+            modelBuilder.Entity("PontoB.Models.ManutencaoPonto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ColaboradorId");
+
+                    b.Property<DateTime>("Data");
+
+                    b.Property<int>("SaldoEmMinutos");
+
+                    b.Property<int>("TotalPrevistoEmMinutos");
+
+                    b.Property<int>("TotalRealizadoEmMinutos");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColaboradorId");
+
+                    b.ToTable("ManutencaoPonto");
+                });
+
             modelBuilder.Entity("PontoB.Models.MotivoAusencia", b =>
                 {
                     b.Property<int>("Id")
@@ -276,6 +276,29 @@ namespace PontoB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MotivoAusencia");
+                });
+
+            modelBuilder.Entity("PontoB.Models.OcorrenciaDia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CodigoOcorrencia");
+
+                    b.Property<int>("ColaboradorId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("QtdMinutos");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColaboradorId");
+
+                    b.HasIndex("Date", "ColaboradorId", "CodigoOcorrencia");
+
+                    b.ToTable("OcorrenciaDia");
                 });
 
             modelBuilder.Entity("PontoB.Models.RegistroPontoModels.RegistroPonto", b =>
@@ -323,14 +346,6 @@ namespace PontoB.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("PontoB.Models.CalculoPonto", b =>
-                {
-                    b.HasOne("PontoB.Models.Colaborador", "Colaborador")
-                        .WithMany()
-                        .HasForeignKey("ColaboradorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("PontoB.Models.Colaborador", b =>
                 {
                     b.HasOne("PontoB.Models.Empresa", "Empresa")
@@ -367,6 +382,22 @@ namespace PontoB.Migrations
                     b.HasOne("PontoB.Models.Escala")
                         .WithMany("EscalasHorario")
                         .HasForeignKey("EscalaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PontoB.Models.ManutencaoPonto", b =>
+                {
+                    b.HasOne("PontoB.Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PontoB.Models.OcorrenciaDia", b =>
+                {
+                    b.HasOne("PontoB.Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

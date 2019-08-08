@@ -48,21 +48,7 @@ namespace PontoB.DAO
             }
         }
 
-       /* public IList<RegistroPonto> Filtro(DateTime dataInicio, DateTime dataFim, Colaborador colaborador)
-        {
-            using (var contexto = new PontoContex())
-            {
-                var objFiltro = new FiltroRegistroPontoEntreDataColaborador();
-
-
-                return objFiltro.Filtrar(contexto
-                         .RegistroPonto
-                         .AsNoTracking(),dataInicio, dataFim,colaborador );
-
-            }
-
-        }*/
-
+   
 
 
         public bool ExcluirRegistroPonto(RegistroPonto registro)

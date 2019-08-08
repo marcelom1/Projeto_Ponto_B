@@ -24,7 +24,9 @@ namespace PontoB
         public DbSet<AusenciaColaboradores> AusenciaColaboradores { get; set; }
         public DbSet<MotivoAusencia> MotivoAusencia { get; set; }
         public DbSet<RegistroPonto> RegistroPonto { get; set; }
-        public DbSet<CalculoPonto> CalculoPonto { get; set; }
+        public DbSet<ManutencaoPonto> ManutencaoPonto { get; set; }
+        public DbSet<OcorrenciaDia> OcorrenciaDia { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,6 +39,8 @@ namespace PontoB
             modelBuilder.ApplyConfiguration(new EnderecoMap());
             modelBuilder.ApplyConfiguration(new EscalaMap());
             modelBuilder.ApplyConfiguration(new ColaboradorMap());
+            modelBuilder.ApplyConfiguration(new OcorrenciaDiaMap());
+
 
             modelBuilder.HasSequence<int>("MinhaSequencia").StartsAt(1).IncrementsBy(1);
 
