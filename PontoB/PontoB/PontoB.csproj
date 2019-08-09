@@ -358,6 +358,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Utils\FiltroPeriodoValores.cs" />
+    <Compile Include="Business\Utils\DateTimeExtensions.cs" />
     <Compile Include="Business\Utils\NullableDateTimeExtensions.cs" />
     <Compile Include="Controllers\AusenciaController.cs" />
     <Compile Include="Controllers\ManutencaoPontoController.cs" />
@@ -416,10 +417,14 @@
     <Compile Include="Filtros\FEmpresa\FiltroEmpresaRazaoSocial.cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresaNomeFantasia.cs" />
     <Compile Include="Filtros\FEmpresa\FiltroEmpresaCnpj.cs" />
+    <Compile Include="Filtros\FEscala\FEscalaHorario\FiltroEscalaHorario.cs" />
+    <Compile Include="Filtros\FEscala\FEscalaHorario\FiltroEscalaHorarioPorEscalaId.cs" />
     <Compile Include="Filtros\FEscala\FiltroEscala.cs" />
     <Compile Include="Filtros\FEscala\FiltroEscalaCodigo.cs" />
     <Compile Include="Filtros\FEscala\FiltroEscalaDescricao.cs" />
     <Compile Include="Filtros\FEscala\FiltroEscalaTodos .cs" />
+    <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDia.cs" />
+    <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreData.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPonto.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoColaborador.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoEntreDataColaborador.cs" />

@@ -34,14 +34,7 @@ namespace PontoB.Controllers
             return View();
         }
 
-        public ActionResult PaginacaoColaborador(int pagina, int indexColaborador)
-        {
-            var registro = 1;
-
-
-            return View();
-        }
-
+       
 
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]

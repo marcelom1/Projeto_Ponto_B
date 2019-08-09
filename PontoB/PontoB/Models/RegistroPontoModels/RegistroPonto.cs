@@ -16,5 +16,10 @@ namespace PontoB.Models.RegistroPontoModels
         public bool RegistroManual { get; set; }
         public string Observacao { get; set; }
         public bool DesconsiderarMarcacao { get; set; }
+
+        public static implicit operator Stack<object>(RegistroPonto v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PontoB.Filtros.FOcorrenciaDia;
 using PontoB.Models;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,15 @@ namespace PontoB.DAO
             }
         }
 
-        /*
+
+
+        
         public IList<OcorrenciaDia> Filtro(string coluna, string filtro)
         {
 
             using (var contexto = new PontoContex())
             {
-                var objFiltro = FiltroRegistroPonto.ObterFiltroColuna(coluna);
+                var objFiltro = FiltroOcorrenciaDia.ObterFiltroColuna(coluna);
 
 
                 return objFiltro.Filtrar(contexto
@@ -46,7 +49,7 @@ namespace PontoB.DAO
 
             }
         }
-        */
+        
 
 
 

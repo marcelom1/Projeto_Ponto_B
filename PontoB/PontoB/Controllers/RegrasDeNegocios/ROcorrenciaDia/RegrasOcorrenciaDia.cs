@@ -1,4 +1,7 @@
-﻿using PontoB.DAO;
+﻿using PontoB.Business.Utils;
+using PontoB.DAO;
+using PontoB.Models;
+using PontoB.Models.RegistroPontoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,20 +9,239 @@ using System.Web;
 
 namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
 {
+
+    
     public class RegrasOcorrenciaDia
     {
-        
-        private AusenciaColaboradoresDAO dbAusenciaColaborador = new AusenciaColaboradoresDAO();
-        private ColaboradorDAO dbColaborador = new ColaboradorDAO();
-        private RegistroPontoDAO dbRegistroPonto = new RegistroPontoDAO();
-        private EscalaHorarioDAO dbEscalaHorario = new EscalaHorarioDAO();
+        private static int IdOcorrenciaPrevistas        = 1;
+        private static int IdOcorrenciaTrabalhadas      = 2;
+        private static int IdOcorrenciaAusenciaAbona    = 3;
+        private static int IdOcorrenciaAusenciaDesconta = 4;
+        private static int IdOcorrenciaHorasExedentes   = 5;
+        private static int IdOcorrenciaHorasFaltas      = 6;
 
-        public bool CalculoPonto()
+
+
+        private EscalaDAO dbEscala                  = new EscalaDAO();
+        private AusenciaDAO dbAusencia              = new AusenciaDAO();
+        private ColaboradorDAO dbColaborador        = new ColaboradorDAO();
+        private RegistroPontoDAO dbRegistroPonto    = new RegistroPontoDAO();
+        private EscalaHorarioDAO dbEscalaHorario    = new EscalaHorarioDAO();
+        private OcorrenciaDiaDAO dbOcorenciaDia     = new OcorrenciaDiaDAO();
+
+        public void CalculoPonto(int colaboradorId, DateTime dataInicio, DateTime dataFim)
+        {
+            //Busca Dados para o Calculo
+            var colaborador = dbColaborador.BuscarPorId(colaboradorId);
+            var escala = dbEscala.BuscarPorId(colaborador.EscalaId);
+            var valores = new FiltroPeriodoValores
+            {
+                Inicio = dataInicio,
+                Fim = dataFim,
+                ColaboradorId = colaboradorId
+
+            };
+            var texto = valores.ToString();
+            var registros = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto);
+            var ausencia = dbAusencia.Filtro("ColaboradorEntreData", texto);
+
+            //Gerar Ocorrências
+            for (DateTime data = dataInicio.Date; data<=dataFim.Date; data.AddDays(1))
+            {
+                GerarOcorrenciasAusencia(data, ausencia, escala);
+                GerarOcorrenciasHorasPrevistas(data, escala, colaboradorId);
+                GerarOcorrenciasHorasTrabalhadas(registros.Where(x=>x.DataRegistro.Date.Equals(data)).ToList());
+            }
+            var ocorrencias = dbOcorenciaDia.Filtro("OcorrenciaEntreDatas", texto);
+
+            for (DateTime data = dataInicio.Date; data <= dataFim.Date; data.AddDays(1))
+            {
+                GerarOcorrenciasHorasFaltantesOuExcedentes(ocorrencias.Where(x => x.Date.Equals(data)).ToList());
+            }
+
+
+        }
+
+        private void GerarOcorrenciasHorasFaltantesOuExcedentes(IList<OcorrenciaDia> ocorrencias)
+        {
+            var Trabalhadas = 0;
+            var Prevista = 0;
+            var AusenciaAbona = 0;
+            var AusenciaDesconta = 0;
+            
+
+            foreach (var ocorrenciaDia in ocorrencias)
+            {
+                if (ocorrenciaDia.Equals(IdOcorrenciaPrevistas))
+                    Prevista = ocorrenciaDia.QtdMinutos;
+                else if (ocorrenciaDia.Equals(IdOcorrenciaTrabalhadas))
+                    Trabalhadas = ocorrenciaDia.QtdMinutos;
+                else if (ocorrenciaDia.Equals(IdOcorrenciaAusenciaAbona))
+                    AusenciaAbona = ocorrenciaDia.QtdMinutos;
+                else if (ocorrenciaDia.Equals(IdOcorrenciaAusenciaDesconta))
+                    AusenciaDesconta = ocorrenciaDia.QtdMinutos;
+            }
+
+            var calculo = Prevista - Trabalhadas + AusenciaAbona - AusenciaDesconta;
+
+            var temp = new OcorrenciaDia
+            {
+                Date = ocorrencias[0].Date.Date,
+                ColaboradorId = ocorrencias[0].ColaboradorId
+            };
+
+            if (calculo < 0)
+            {
+                temp.CodigoOcorrencia = IdOcorrenciaHorasFaltas;
+                temp.QtdMinutos = calculo * (-1);
+            }
+            else if (calculo>0)
+            {
+                temp.CodigoOcorrencia = IdOcorrenciaHorasExedentes;
+                temp.QtdMinutos = calculo;
+            }
+
+        }
+
+        
+
+        private bool RegistrosPares(IList<RegistroPonto> registros)
         {
 
-
+            if (registros.Where(x => x.DesconsiderarMarcacao == false).Count() % 2 == 0)
+            {
+                return true;
+            }
             return false;
         }
 
+
+        private void GerarOcorrenciasAusencia(DateTime dataCalculo, IList<AusenciaColaboradores> ausencias, Escala escala)
+        {
+            IList<OcorrenciaDia> Lista = new List<OcorrenciaDia>();
+
+            var ausenciasConsideradas = ausencias.Where(a => a.DataInicio.GetValueOrDefault().Date <= dataCalculo
+                                                       && a.DataFim.GetValueOrDefault() >= dataCalculo).ToList();
+            var diaSemana = dataCalculo.ToDiaDaSemana();
+
+            var escalaHorarios = escala.EscalasHorario.Where(h => h.DiaSemana == diaSemana).ToList();
+            foreach (var ausencia in ausenciasConsideradas)
+            {
+                foreach (var horario in escalaHorarios)
+                {
+                    var entrada = new DateTime(dataCalculo.Year, dataCalculo.Month, dataCalculo.Day, horario.EntradaHora, horario.EntradaMinuto, 0);
+                    var saida = new DateTime(dataCalculo.Year, dataCalculo.Month, dataCalculo.Day, horario.SaidaHora, horario.SaidaMinuto, 0);
+
+                    var inicioConsiderar = entrada > ausencia.DataInicio ? entrada : ausencia.DataInicio;
+                    var fimConsiderar = saida < ausencia.DataFim ? saida : ausencia.DataFim;
+
+                    if (inicioConsiderar < fimConsiderar)
+                    {
+                        var horaConsiderada = fimConsiderar - inicioConsiderar;
+                        var minutosConsiderados = horaConsiderada.Value.Hours / 60 + horaConsiderada.Value.Minutes;
+                        var codOcorrencia=0;
+                        if (ausencia.MotivoAusencia.Abonar)
+                            codOcorrencia = IdOcorrenciaAusenciaAbona;
+                        else
+                            codOcorrencia = IdOcorrenciaAusenciaDesconta;
+
+
+                        var temp = new OcorrenciaDia
+                        {
+                            Date = dataCalculo,
+                            ColaboradorId = ausencia.ColaboradorId,
+                            CodigoOcorrencia = codOcorrencia,
+                            QtdMinutos = minutosConsiderados
+                        };
+                        Lista.Add(temp);
+                    }
+
+                }
+            }
+
+           
+
+            foreach (var codOcorrencia in Lista.Select(x=>x.CodigoOcorrencia).Distinct())
+            {
+                var ocorrencia = new OcorrenciaDia
+                {
+                    Date = dataCalculo,
+                    ColaboradorId = Lista[0].ColaboradorId,
+                    CodigoOcorrencia = codOcorrencia,
+                    QtdMinutos = Lista.Where(x => x.CodigoOcorrencia.Equals(codOcorrencia)).Select(x=>x.QtdMinutos).Sum()
+                };
+
+                dbOcorenciaDia.Adiciona(ocorrencia);
+            }
+
+        }
+
+
+        private void GerarOcorrenciasHorasPrevistas(DateTime dataCalculo, Escala escala, int colaboradorId)
+        {
+
+            IList<EscalaHorario> EscalaTotalDiaSemana = GetHorasDiaDaSemana(escala);
+            var diaSemana = dataCalculo.ToDiaDaSemana();
+            foreach (var horas in EscalaTotalDiaSemana)
+            {
+                if (diaSemana == horas.DiaSemana)
+                {
+                    var ocorencia = new OcorrenciaDia
+                    {
+                        Date = dataCalculo,
+                        ColaboradorId = colaboradorId,
+                        CodigoOcorrencia = IdOcorrenciaPrevistas,
+                        QtdMinutos = horas.TotalEmMinutos
+                    };
+                    dbOcorenciaDia.Adiciona(ocorencia);
+
+                }
+
+            }
+
+
+        }
+
+        private static IList<EscalaHorario> GetHorasDiaDaSemana(Escala EscalaColaborador)
+        {
+            IList<EscalaHorario> EscalaTotalDiaSemana = new List<EscalaHorario>();
+            foreach (var diaSemana in EscalaColaborador.EscalasHorario.Select(x => x.DiaSemana).Distinct())
+            {
+                EscalaTotalDiaSemana.Add(new EscalaHorario
+                {
+                    DiaSemana = diaSemana.ToString(),
+                    TotalEmMinutos = EscalaColaborador.EscalasHorario.Where(x => x.DiaSemana == diaSemana).Select(x => x.TotalEmMinutos).Sum()
+                });
+
+            }
+
+            return EscalaTotalDiaSemana;
+        }
+
+        private void GerarOcorrenciasHorasTrabalhadas(IList<RegistroPonto> registros)
+        {
+            var totalHorasTrabalhadasEmMinuto = 0;
+            if (RegistrosPares(registros))
+            {
+                for (int i = 0; i < registros.Count; i += 2)
+                {
+                    var horas = registros[i + 1].DataRegistro.TimeOfDay - registros[i].DataRegistro.TimeOfDay;
+                    totalHorasTrabalhadasEmMinuto += horas.Hours / 60 + horas.Minutes;
+
+                    var ocorencia = new OcorrenciaDia
+                    {
+                        Date = registros[i].DataRegistro.Date,
+                        ColaboradorId = registros[i].ColaboradorId,
+                        CodigoOcorrencia = IdOcorrenciaTrabalhadas,
+                        QtdMinutos = totalHorasTrabalhadasEmMinuto
+                    };
+                    dbOcorenciaDia.Adiciona(ocorencia);
+                }
+            }
+        }
+
+       
+
+     
     }
 }
