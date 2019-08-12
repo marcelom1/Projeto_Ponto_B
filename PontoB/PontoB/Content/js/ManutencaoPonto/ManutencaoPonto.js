@@ -115,7 +115,8 @@ $("#Select2Empresa").on('select2:close', function () {
 
 $("#Select2Colaborador").on('select2:close', function () {
     AtualizaSelectColaborador();
-    BuscaIndiceColaborador();
+    if ($("#Select2Colaborador").val() != null)
+        BuscaIndiceColaborador();
 });
 
 function AtualizaSelectColaborador() {
@@ -148,7 +149,39 @@ function validacaoData() {
                 $("#Erro_DataInicio").hide();
                 buscaTabela();
             }
-}
+};
+
+$(document).ready(function () {
+    $('.tooltip').tooltipster({
+        trigger: "custom"
+    });
+});
+
+$("#calculo").click(function () {
+    $(".tooltip").tooltipster("open").tooltipster("content", "Calculando...");
+    var colaboradorId = $("#Select2Colaborador").val();
+    var dataInicial = $("#dataInicio").val();
+    var dataFinal = $("#dataFim").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/ManutencaoPonto/CalculoPonto/",
+        data: JSON.stringify({ idColaborador: colaboradorId, dataInicial: dataInicial, dataFinal: dataFinal }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (resposta) {
+            console.log(resposta);
+            buscaTabela();
+            $(".tooltip").tooltipster("close");
+
+        },
+        error: function (json) {
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
+        }
+    });
+
+});
 
 
 

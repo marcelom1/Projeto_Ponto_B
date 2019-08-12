@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using PontoB.DAO;
 using PontoB.Models;
+using PontoB.Models.ViewModels.VEscala;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace PontoB.Controllers
         
         private EscalaDAO dbEscala = new EscalaDAO();
         private EscalaHorarioDAO dbEscalaHorario = new EscalaHorarioDAO();
+        
 
 
         public ActionResult Index(int pagina = 1, string coluna = "", string filtro = "")
@@ -196,8 +198,9 @@ namespace PontoB.Controllers
         }
 
 
-
         
+
+
     }
 
 }

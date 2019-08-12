@@ -15,7 +15,8 @@
     });
 
     $('.modal-title').text(titulo);
-    $('#conteudoModal').html(frase);
+    if (frase!=null)
+        $('#conteudoModal').html(frase);
 
 
 

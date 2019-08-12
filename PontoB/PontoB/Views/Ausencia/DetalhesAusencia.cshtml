@@ -49,7 +49,7 @@
 
             </div>
             <div class="form-group col-md-offset-1">
-                <label for="Data_Admissao" >Hora Inicio</label>
+                <label for="Data_Admissao">Hora Inicio</label>
                 <input type="time" name="HoraInicio" class="form-control" id="hora_inicio" value="@Model.AusenciaColaboradores.DataInicio.GetValueOrDefault().ToString("HH:mm")">
                 <span class="erro" required id="Erro_Ausencia_HoraInicio">@Html.ValidationMessage("HoraInicio")</span>
 
@@ -80,7 +80,7 @@
             </div>
 
         </div>
-
+        <label class="erro" id="Erro_Ausencia_Detalhes">@Html.ValidationMessage("ausenciaColaboradores.Erro")</label>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Observação</label>
             <textarea class="form-control" id="Observacao" name="ausenciaColaboradores.Observacao" rows="3" maxlength="280">@Model.AusenciaColaboradores.Observacao</textarea>
@@ -92,6 +92,7 @@
             </div>
         </div>
     }
+
     <img id="spninner" src="~/Content/img/spinner.gif" class="Oculto" width="20" height="20" />
     <div id="GridAusencia">
         <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">

@@ -136,10 +136,11 @@ namespace PontoB.Controllers
             model.EnderecoColaborador.Estado = colaborador.EnderecoColaborador.Estado;
             model.Empresa = dbEmpresa.BuscarPorId(colaborador.EmpresaId);
             model.Escala = dbEscala.BuscarPorId(colaborador.EscalaId);
-            //ViewBag.Colaborador = colaborador;
-            //ViewBag.Colaborador.EnderecoColaborador = colaborador.EnderecoColaborador;
-            //ViewBag.Colaborador.EnderecoColaborador.Estado = colaborador.EnderecoColaborador.Estado;
-           
+            
+           if (colaborador.EmpresaId==0)
+                ModelState.AddModelError("colaborador.EmpresaId", "Empresa é um campo obrigatório!");
+           if(colaborador.EscalaId==0)
+                ModelState.AddModelError("colaborador.EscalaId", "Escala é um campo obrigatório!");
 
 
             if (ModelState.IsValid)//Validação de Todos os Campos
@@ -161,8 +162,7 @@ namespace PontoB.Controllers
                             {
                                 model.Id = 0;
                                 model.EnderecoColaborador.Id = 0;
-                                //ViewBag.Colaborador.Id = 0;
-                               // ViewBag.Colaborador.EnderecoColaborador.Id = 0;
+                                
                                 ModelState.AddModelError("colaborador.Cpf", "CPF já cadastrado e sem registro de demissão!");
                                 return View("Form",model);
                             }
@@ -189,7 +189,8 @@ namespace PontoB.Controllers
             }
             else
             {
-
+                model.Empresa = new Empresa();
+                model.Escala = new Escala();
                 return View("Form",model);
             }
         }

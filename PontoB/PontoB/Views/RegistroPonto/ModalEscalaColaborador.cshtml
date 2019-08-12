@@ -1,0 +1,22 @@
+﻿
+@model IList<PontoB.Models.ViewModels.VEscala.ModalEscalaColaboradorViewModel>
+
+<table class="table table-bordered table-hover table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th>Dia Da Semana</th>
+            <th>Horário</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var escala in Model)
+        {
+            <tr>
+                <td>@escala.DiaDaSemana</td>
+                <td>@escala.Horario</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PontoB.Business.Utils;
+using PontoB.Models.ViewModels.VEscala;
 
 namespace PontoB.Controllers
 {
@@ -17,6 +18,7 @@ namespace PontoB.Controllers
     {
         private ColaboradorDAO dbColaborador = new ColaboradorDAO();
         private RegistroPontoDAO dbRegistroPonto = new RegistroPontoDAO();
+        private EscalaHorarioDAO dbEscalaHorario = new EscalaHorarioDAO();
        
         public ActionResult Index()
         {
@@ -95,7 +97,8 @@ namespace PontoB.Controllers
             {
                 HistoricoRegistroPonto = Lista.ToPagedList(pagina, 10),
                 FiltroDataInicio = dataInicio,
-                FiltroDataFim = dataFim
+                FiltroDataFim = dataFim,
+                escalaId = filtro[0].Colaborador.EscalaId
             };
 
 
@@ -125,7 +128,8 @@ namespace PontoB.Controllers
             {
                 HistoricoRegistroPonto = Lista.ToPagedList(pagina, 10),
                 FiltroDataInicio = dataInicio,
-                FiltroDataFim = dataFim
+                FiltroDataFim = dataFim,
+                escalaId = filtro[0].Colaborador.EscalaId
             };
 
             //Preenche as ViewBag com os resultado do filtro
@@ -150,5 +154,27 @@ namespace PontoB.Controllers
             return model;
 
         }
+
+        public ActionResult ModalEscalaColaborador(int escalaId)
+        {
+
+            IList<ModalEscalaColaboradorViewModel> model = new List<ModalEscalaColaboradorViewModel>();
+            var filtro = dbEscalaHorario.Lista(escalaId);
+
+
+            foreach (var escala in filtro.Select(x => x.DiaSemana).Distinct())
+            {
+                model.Add(new ModalEscalaColaboradorViewModel
+                {
+                    DiaDaSemana = escala,
+                    Horario = string.Join(" - ", filtro.Where(x => x.DiaSemana == escala).Select(x => x.EntradaHora.ToString("00") + ":" + x.EntradaMinuto.ToString("00") + " - " + x.SaidaHora.ToString("00") + ":" + x.SaidaMinuto.ToString("00"))),
+
+                });
+            }
+
+            return PartialView(model);
+
+        }
+
     }
 }

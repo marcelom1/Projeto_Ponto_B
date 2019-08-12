@@ -108,24 +108,57 @@ $(document).on('click', '#RegistroAdicionar', function () {
     var hora = $("#HoraRegistroManutencao").val();
     var colaboradorId = $("#ColaboradorIdManutencao").val();
     var observacao = $("#ObservacaoManutencao").val();
+    if (hora != '' && !observacao.match(/^(\s)+$/)) {
+        $.ajax({
+            type: "POST",
+            url: "/ManutencaoPonto/AdicionarRegistroManutencao/",
+            data: JSON.stringify({ data: data, hora: hora, colaboradorId: colaboradorId, motivo: observacao }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (resposta) {
+                $('#ModalEditar').modal('hide');
 
-    $.ajax({
-        type: "POST",
-        url: "/ManutencaoPonto/AdicionarRegistroManutencao/",
-        data: JSON.stringify({ data: data, hora: hora, colaboradorId: colaboradorId, motivo: observacao }),
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
-        success: function (resposta) {
-            $('#ModalEditar').modal('hide');
-
-        },
-        error: function (json) {
-            alert("Erro de conexão com o servidor!");
-            Console.log(json);
-        }
-    });
+            },
+            error: function (json) {
+                alert("Erro de conexão com o servidor!");
+                Console.log(json);
+            }
+        });
+    } else {
+        validaCampos();
+    } 
 });
 
+function validaCampos() {
+    validaHora();
+    validaObs();
+};
+
+function validaHora() {
+    var hora = $("#HoraRegistroManutencao").val();
+    if (hora == "")
+        $("#erroHora").text("Hora Inválida");
+    else
+        $("#erroHora").text("");
+};
+
+function validaObs() {
+    var obs = $("#ObservacaoManutencao").val();
+    if (obs.match(/^(\s)+$/) || obs.length==0)
+        $("#erroObservacao").text("Observação obrigatória");
+    else
+        $("#erroObservacao").text("");
+        
+};
+
+$(document).on('blur', "#HoraRegistroManutencao", function () {
+    validaHora();
+});
+
+$(document).on('blur', "#ObservacaoManutencao", function () {
+    validaObs();
+
+});
 
 $('#ModalEditar').on('hidden.bs.modal', function (e) {
     buscaTabela();

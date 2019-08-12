@@ -16,3 +16,7 @@
     height: 66%;
 }
 
+.tooltip {
+    z-index: 0;
+}
+

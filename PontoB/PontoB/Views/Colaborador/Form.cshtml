@@ -35,8 +35,8 @@
         </div>
 
 
-        <div class="form-group col-md-2">
-            <div class="form-group col-md-1">
+        <div class="form-group col-md-3">
+            <div class="form-group col-md-12">
                 <label for="CodigoEmpresa">Empresa</label>
                 <select class="js-example-basic-single select2" id="Select2_Empresa" name="colaborador.EmpresaId">
                     <option value="@Model.EmpresaId">@Model.Empresa.RazaoSocial</option>
@@ -94,8 +94,8 @@
             @Html.TextBoxFor(m => m.DataNascimento, "{0:yyyy-MM-dd}", htmlAttributes: new { @Name = "colaborador.DataNascimento", @class = "form-control", @type = "date", @id = "Data_Nascimento", @value = Model.DataAdmissao })
             <span class="erro" id="Erro_DataNascimento">@Html.ValidationMessage("colaborador.DataNascimento")</span>
         </div>
-        <div class="form-group col-md-2">
-            <div class="form-group col-md-1">
+        <div class="form-group col-md-3">
+            <div class="form-group col-md-12">
                 <label for="CodigoEmpresa">Escalas</label>
                 <select class="js-example-basic-single select2" id="Select2_Escalas" name="colaborador.EscalaId">
                     <option value="@Model.EscalaId">@Model.Escala.Descricao</option>

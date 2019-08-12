@@ -91,3 +91,4 @@ function atualizaRelogio(hora) {
         setTimeout(function () { atualizaRelogio(momentoAtual) }, 1000);
     
 }
+

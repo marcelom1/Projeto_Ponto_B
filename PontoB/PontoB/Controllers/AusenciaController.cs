@@ -115,7 +115,7 @@ namespace PontoB.Controllers
                 }
                 catch (ArgumentException e)
                 {
-                    ModelState.AddModelError(e.ParamName, e.Message);
+                    ModelState.AddModelError("ausenciaColaboradores.Erro", e.Message);
                     
                 }
             }
@@ -127,7 +127,7 @@ namespace PontoB.Controllers
 
 
 
-        public void AdicionaAusenciaColaboradorPelaManutencao(AusenciaColaboradores ausenciaColaboradores, DateTime HoraInicio, DateTime HoraFim)
+        public string AdicionaAusenciaColaboradorPelaManutencao(AusenciaColaboradores ausenciaColaboradores, DateTime HoraInicio, DateTime HoraFim)
         {
             ausenciaColaboradores = RegrasAusencia.MontarAusenciaColaboradores(ausenciaColaboradores, HoraInicio, HoraFim);
 
@@ -145,13 +145,14 @@ namespace PontoB.Controllers
                 }
                 catch (ArgumentException e)
                 {
-                    ModelState.AddModelError(e.ParamName, e.Message);
-                    
+                    ModelState.AddModelError("ausenciaColaboradores.Erro", e.Message);
+                    return e.Message;
                     
 
                 }
 
             }
+            return "";
         }
 
 

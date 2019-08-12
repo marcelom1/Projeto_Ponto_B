@@ -1,4 +1,5 @@
-﻿using PontoB.DAO;
+﻿using PontoB.Business.Utils;
+using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.ViewModels.VAusencia;
 using System;
@@ -85,8 +86,16 @@ namespace PontoB.Controllers.RegrasDeNegocios.RAusencia
             {
                 ausenciaColaboradores.Id = 0;
                 ausenciaColaboradores.ColaboradorId = colaborador.Id;
-                if (!ConflitoAusenciaDemissao(colaborador, ausenciaColaboradores))
-                    dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                try
+                {
+                    if (AusenciaSemConflito(ausenciaColaboradores, colaborador))
+                        dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                }
+                catch (Exception)
+                {
+
+                   
+                }
             }
         }
 
@@ -96,21 +105,30 @@ namespace PontoB.Controllers.RegrasDeNegocios.RAusencia
             {
                 ausenciaColaboradores.Id = 0;
                 ausenciaColaboradores.ColaboradorId = colaborador.Id;
-                if (!ConflitoAusenciaDemissao(colaborador, ausenciaColaboradores))
-                    dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+
+                try
+                {
+                    if (AusenciaSemConflito(ausenciaColaboradores, colaborador))
+                        dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
+                }
+                catch (Exception)
+                {
+
+                    
+                }
             }
         }
 
         public void AdicionarAusenciaEmUmColaborador(AusenciaColaboradores ausenciaColaboradores)
         {
             Colaborador buscaColaborador = (dbColaborador.BuscarPorId(ausenciaColaboradores.ColaboradorId));
-            if (!ConflitoAusenciaDemissao(buscaColaborador, ausenciaColaboradores))
+            
+            if (AusenciaSemConflito(ausenciaColaboradores, buscaColaborador))
             {
                 dbAusenciaColaborador.Adiciona(ausenciaColaboradores);
 
             }
-            else
-                throw new System.ArgumentException("Data de lançamento em conflito com a data de demissão do colaborador", "ausenciaColaboradores.DataInicio");
+            
                 
         }
 
@@ -124,6 +142,44 @@ namespace PontoB.Controllers.RegrasDeNegocios.RAusencia
             if (pesquisa != null)
                 dbAusenciaColaborador.ExcluirAusenciaColaboradores(pesquisa);
             return IdAusenciaColaborador;
+        }
+
+        public bool AusenciaSemConflito(AusenciaColaboradores ausencia, Colaborador colaborador)
+        {
+            if (ConflitoAusenciaDemissao(colaborador, ausencia))
+                throw new System.ArgumentException("Data de lançamento em conflito com a data de demissão do colaborador");
+
+            if (ExisteSobreposicaoAusencia(ausencia))
+                throw new System.ArgumentException("Data de lançamento em conflito com outro lançamento de ausência");
+
+
+            return true;
+
+        }
+
+        public bool ExisteSobreposicaoAusencia(AusenciaColaboradores ausencia)
+        {
+            var valores = new FiltroPeriodoValores
+            {
+                Inicio = ausencia.DataInicio,
+                Fim = ausencia.DataFim,
+                ColaboradorId = ausencia.ColaboradorId
+
+            };
+            var texto = valores.ToString();
+            var ausencias = dbAusencia.Filtro("ColaboradorEntreData",texto);
+            foreach (var item in ausencias)
+            {
+                var inicioConsiderar = item.DataInicio > ausencia.DataInicio ? item.DataInicio : ausencia.DataInicio;
+                var fimConsiderar = item.DataFim < ausencia.DataFim ? item.DataFim : ausencia.DataFim;
+
+                if (inicioConsiderar < fimConsiderar)
+                {
+                    return true;
+                }
+
+            }
+            return false;
         }
 
     }

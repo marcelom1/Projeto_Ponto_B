@@ -1,4 +1,5 @@
 ﻿using PontoB.Business.Utils;
+using PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia;
 using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.RegistroPontoModels;
@@ -25,6 +26,7 @@ namespace PontoB.Controllers
         private RegistroPontoDAO dbRegistroPonto    = new RegistroPontoDAO();
         private AusenciaDAO dbAusencia              = new AusenciaDAO();
         private EscalaDAO dbEscala                  = new EscalaDAO();
+        private OcorrenciaDiaDAO dbOcorrenciaDia = new OcorrenciaDiaDAO();
       
 
         // GET: ManutencaoPonto
@@ -134,6 +136,7 @@ namespace PontoB.Controllers
             var AusenciaColaborador = dbAusencia.Filtro("ColaboradorEntreData", texto);
             var EscalaColaborador = dbEscala.BuscarPorId(Colaborador.EscalaId);
             IList<EscalaHorario> EscalaTotalDiaSemana = GetHorasDiaDaSemana(EscalaColaborador);
+            var Ocorrencias = dbOcorrenciaDia.Filtro("OcorrenciaEntreDatas", texto);
 
             while (dataInicio <= dataFim)
             {
@@ -168,10 +171,29 @@ namespace PontoB.Controllers
                     }
 
                 }
+
+                item.Ausencia = AusenciaColaborador.Where(e => e.DataFim >= item.Data && e.DataInicio < item.Data.AddDays(1)).ToList();
+
                 foreach (var escala in EscalaTotalDiaSemana.Where(x=>x.DiaSemana==item.DiaDaSemana))
                 {
                     item.TotalEscalaMinutos = escala.TotalEmMinutos;
                     break;
+                }
+
+                item.Saldo = 0;
+                item.HorasTrabalhadas = 0;
+                foreach (var horas in Ocorrencias.Where(x=>(x.Date.Date == item.Data.Date)&&(x.CodigoOcorrencia.Equals(5) || x.CodigoOcorrencia.Equals(6) || x.CodigoOcorrencia.Equals(2))))
+                {
+                    if (horas.CodigoOcorrencia == 2)
+                        item.HorasTrabalhadas = horas.QtdMinutos;
+                    else
+                        if (horas.QtdMinutos>0)
+                        {
+                            if (horas.CodigoOcorrencia.Equals(6))
+                                item.Saldo = horas.QtdMinutos * (-1);
+                            else 
+                                item.Saldo = horas.QtdMinutos;
+                        }
                 }
             }
 
@@ -364,7 +386,7 @@ namespace PontoB.Controllers
                 model.Add(new HistoricoRegistroPontoViewModels
                 {
                     Data = registro.Date.ToShortDateString(),
-                    Registros = string.Join(" - ", filtro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.Date).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),
+                    Registros = string.Join(" - ", filtro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.Date && x.DesconsiderarMarcacao==false).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),
                     colaborador = filtro[0].Colaborador
                 });
             }
@@ -382,5 +404,14 @@ namespace PontoB.Controllers
             return resultado;
 
         }
+
+        public void CalculoPonto(int idColaborador, DateTime dataInicial, DateTime dataFinal)
+        {
+            var calculo = new RegrasOcorrenciaDia();
+
+            calculo.CalculoPonto(idColaborador,dataInicial,dataFinal);
+
+        }
+
     }
 }

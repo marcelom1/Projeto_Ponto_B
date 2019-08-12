@@ -9,6 +9,7 @@ function AddAusencia(id, data) {
     var idColaborador = $("#Select2Colaborador").find(':selected').val();
     var nomeColaborador = $("#Select2Colaborador").find(':selected').text();
 
+    ModalAlert("", "", null, "", "", data);
     $.ajax({
         type: "POST",
         url: "/Ausencia/DetalhesAusencia/",
@@ -84,7 +85,9 @@ function AtualizaAusencia(data) {
 
 };
 
-
+$('#ModalAlert').on('hidden.bs.modal', function (e) {
+    buscaTabela();
+})
 
 function EnvioFormularioAusencia(data) {
     $("#Select2_Colaborador").attr("disabled", false);
@@ -99,7 +102,9 @@ function EnvioFormularioAusencia(data) {
         data: form_data,
         dataType: "html",
         success: function (resposta) {
-            AtualizaAusencia(data);
+            $("#Erro_Ausencia_Detalhes").text(resposta);
+            if ($("#Erro_Ausencia_Detalhes").text()=='')
+                AtualizaAusencia(data);
         }
     });
 };

@@ -325,6 +325,7 @@
     <Content Include="Content\js\CadastroColaborador.js" />
     <Content Include="Content\js\CadastroEmpresa.js" />
     <Content Include="Content\js\CadastroEscala.js" />
+    <Content Include="Content\js\HistoricoPonto.js" />
     <Content Include="Content\js\ManutencaoPonto\ManutencaoPonto.js" />
     <Content Include="Content\js\DetalhesAusencia.js" />
     <Content Include="Content\js\jquery-3.3.1.slim.min.js" />
@@ -493,6 +494,7 @@
     <Compile Include="Models\ViewModels\VAusencia\AusenciaViewModels.cs" />
     <Compile Include="Models\ViewModels\VCalculoPonto\IndexCalculoPontoViewModels.cs" />
     <Compile Include="Models\ViewModels\VCalculoPonto\TabelaCalculoViewModels.cs" />
+    <Compile Include="Models\ViewModels\VEscala\ModalEscalaColaboradorViewModel.cs" />
     <Compile Include="Models\ViewModels\VManutencaoPonto\ManutencaoPontoViewModel.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoComFiltro.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
@@ -527,6 +529,7 @@
     <Content Include="Views\Ausencia\TabelaAusenciaPorDia.cshtml" />
     <Content Include="Views\ManutencaoPonto\TabelaManutencao.cshtml" />
     <Content Include="Views\ManutencaoPonto\AdicionarRegistroManualmente.cshtml" />
+    <Content Include="Views\RegistroPonto\ModalEscalaColaborador.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

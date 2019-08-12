@@ -22,21 +22,30 @@ botaoBuscarCep.addEventListener("click", function () {
     xhr.open("GET", "https://viacep.com.br/ws/" + valorCEP +"/json/");
 
     xhr.addEventListener("load", function () {
-            var resposta = xhr.responseText;
+        var resposta = xhr.responseText;
+        var endereco = JSON.parse(resposta);
 
-            var endereco = JSON.parse(resposta);
-        
-            $("#Logradouro").val(endereco.logradouro);
-            $("#LogradouroBairro").val(endereco.bairro);
-            $("#LogradouroCidade").val(endereco.localidade);
-            $("#LogradouroEstado option:contains(" + endereco.uf + ")").attr('selected', true);
-      
+        if (xhr.status == 200 && xhr.readyState == 4) {
+            if (endereco.erro) {
+                $(".tooltip").tooltipster("open").tooltipster("content", "Erro - CEP não encontrado");
+                 setTimeout(function () {
+                     $(".tooltip").tooltipster("close");
+                 }, 1200);
+            }
+            else {
+                setTimeout(function () {
+                    $(".tooltip").tooltipster("close");
+                }, 350);
+                $("#Logradouro").val(endereco.logradouro);
+                $("#LogradouroBairro").val(endereco.bairro);
+                $("#LogradouroCidade").val(endereco.localidade);
+                $("#LogradouroEstado option:contains(" + endereco.uf + ")").attr('selected', true);
+            }
+        }
 
     });
     
     xhr.send();
     
-    setTimeout(function () {
-        $(".tooltip").tooltipster("close");
-    }, 1200);
+   
 });

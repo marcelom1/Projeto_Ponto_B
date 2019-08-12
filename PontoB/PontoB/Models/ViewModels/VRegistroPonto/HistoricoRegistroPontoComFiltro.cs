@@ -11,5 +11,7 @@ namespace PontoB.Models.ViewModels.VRegistroPonto
         public IPagedList<HistoricoRegistroPontoViewModels> HistoricoRegistroPonto { get; set; }
         public DateTime? FiltroDataInicio { get; set; }
         public DateTime? FiltroDataFim { get; set; }
+        public int escalaId { get; set; }
+
     }
 }
