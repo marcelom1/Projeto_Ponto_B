@@ -147,7 +147,9 @@ namespace PontoB.Controllers
                     DiaDaSemana = diasemana,
                     Data = dataInicio,
                     ColaboradorId = Colaborador.Id,
-                    EscalaId = EscalaColaborador.Id
+                    EscalaId = EscalaColaborador.Id,
+                    Colaborador = Colaborador
+                    
                     
 
 
@@ -405,11 +407,20 @@ namespace PontoB.Controllers
 
         }
 
-        public void CalculoPonto(int idColaborador, DateTime dataInicial, DateTime dataFinal)
+        public string CalculoPonto(int idColaborador, DateTime dataInicial, DateTime dataFinal)
         {
             var calculo = new RegrasOcorrenciaDia();
 
-            calculo.CalculoPonto(idColaborador,dataInicial,dataFinal);
+            try
+            {
+                calculo.CalculoPonto(idColaborador, dataInicial, dataFinal);
+            }
+            catch (Exception e)
+            {
+
+                return e.Message;
+            }
+            return "";
 
         }
 

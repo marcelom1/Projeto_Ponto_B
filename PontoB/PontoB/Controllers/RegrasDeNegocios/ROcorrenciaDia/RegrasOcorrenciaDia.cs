@@ -19,6 +19,8 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
         private static int IdOcorrenciaAusenciaDesconta = 4;
         private static int IdOcorrenciaHorasExedentes   = 5;
         private static int IdOcorrenciaHorasFaltas      = 6;
+        private static int IdOcorrenciaDiaFalta         = 7;
+
 
 
 
@@ -34,40 +36,64 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
             //Busca Dados para o Calculo
             var colaborador = dbColaborador.BuscarPorId(colaboradorId);
             var escala = dbEscala.BuscarPorId(colaborador.EscalaId);
-            var valores = new FiltroPeriodoValores
-            {
-                Inicio = dataInicio,
-                Fim = dataFim,
-                ColaboradorId = colaboradorId
 
-            };
+            var valores = PeriodoCalculoValidoAdmissaoDemissao(colaborador, dataInicio, dataFim);
             var texto = valores.ToString();
+
             var registros = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto);
-
-           
-
-
             var ausencia = dbAusencia.Filtro("ColaboradorEntreData", texto);
             var ocorrencias = dbOcorenciaDia.Filtro("OcorrenciaEntreDatas", texto);
 
-            //Gerar Ocorrências
-            LimparApuracaoAnterior(ocorrencias);
-            for (DateTime data = dataInicio.Date; data<=dataFim.Date; data = data.AddDays(1))
+            
+           
+            //Validar Registros pares
+            for (DateTime data = valores.Inicio.Value.Date; data <= valores.Fim.Value.Date; data = data.AddDays(1))
             {
+                var registrosDia = registros.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date.Equals(data) && x.DesconsiderarMarcacao==false).ToList();
+
+                RegistrosPares(registrosDia);
+            }
+
+            LimparApuracaoAnterior(ocorrencias);
+
+
+            //Gerar Ocorrências
+            for (DateTime data = valores.Inicio.Value.Date; data<= valores.Fim.Value.Date; data = data.AddDays(1))
+            {
+
+                var registrosDia = registros.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date.Equals(data) && x.DesconsiderarMarcacao == false).ToList();
                 GerarOcorrenciasAusencia(data, ausencia, escala);
                 GerarOcorrenciasHorasPrevistas(data, escala, colaboradorId);
-                GerarOcorrenciasHorasTrabalhadas(registros.OrderBy(x=>x.DataRegistro).Where(x=>x.DataRegistro.Date.Equals(data)).ToList());
+                GerarOcorrenciasHorasTrabalhadas(registrosDia,data,colaborador.Id);
             }
+
+
             ocorrencias = dbOcorenciaDia.Filtro("OcorrenciaEntreDatas", texto);
-
-            for (DateTime data = dataInicio.Date; data <= dataFim.Date; data = data.AddDays(1))
+            for (DateTime data = valores.Inicio.Value.Date; data <= valores.Fim.Value.Date; data = data.AddDays(1))
             {
-
                 GerarOcorrenciasHorasFaltantesOuExcedentes(ocorrencias.Where(x => x.Date.Equals(data)).ToList());
             }
 
 
         }
+
+        private FiltroPeriodoValores PeriodoCalculoValidoAdmissaoDemissao(Colaborador colaborador, DateTime dataInicio, DateTime dataFim)
+        {
+           
+
+            var inicioConsiderar = dataInicio > colaborador.DataAdmissao ? dataInicio : colaborador.DataAdmissao;
+            var fimConsiderar = colaborador.DataDemissao==null || dataFim < colaborador.DataDemissao ? dataFim : colaborador.DataDemissao;
+
+            var periodoValido = new FiltroPeriodoValores
+            {
+                Inicio = inicioConsiderar,
+                Fim = fimConsiderar,
+                ColaboradorId = colaborador.Id
+            };
+
+            return periodoValido;
+        }
+
 
         private void LimparApuracaoAnterior(IList<OcorrenciaDia> ocorrenciaDias)
         {
@@ -132,7 +158,8 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
             {
                 return true;
             }
-            return false;
+            throw new System.ArgumentException("Falha no cálculo - Os registros devem está em quantidade pares para efetuar o cálculo no dia: "+registros[0].DataRegistro.ToShortDateString());
+           
         }
 
 
@@ -239,34 +266,47 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
             return EscalaTotalDiaSemana;
         }
 
-        private void GerarOcorrenciasHorasTrabalhadas(IList<RegistroPonto> registros)
+        private void GerarOcorrenciasHorasTrabalhadas(IList<RegistroPonto> registros, DateTime data, int colaboradorId)
         {
+            var ocorencia = new OcorrenciaDia();
             if (registros.Count > 0)
             {
                 var totalHorasTrabalhadasEmMinuto = 0;
-                if (RegistrosPares(registros))
+               
+                for (int i = 0; i < registros.Count; i += 2)
                 {
-                    for (int i = 0; i < registros.Count; i += 2)
-                    {
-                        var horas = registros[i + 1].DataRegistro.TimeOfDay - registros[i].DataRegistro.TimeOfDay;
-                        totalHorasTrabalhadasEmMinuto += horas.Hours * 60 + horas.Minutes;
+                    var horas = registros[i + 1].DataRegistro.TimeOfDay - registros[i].DataRegistro.TimeOfDay;
+                    totalHorasTrabalhadasEmMinuto += horas.Hours * 60 + horas.Minutes;
 
 
-                    }
-                    var ocorencia = new OcorrenciaDia
-                    {
-                        Date = registros[0].DataRegistro.Date,
-                        ColaboradorId = registros[0].ColaboradorId,
-                        CodigoOcorrencia = IdOcorrenciaTrabalhadas,
-                        QtdMinutos = totalHorasTrabalhadasEmMinuto
-                    };
-                    dbOcorenciaDia.Adiciona(ocorencia);
                 }
+                ocorencia = new OcorrenciaDia
+                {
+                    Date = data.Date,
+                    ColaboradorId = colaboradorId,
+                    CodigoOcorrencia = IdOcorrenciaTrabalhadas,
+                    QtdMinutos = totalHorasTrabalhadasEmMinuto
+                };
+               
+
             }
+            else
+            {
+                ocorencia = new OcorrenciaDia
+                {
+                    Date = data.Date,
+                    ColaboradorId = colaboradorId,
+                    CodigoOcorrencia = IdOcorrenciaDiaFalta,
+                    QtdMinutos = 0
+                };
+            }
+
+            dbOcorenciaDia.Adiciona(ocorencia);
         }
+        
 
-       
 
-     
+
+
     }
 }

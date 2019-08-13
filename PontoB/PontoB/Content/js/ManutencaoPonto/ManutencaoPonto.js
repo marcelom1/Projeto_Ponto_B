@@ -170,6 +170,7 @@ $("#calculo").click(function () {
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (resposta) {
+            $("#erro-calculo").text(resposta);
             console.log(resposta);
             buscaTabela();
             $(".tooltip").tooltipster("close");

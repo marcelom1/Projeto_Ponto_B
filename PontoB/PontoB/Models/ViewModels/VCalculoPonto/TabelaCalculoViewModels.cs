@@ -26,6 +26,7 @@ namespace PontoB.Models.ViewModels.VCalculoPonto
       
         public int EscalaId { get; set; }
         public int ColaboradorId { get; set; }
+        public Colaborador Colaborador { get; set; }
         public int Saldo { get; set; }
         public int HorasTrabalhadas { get; set; }
     }
