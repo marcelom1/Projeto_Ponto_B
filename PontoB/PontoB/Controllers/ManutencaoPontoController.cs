@@ -411,6 +411,8 @@ namespace PontoB.Controllers
         {
             var calculo = new RegrasOcorrenciaDia();
 
+            
+
             try
             {
                 calculo.CalculoPonto(idColaborador, dataInicial, dataFinal);

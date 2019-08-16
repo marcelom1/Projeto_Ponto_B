@@ -17,6 +17,9 @@ namespace PontoB.Models
         public virtual EstadosUF Estado { get; set; }
         public string Cidade { get; set; }
 
-       
+        public override string ToString()
+        {
+            return Logradouro + " " + Numero + ", " + Bairro + " - " + Cidade; 
+        }
     }
 }

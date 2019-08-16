@@ -308,6 +308,7 @@
     <Content Include="Content\CSS\login.css" />
     <Content Include="Content\CSS\menuAdm.css" />
     <Content Include="Content\CSS\RegistroPonto.css" />
+    <Content Include="Content\CSS\RelatorioCartaoPonto.css" />
     <Content Include="Content\CSS\select2.min.css" />
     <Content Include="Content\CSS\tooltipster.bundle.min.css" />
     <Content Include="Content\img\adicionar.svg" />
@@ -371,7 +372,9 @@
     <Compile Include="Controllers\OcorrenciaDiaController.cs" />
     <Compile Include="Controllers\RegistroPontoController.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RAusencia\RegrasAusencia.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RCalculo\CalculoPonto.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\ROcorrenciaDia\RegrasOcorrenciaDia.cs" />
+    <Compile Include="Controllers\RelatorioController.cs" />
     <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
     <Compile Include="DAO\AusenciaDAO.cs" />
     <Compile Include="DAO\ManutencaoPontoDAO.cs" />
@@ -498,6 +501,8 @@
     <Compile Include="Models\ViewModels\VManutencaoPonto\ManutencaoPontoViewModel.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoComFiltro.cs" />
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\CartaoPonto.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\RegistroPontoCalculo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -530,6 +535,7 @@
     <Content Include="Views\ManutencaoPonto\TabelaManutencao.cshtml" />
     <Content Include="Views\ManutencaoPonto\AdicionarRegistroManualmente.cshtml" />
     <Content Include="Views\RegistroPonto\ModalEscalaColaborador.cshtml" />
+    <Content Include="Views\Relatorio\CartaoPonto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

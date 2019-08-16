@@ -13,15 +13,15 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
     
     public class RegrasOcorrenciaDia
     {
-        private static int IdOcorrenciaPrevistas        = 1;
-        private static int IdOcorrenciaTrabalhadas      = 2;
-        private static int IdOcorrenciaAusenciaAbona    = 3;
-        private static int IdOcorrenciaAusenciaDesconta = 4;
-        private static int IdOcorrenciaHorasExedentes   = 5;
-        private static int IdOcorrenciaHorasFaltas      = 6;
-        private static int IdOcorrenciaDiaFalta         = 7;
+        private static int OcorrenciaPrevistasId = 1;
+        private static int OcorrenciaTrabalhadasId = 2;
+        private static int OcorrenciaAusenciaAbonaId = 3;
+        private static int OcorrenciaAusenciaDescontaId = 4;
+        private static int OcorrenciaHorasExedentesId = 5;
+        private static int OcorrenciaHorasFaltasId = 6;
+        private static int OcorrenciaDiaFaltaId = 7;
 
-
+        
 
 
         private EscalaDAO dbEscala                  = new EscalaDAO();
@@ -33,7 +33,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
 
         public void CalculoPonto(int colaboradorId, DateTime dataInicio, DateTime dataFim)
         {
-            //Busca Dados para o Calculo
+            //Busca Dados para o CalculoPonto
             var colaborador = dbColaborador.BuscarPorId(colaboradorId);
             var escala = dbEscala.BuscarPorId(colaborador.EscalaId);
 
@@ -115,13 +115,13 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
 
                 foreach (var ocorrenciaDia in ocorrencias)
                 {
-                    if (ocorrenciaDia.CodigoOcorrencia.Equals(IdOcorrenciaPrevistas))
+                    if (ocorrenciaDia.CodigoOcorrencia.Equals(OcorrenciaPrevistasId))
                         Prevista = ocorrenciaDia.QtdMinutos;
-                    else if (ocorrenciaDia.CodigoOcorrencia.Equals(IdOcorrenciaTrabalhadas))
+                    else if (ocorrenciaDia.CodigoOcorrencia.Equals(OcorrenciaTrabalhadasId))
                         Trabalhadas = ocorrenciaDia.QtdMinutos;
-                    else if (ocorrenciaDia.CodigoOcorrencia.Equals(IdOcorrenciaAusenciaAbona))
+                    else if (ocorrenciaDia.CodigoOcorrencia.Equals(OcorrenciaAusenciaAbonaId))
                         AusenciaAbona = ocorrenciaDia.QtdMinutos;
-                    else if (ocorrenciaDia.CodigoOcorrencia.Equals(IdOcorrenciaAusenciaDesconta))
+                    else if (ocorrenciaDia.CodigoOcorrencia.Equals(OcorrenciaAusenciaDescontaId))
                         AusenciaDesconta = ocorrenciaDia.QtdMinutos;
                 }
 
@@ -135,16 +135,26 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
 
                 if (calculo < 0)
                 {
-                    temp.CodigoOcorrencia = IdOcorrenciaHorasFaltas;
+                    temp.CodigoOcorrencia = OcorrenciaHorasFaltasId;
                     temp.QtdMinutos = calculo * (-1);
                     dbOcorenciaDia.Adiciona(temp);
+                    if (Prevista != 0 && Trabalhadas == 0 && AusenciaAbona == 0)
+                    {
+                        temp.Id = 0;
+                        temp.CodigoOcorrencia = OcorrenciaDiaFaltaId;
+                        dbOcorenciaDia.Adiciona(temp);
+                    }
                 }
                 else if (calculo > 0)
                 {
-                    temp.CodigoOcorrencia = IdOcorrenciaHorasExedentes;
+                    temp.CodigoOcorrencia = OcorrenciaHorasExedentesId;
                     temp.QtdMinutos = calculo;
                     dbOcorenciaDia.Adiciona(temp);
                 }
+
+               
+
+               
             }
 
         }
@@ -188,9 +198,9 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
                         var minutosConsiderados = horaConsiderada.Value.Hours * 60 + horaConsiderada.Value.Minutes;
                         var codOcorrencia=0;
                         if (ausencia.MotivoAusencia.Abonar)
-                            codOcorrencia = IdOcorrenciaAusenciaAbona;
+                            codOcorrencia = OcorrenciaAusenciaAbonaId;
                         else
-                            codOcorrencia = IdOcorrenciaAusenciaDesconta;
+                            codOcorrencia = OcorrenciaAusenciaDescontaId;
 
 
                         var temp = new OcorrenciaDia
@@ -238,7 +248,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
                     {
                         Date = dataCalculo,
                         ColaboradorId = colaboradorId,
-                        CodigoOcorrencia = IdOcorrenciaPrevistas,
+                        CodigoOcorrencia = OcorrenciaPrevistasId,
                         QtdMinutos = horas.TotalEmMinutos
                     };
                     dbOcorenciaDia.Adiciona(ocorencia);
@@ -284,24 +294,15 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
                 {
                     Date = data.Date,
                     ColaboradorId = colaboradorId,
-                    CodigoOcorrencia = IdOcorrenciaTrabalhadas,
+                    CodigoOcorrencia = OcorrenciaTrabalhadasId,
                     QtdMinutos = totalHorasTrabalhadasEmMinuto
                 };
-               
 
+                dbOcorenciaDia.Adiciona(ocorencia);
             }
-            else
-            {
-                ocorencia = new OcorrenciaDia
-                {
-                    Date = data.Date,
-                    ColaboradorId = colaboradorId,
-                    CodigoOcorrencia = IdOcorrenciaDiaFalta,
-                    QtdMinutos = 0
-                };
-            }
+            
 
-            dbOcorenciaDia.Adiciona(ocorencia);
+            
         }
         
 

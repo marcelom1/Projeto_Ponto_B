@@ -1,0 +1,188 @@
+﻿@model PontoB.Models.ViewModels.VRelatorios.CartaoPonto.CartaoPonto
+@{
+    ViewBag.Title = "CartaoPonto";
+}
+
+    <main class="borda">
+
+        <table class="tabela borda">
+            <!-- Cabeçalho -->
+
+            <thead class="linhaCabecalho">
+                <tr>
+                    <th COLSPAN="5">FOLHA PONTO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td COLSPAN="5">Apuração: @Model.DataInicio.ToShortDateString() à @Model.DataFim.ToShortDateString()</td>
+                </tr>
+            </tbody>
+            <tr>
+                <td class="espaco"></td>
+            </tr>
+            <thead class="linhaCabecalho">
+                <tr>
+                    <th COLSPAN="5">DADOS DO EMPREGADOR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td COLSPAN="4">Razão Social: @Model.Empresa.RazaoSocial</td>
+                    <td COLSPAN="1">CNPJ: @Model.Empresa.Cnpj</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">Endereço: @Model.Empresa.EnderecoEmpresa.ToString()</td>
+                </tr>
+            </tbody>
+
+            <tr>
+                <td class="espaco"></td>
+            </tr>
+            <thead class="linhaCabecalho">
+                <tr>
+                    <th COLSPAN="5">DADOS DO COLABORADOR</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td COLSPAN="3">Nome: @Model.Colaborador.NomeCompleto</td>
+                    <td COLSPAN="1">Cargo: @Model.Colaborador.Cargo</td>
+                    <td COLSPAN="1">Admissão: @Model.Colaborador.DataAdmissao.Value.ToShortDateString()</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="3">CPF: @Model.Colaborador.CPF</td>
+                    <td COLSPAN="1">PIS: @Model.Colaborador.Pis</td>
+                </tr>
+            </tbody>
+            <tr>
+                <td class="espaco"></td>
+            </tr>
+            <thead class="linhaCabecalho">
+                <tr>
+                    <th COLSPAN="5">ESCALA: @Model.Colaborador.EscalaId</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td COLSPAN="5">
+                        <table>
+                            @foreach (var escala in Model.RelatorioEscala)
+                            {
+                                <tr>
+                                    <td COLSPAN="1">@escala.DiaDaSemana:</td>
+                                    <td COLSPAN="4">@escala.Horario</td>
+                                </tr>
+                            }
+
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+            <tr>
+                <td class="espaco"></td>
+            </tr>
+            <thead class="linhaCabecalho">
+                <tr>
+                    <th COLSPAN="5">REGISTROS PONTO</th>
+                </tr>
+            </thead>
+            <tr>
+                <td COLSPAN="5" class="registro">
+                    <table border='1' class="tabela">
+                        <thead>
+                            <tr>
+                                <th>DATA</th>
+                                <th>MARCAÇÕES NO REP</th>
+                                <th>REGISTROS CONSIDERADOS</th>
+                                <th>OCORRÊNCIAS</th>
+                                <th>SALDO</th>
+                            </tr>
+                        </thead>
+                        @foreach (var registro in Model.RegistroPontoCalculo)
+                        {
+                            <tr>
+                                <td>@registro.Data.ToShortDateString()</td>
+                                <td>@registro.MarcacaoRep</td>
+                                <td>@registro.RegistroConsiderado</td>
+                                <td>
+                                    <table class="tabela">
+                                        @foreach (var ausencia in registro.AusenciaColaboradores)
+                                        {
+                                            <tr>
+                                                <td>@ausencia.MotivoAusencia.Descricao</td>
+                                                <td> </td>
+
+                                            </tr>
+                                        }
+                                        @foreach (var modificado in registro.RegistroPontosModificados)
+                                        {
+                                            <tr>
+                                                <td>@modificado.DataRegistro.Hour.ToString("D2"):@modificado.DataRegistro.Minute.ToString("D2") - @modificado.Observacao </td>
+                                                <td></td>
+                                            </tr>
+                                        }
+
+                                    </table>
+                                </td>
+                                @{
+                                    var saldo = (registro.Saldo / 60).ToString("D2") + ":" + ((registro.Saldo % 60) < 0 ? ((registro.Saldo % 60) * -1).ToString("D2") : (registro.Saldo % 60).ToString("D2"));
+                                }
+
+                                <td>@saldo</td>
+                            </tr>
+                        }
+
+
+                    </table>
+
+                </td>
+            </tr>
+
+
+            
+            <tr>
+                <td class="espaco"></td>
+            </tr>
+            <thead class="linhaCabecalho">
+                <tr>
+                    <th COLSPAN="5">TOTALIZADORES</th>
+                </tr>
+            </thead>
+            
+            <tr>
+                <td class="espaco"></td>
+            </tr>
+            <tbody class="centro">
+                <tr>
+                    <td COLSPAN="5">HORAS EXCEDENTES: @Model.HorasExedentes</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">HORAS FALTAS: @Model.HorasFaltas</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">SALDO DO PERÍODO: @Model.SaldoPeriodo</td>
+                </tr>
+                <tr>
+                    <td class="espaco"></td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">Reconheço com exatidão todos os registros constantes neste documento, pois representam o ocorrido neste periodo.</td>
+                </tr>
+                <tr>
+                    <td class="espaco"></td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">________________________________________________________________________________</td>
+                </tr>
+
+                <tr>
+                    <td COLSPAN="5">@Model.Colaborador.NomeCompleto</td>
+                </tr>
+            </tbody>
+
+        </table>
+    </main>
+
+
+

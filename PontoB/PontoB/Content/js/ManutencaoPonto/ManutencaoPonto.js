@@ -184,6 +184,32 @@ $("#calculo").click(function () {
 
 });
 
+$("#CartaoPonto").click(function () {
+    var colaboradorId = $("#Select2Colaborador").val();
+    var dataInicial = $("#dataInicio").val();
+    var dataFinal = $("#dataFim").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/Relatorio/CartaoPonto/",
+        data: JSON.stringify({ colaboradorId: colaboradorId, dataInicio: dataInicial, dataFim: dataFinal }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (resposta) {
+            var myWindow = window.open("", "_blank");
+
+            myWindow.document.write(resposta);
+            console.log(resposta);
+
+        },
+        error: function (json) {
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
+        }
+    });
+
+});
+
 
 
 
