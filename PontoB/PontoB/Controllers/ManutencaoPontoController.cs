@@ -123,7 +123,7 @@ namespace PontoB.Controllers
             {
                 Inicio = dataInicio,
                 Fim = dataFim,
-                ColaboradorId = idColaborador
+                Id = idColaborador
 
             };
             var texto = valores.ToString();
@@ -288,7 +288,7 @@ namespace PontoB.Controllers
             {
                 Inicio = data,
                 Fim = data,
-                ColaboradorId = idColaborador
+                Id = idColaborador
 
             };
             var texto = valores.ToString();

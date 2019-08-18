@@ -52,7 +52,7 @@ namespace PontoB.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_RegistroPonto_ColaboradorId",
                 table: "RegistroPonto",
-                column: "ColaboradorId");
+                column: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

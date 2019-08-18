@@ -43,7 +43,7 @@ namespace PontoB.Migrations
 
                     b.Property<int>("AusenciaId");
 
-                    b.Property<int>("ColaboradorId");
+                    b.Property<int>("Id");
 
                     b.Property<DateTime>("DataFim");
 
@@ -65,7 +65,7 @@ namespace PontoB.Migrations
 
                     b.HasIndex("AusenciaId");
 
-                    b.HasIndex("ColaboradorId");
+                    b.HasIndex("Id");
 
                     b.HasIndex("MotivoAusenciaId");
 
@@ -260,7 +260,7 @@ namespace PontoB.Migrations
 
                     b.HasOne("PontoB.Models.Colaborador", "Colaborador")
                         .WithMany()
-                        .HasForeignKey("ColaboradorId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PontoB.Models.MotivoAusencia", "MotivoAusencia")

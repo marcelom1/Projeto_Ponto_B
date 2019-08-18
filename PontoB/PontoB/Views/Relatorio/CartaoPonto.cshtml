@@ -3,7 +3,7 @@
     ViewBag.Title = "CartaoPonto";
 }
 
-    <main class="borda">
+    <main class="borda" style="page-break-after: always;">
 
         <table class="tabela borda">
             <!-- Cabeçalho -->
@@ -101,6 +101,8 @@
                         </thead>
                         @foreach (var registro in Model.RegistroPontoCalculo)
                         {
+                            if (registro.Data >= Model.Colaborador.DataAdmissao && (Model.Colaborador.DataDemissao == null || registro.Data <= Model.Colaborador.DataDemissao))
+                            {
                             <tr>
                                 <td>@registro.Data.ToShortDateString()</td>
                                 <td>@registro.MarcacaoRep</td>
@@ -122,6 +124,17 @@
                                                 <td></td>
                                             </tr>
                                         }
+                                        @{ if (registro.OcorrenciaDiaFalta != null)
+                                            {
+                                            <tr>
+                                                <td>Falta Sem Justificativa</td>
+                                                <td></td>
+                                            </tr>
+                                            }
+
+                                        }
+                                        
+                                       
 
                                     </table>
                                 </td>
@@ -131,6 +144,7 @@
 
                                 <td>@saldo</td>
                             </tr>
+                            }
                         }
 
 

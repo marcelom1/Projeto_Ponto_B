@@ -88,7 +88,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
             {
                 Inicio = inicioConsiderar,
                 Fim = fimConsiderar,
-                ColaboradorId = colaborador.Id
+                Id = colaborador.Id
             };
 
             return periodoValido;

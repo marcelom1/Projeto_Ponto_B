@@ -1,0 +1,64 @@
+﻿@using PagedList.Mvc
+
+@{
+    Layout = "";
+}
+
+@model PagedList.IPagedList<PontoB.Models.ViewModels.VResumoCalculo.ResumoCalculoViewModel>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>Impressão</th>
+                <th>Nome Completo</th>
+                <th>Previstas</th>
+                <th>Trabalhadas</th>
+                <th>Ausencias Abonadas</th>
+                <th>Ausencias Desconta</th>
+                <th>Excedentes</th>
+                <th>Faltas</th>
+                <th>Saldo</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ponto in Model)
+            {
+                <tr>
+                    <td><img src="~/Content/img/printer.png" id="printerCartaoPonto" class="PonteiroClick" data-colaboradorid="@ponto.Colaborador.Id" width="20" height="20" /></td>
+                    <td>@ponto.Colaborador.NomeCompleto</td>
+
+                    <td>@((ponto.CalculoPonto.HorasPrevista / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.HorasPrevista % 60) < 0 ? ((ponto.CalculoPonto.HorasPrevista % 60) * -1).ToString("D2") : (ponto.CalculoPonto.HorasPrevista % 60).ToString("D2")))</td>
+
+                    <td>@((ponto.CalculoPonto.HorasTrabalhadas / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.HorasTrabalhadas % 60) < 0 ? ((ponto.CalculoPonto.HorasTrabalhadas % 60) * -1).ToString("D2") : (ponto.CalculoPonto.HorasTrabalhadas % 60).ToString("D2")))</td>
+                    <td>@((ponto.CalculoPonto.AusenciaAbona / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.AusenciaAbona % 60) < 0 ? ((ponto.CalculoPonto.AusenciaAbona % 60) * -1).ToString("D2") : (ponto.CalculoPonto.AusenciaAbona % 60).ToString("D2")))</td>
+                    <td>@((ponto.CalculoPonto.AusenciaDesconta / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.AusenciaDesconta % 60) < 0 ? ((ponto.CalculoPonto.AusenciaDesconta % 60) * -1).ToString("D2") : (ponto.CalculoPonto.AusenciaDesconta % 60).ToString("D2")))</td>
+                    <td>@((ponto.CalculoPonto.HorasExedentes / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.HorasExedentes % 60) < 0 ? ((ponto.CalculoPonto.HorasExedentes % 60) * -1).ToString("D2") : (ponto.CalculoPonto.HorasExedentes % 60).ToString("D2")))</td>
+                    <td>@((ponto.CalculoPonto.HorasFaltas / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.HorasFaltas % 60) < 0 ? ((ponto.CalculoPonto.HorasFaltas % 60) * -1).ToString("D2") : (ponto.CalculoPonto.HorasFaltas % 60).ToString("D2")))</td>
+                    <td>@((ponto.CalculoPonto.Saldo / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.Saldo % 60) < 0 ? ((ponto.CalculoPonto.Saldo % 60) * -1).ToString("D2") : (ponto.CalculoPonto.Saldo % 60).ToString("D2")))</td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div id="contentPager">
+
+        @Html.PagedListPager(Model, page => Url.Action("TabelaResumoCalculo",
+        new { pagina = page, empresaId = ViewBag.EmpresaId, dataInicio = ViewBag.DataInicio, dataFim = ViewBag.DataFim }),
+        new PagedListRenderOptions
+        {
+            FunctionToTransformEachPageLink = (liTag, aTag) =>
+            {
+                aTag.Attributes.Add("class", "page-link");
+                liTag.InnerHtml = aTag.ToString();
+                return liTag;
+            },
+            LiElementClasses = new[] { "page-item" },
+            UlElementClasses = new[] { "pagination justify-content-center" }
+        })
+    </div>
+
+    
+</div>

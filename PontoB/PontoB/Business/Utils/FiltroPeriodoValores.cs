@@ -11,11 +11,11 @@ namespace PontoB.Business.Utils
     {
         public DateTime? Inicio { get; set; }
         public DateTime? Fim { get; set; }
-        public int ColaboradorId { get; set; }
+        public int Id { get; set; }
 
         public override string ToString()
         {
-            return Inicio.ToFilterString() + "|" + Fim.ToFilterString() + "|" + ColaboradorId;
+            return Inicio.ToFilterString() + "|" + Fim.ToFilterString() + "|" + Id;
         }
 
         public static FiltroPeriodoValores FromString(string s)
@@ -26,7 +26,7 @@ namespace PontoB.Business.Utils
             {
                 Inicio = paramentros[0].ToDateTimeNullable(),
                 Fim = paramentros[1].ToDateTimeNullable(),
-                ColaboradorId = id
+                Id = id
         };
             return resultado;
         }

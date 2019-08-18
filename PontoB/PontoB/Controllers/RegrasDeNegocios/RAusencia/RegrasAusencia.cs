@@ -163,7 +163,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.RAusencia
             {
                 Inicio = ausencia.DataInicio,
                 Fim = ausencia.DataFim,
-                ColaboradorId = ausencia.ColaboradorId
+                Id = ausencia.ColaboradorId
 
             };
             var texto = valores.ToString();

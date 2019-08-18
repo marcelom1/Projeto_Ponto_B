@@ -89,7 +89,7 @@ namespace PontoB.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AusenciaColaboradores_ColaboradorId",
                 table: "AusenciaColaboradores",
-                column: "ColaboradorId");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AusenciaColaboradores_MotivoAusenciaId",

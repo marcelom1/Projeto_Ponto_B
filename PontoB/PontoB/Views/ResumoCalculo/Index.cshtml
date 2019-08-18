@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Resumo de Cáclculo";
+    Layout = "~/Views/Shared/_LayoutAdm.cshtml";
+}
+
+@section css{
+
+    <link rel="stylesheet" href="~/Content/CSS/select2.min.css" />
+    <link rel="stylesheet" href="~/Content/CSS/ManutencaoPonto.css" />
+
+
+
+}
+
+
+<h2 class="pb-3">Resumo de Cálculo</h2>
+<div class="form-row pb-1 pt-4 ">
+    <div class="form-group col-md-2">
+        <label for="CodigoEscala">Código Empresa</label>
+        <div class="input-group mb-1">
+            <input type="text" class="form-control" id="Empresa_id" disabled placeholder="Código" name="Empresa.Id" value="">
+        </div>
+    </div>
+    <div class="form-group col-md-3 mr-2">
+        <div class="pr-2">
+            <label for="CodigoEmpresa">Empresa</label>
+        </div>
+        <select class="js-example-basic-single select2" id="Select2Empresa" name="empresa">
+            <option value=""></option>
+
+        </select>
+        <span class="erro" id="Erro_Ausencia_EmpresaId"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="DescricaoEscala">Data Inicial</label>
+        <input type="date" class="form-control" id="dataInicio" name="" value="">
+        <span class="erro" id="Erro_DataInicio"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="DescricaoEscala">Data Final</label>
+        <input type="date" class="form-control" id="dataFim" name="" value="">
+        <span class="erro" id="Erro_DataFim"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <div class="form-group pt-4 mt-2">
+            <button type="button" class="btn btn-secondary botao_cor btn-sm" id="BuscarColaboradores">Buscar</button>
+        </div>
+    </div>
+</div>
+<div id="teste2"></div>
+<div id="Grid" class="Oculto">
+   
+</div>
+
+@section scripts{
+
+    <script src="~/Content/js/select2.min.js"></script>
+    <script src="~/Content/js/pt-BR.js"></script>
+    <script src="~/Content/js/ResumoDeCalculo.js"></script>
+
+}

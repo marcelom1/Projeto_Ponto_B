@@ -114,7 +114,7 @@ namespace PontoB.Controllers
             {
                 Inicio = dataInicio,
                 Fim = dataFim,
-                ColaboradorId = colaboradorLogado.Id
+                Id = colaboradorLogado.Id
 
             };
             var texto = valores.ToString();

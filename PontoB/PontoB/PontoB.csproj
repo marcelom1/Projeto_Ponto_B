@@ -318,6 +318,7 @@
     <Content Include="Content\img\lixeira.png" />
     <Content Include="Content\img\LogoB.gif" />
     <Content Include="Content\img\Lupa2.png" />
+    <Content Include="Content\img\printer.png" />
     <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\img\x.svg" />
     <Content Include="Content\js\bootstrap.min.js" />
@@ -341,6 +342,7 @@
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\RegistroPonto.js" />
+    <Content Include="Content\js\ResumoDeCalculo.js" />
     <Content Include="Content\js\select2.min.js" />
     <Content Include="Content\js\tooltipster.bundle.min.js" />
     <Content Include="Content\PagedList.css" />
@@ -369,12 +371,13 @@
     <Compile Include="Controllers\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\OcorrenciaDiaController.cs" />
     <Compile Include="Controllers\RegistroPontoController.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RAusencia\RegrasAusencia.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RCalculo\CalculoPonto.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\ROcorrenciaDia\RegrasOcorrenciaDia.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\RelatorioCartaoPonto.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
+    <Compile Include="Controllers\ResumoCalculoController.cs" />
     <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
     <Compile Include="DAO\AusenciaDAO.cs" />
     <Compile Include="DAO\ManutencaoPontoDAO.cs" />
@@ -429,6 +432,7 @@
     <Compile Include="Filtros\FEscala\FiltroEscalaTodos .cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDia.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreData.cs" />
+    <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreDataPorEmpresa.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPonto.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoColaborador.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoEntreDataColaborador.cs" />
@@ -503,6 +507,7 @@
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\CartaoPonto.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\RegistroPontoCalculo.cs" />
+    <Compile Include="Models\ViewModels\VResumoCalculo\ResumoCalculoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -536,6 +541,8 @@
     <Content Include="Views\ManutencaoPonto\AdicionarRegistroManualmente.cshtml" />
     <Content Include="Views\RegistroPonto\ModalEscalaColaborador.cshtml" />
     <Content Include="Views\Relatorio\CartaoPonto.cshtml" />
+    <Content Include="Views\ResumoCalculo\Index.cshtml" />
+    <Content Include="Views\ResumoCalculo\TabelaResumoCalculo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

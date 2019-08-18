@@ -33,12 +33,12 @@ namespace PontoB.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_OcorrenciaDia_ColaboradorId",
                 table: "OcorrenciaDia",
-                column: "ColaboradorId");
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OcorrenciaDia_Date_ColaboradorId_CodigoOcorrencia",
                 table: "OcorrenciaDia",
-                columns: new[] { "Date", "ColaboradorId", "CodigoOcorrencia" });
+                columns: new[] { "Date", "Id", "CodigoOcorrencia" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
