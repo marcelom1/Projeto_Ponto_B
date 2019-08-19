@@ -158,3 +158,29 @@ $(document).on("click", "#contentPager a", function () {
     return false;
 });
 
+$(document).on('click', '#ImprimirTodos', function () {
+    var datafim = $("#dataFim").val();
+    var datainicio = $("#dataInicio").val()
+    var empresaId = $("#Select2Empresa").val();
+    if (datafim > datainicio && empresaId != 0 && datainicio != '' && datafim != '') {
+        $.ajax({
+            type: "POST",
+            url: "/Relatorio/TodosCartaoPontoEmpresa/",
+            data: JSON.stringify({ empresaId: empresaId, dataInicio: datainicio, dataFim: datafim }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (resposta) {
+                var myWindow = window.open("", "_blank");
+
+                myWindow.document.write(resposta);
+                console.log(resposta)
+
+            },
+            error: function (json) {
+                alert("Erro de conexão com o servidor!");
+                Console.log(json);
+            }
+        });
+    }
+
+});

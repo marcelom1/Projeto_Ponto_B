@@ -1,9 +1,12 @@
-﻿@model PontoB.Models.ViewModels.VRelatorios.CartaoPonto.CartaoPonto
+﻿@model IList <PontoB.Models.ViewModels.VRelatorios.CartaoPonto.CartaoPonto>
 @{
     ViewBag.Title = "CartaoPonto";
 }
+@foreach (var ponto in Model)
+{
 
-    <main class="borda" style="page-break-after: always;">
+
+    <div class="borda" style="page-break-after: always;">
 
         <table class="tabela borda">
             <!-- Cabeçalho -->
@@ -15,7 +18,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td COLSPAN="5">Apuração: @Model.DataInicio.ToShortDateString() à @Model.DataFim.ToShortDateString()</td>
+                    <td COLSPAN="5">Apuração: @ponto.DataInicio.ToShortDateString() à @ponto.DataFim.ToShortDateString()</td>
                 </tr>
             </tbody>
             <tr>
@@ -28,11 +31,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td COLSPAN="4">Razão Social: @Model.Empresa.RazaoSocial</td>
-                    <td COLSPAN="1">CNPJ: @Model.Empresa.Cnpj</td>
+                    <td COLSPAN="4">Razão Social: @ponto.Empresa.RazaoSocial</td>
+                    <td COLSPAN="1">CNPJ: @ponto.Empresa.Cnpj</td>
                 </tr>
                 <tr>
-                    <td COLSPAN="5">Endereço: @Model.Empresa.EnderecoEmpresa.ToString()</td>
+                    <td COLSPAN="5">Endereço: @ponto.Empresa.EnderecoEmpresa.ToString()</td>
                 </tr>
             </tbody>
 
@@ -46,13 +49,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td COLSPAN="3">Nome: @Model.Colaborador.NomeCompleto</td>
-                    <td COLSPAN="1">Cargo: @Model.Colaborador.Cargo</td>
-                    <td COLSPAN="1">Admissão: @Model.Colaborador.DataAdmissao.Value.ToShortDateString()</td>
+                    <td COLSPAN="3">Nome: @ponto.Colaborador.NomeCompleto</td>
+                    <td COLSPAN="1">Cargo: @ponto.Colaborador.Cargo</td>
+                    <td COLSPAN="1">Admissão: @ponto.Colaborador.DataAdmissao.Value.ToShortDateString()</td>
                 </tr>
                 <tr>
-                    <td COLSPAN="3">CPF: @Model.Colaborador.CPF</td>
-                    <td COLSPAN="1">PIS: @Model.Colaborador.Pis</td>
+                    <td COLSPAN="3">CPF: @ponto.Colaborador.CPF</td>
+                    <td COLSPAN="1">PIS: @ponto.Colaborador.Pis</td>
                 </tr>
             </tbody>
             <tr>
@@ -60,14 +63,14 @@
             </tr>
             <thead class="linhaCabecalho">
                 <tr>
-                    <th COLSPAN="5">ESCALA: @Model.Colaborador.EscalaId</th>
+                    <th COLSPAN="5">ESCALA: @ponto.Colaborador.EscalaId</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td COLSPAN="5">
                         <table>
-                            @foreach (var escala in Model.RelatorioEscala)
+                            @foreach (var escala in ponto.RelatorioEscala)
                             {
                                 <tr>
                                     <td COLSPAN="1">@escala.DiaDaSemana:</td>
@@ -99,9 +102,9 @@
                                 <th>SALDO</th>
                             </tr>
                         </thead>
-                        @foreach (var registro in Model.RegistroPontoCalculo)
+                        @foreach (var registro in ponto.RegistroPontoCalculo)
                         {
-                            if (registro.Data >= Model.Colaborador.DataAdmissao && (Model.Colaborador.DataDemissao == null || registro.Data <= Model.Colaborador.DataDemissao))
+                            if (registro.Data >= ponto.Colaborador.DataAdmissao && (ponto.Colaborador.DataDemissao == null || registro.Data <= ponto.Colaborador.DataDemissao))
                             {
                             <tr>
                                 <td>@registro.Data.ToShortDateString()</td>
@@ -144,8 +147,8 @@
 
                                 <td>@saldo</td>
                             </tr>
-                            }
-                        }
+                                        }
+                                    }
 
 
                     </table>
@@ -169,13 +172,13 @@
             </tr>
             <tbody class="centro">
                 <tr>
-                    <td COLSPAN="5">HORAS EXCEDENTES: @Model.HorasExedentes</td>
+                    <td COLSPAN="5">HORAS EXCEDENTES: @ponto.HorasExedentes</td>
                 </tr>
                 <tr>
-                    <td COLSPAN="5">HORAS FALTAS: @Model.HorasFaltas</td>
+                    <td COLSPAN="5">HORAS FALTAS: @ponto.HorasFaltas</td>
                 </tr>
                 <tr>
-                    <td COLSPAN="5">SALDO DO PERÍODO: @Model.SaldoPeriodo</td>
+                    <td COLSPAN="5">SALDO DO PERÍODO: @ponto.SaldoPeriodo</td>
                 </tr>
                 <tr>
                     <td class="espaco"></td>
@@ -191,12 +194,12 @@
                 </tr>
 
                 <tr>
-                    <td COLSPAN="5">@Model.Colaborador.NomeCompleto</td>
+                    <td COLSPAN="5">@ponto.Colaborador.NomeCompleto</td>
                 </tr>
             </tbody>
 
         </table>
-    </main>
-
+    </div>
+ }
 
 

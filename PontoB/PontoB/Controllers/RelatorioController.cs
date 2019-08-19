@@ -16,16 +16,38 @@ namespace PontoB.Controllers
 {
     public class RelatorioController : Controller
     {
-
+        ColaboradorDAO dbColaborador = new ColaboradorDAO();
         // GET: Relatorio
         public ActionResult CartaoPonto(DateTime dataInicio, DateTime dataFim, int colaboradorId)
         {
-            CartaoPonto model = new RelatorioCartaoPonto().CartaoPonto(dataInicio, dataFim, colaboradorId);
+            IList<CartaoPonto> model = new List<CartaoPonto>();
+            model.Add( new RelatorioCartaoPonto().CartaoPonto(dataInicio, dataFim, colaboradorId));
 
             return View(model);
         }
 
-        
+        public ActionResult TodosCartaoPontoEmpresa(DateTime dataInicio, DateTime dataFim, int empresaId)
+        {
+            var filtro = new FiltroPeriodoValores
+            {
+                Inicio = dataInicio,
+                Fim = dataFim,
+                Id = empresaId
+
+            }.ToString();
+            var colaboradores = dbColaborador.Filtro("EmpresaId", empresaId.ToString());
+
+            IList<CartaoPonto> model = new List<CartaoPonto>();
+            foreach (var colaborador in colaboradores.Where(x => x.DataAdmissao <= dataFim && (x.DataDemissao == null || x.DataDemissao >= dataInicio)))
+            {
+                model.Add(new RelatorioCartaoPonto().CartaoPonto(dataInicio, dataFim, colaborador.Id));
+            }
+            
+
+            return View("CartaoPonto", model);
+        }
+
+
 
 
     }
