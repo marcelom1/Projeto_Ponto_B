@@ -18,5 +18,8 @@
 
 .tooltip {
     z-index: 0;
+    opacity: unset;
 }
+
+
 

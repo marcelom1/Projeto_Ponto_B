@@ -24,7 +24,10 @@ namespace PontoB.Filtros.FColaborador
                 return new FiltroColaboradorAtivoPorNome();
             else if (coluna.Equals("EmpresaId", StringComparison.OrdinalIgnoreCase))
                 return new FiltroColaboradorEmpresaID();
+            else if (coluna.Equals("FiltroColaboradorAtivoEntreDatas", StringComparison.OrdinalIgnoreCase))
+                return new FiltroColaboradorAtivoEntreDatas();
 
+            
 
             return null;
 

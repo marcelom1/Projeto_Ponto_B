@@ -303,6 +303,7 @@
     <Content Include="Content\CSS\cadastroColaborador.css" />
     <Content Include="Content\CSS\cadastroEmpresa.css" />
     <Content Include="Content\CSS\CadastroEscala.css" />
+    <Content Include="Content\CSS\Graficos.css" />
     <Content Include="Content\CSS\ManutencaoPonto.css" />
     <Content Include="Content\CSS\fontknewave.css" />
     <Content Include="Content\CSS\login.css" />
@@ -313,6 +314,8 @@
     <Content Include="Content\CSS\tooltipster.bundle.min.css" />
     <Content Include="Content\img\adicionar.svg" />
     <Content Include="Content\img\ausencia.svg" />
+    <Content Include="Content\img\Estrela-Amarela.png" />
+    <Content Include="Content\img\estrela-Vermelha.png" />
     <Content Include="Content\img\Fundo2.jpg" />
     <Content Include="Content\img\lapis2.svg" />
     <Content Include="Content\img\lixeira.png" />
@@ -320,6 +323,7 @@
     <Content Include="Content\img\Lupa2.png" />
     <Content Include="Content\img\printer.png" />
     <Content Include="Content\img\spinner.gif" />
+    <Content Include="Content\img\Trofeu.png" />
     <Content Include="Content\img\x.svg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\BuscarCep.js" />
@@ -327,6 +331,7 @@
     <Content Include="Content\js\CadastroColaborador.js" />
     <Content Include="Content\js\CadastroEmpresa.js" />
     <Content Include="Content\js\CadastroEscala.js" />
+    <Content Include="Content\js\Graficos\Registros.js" />
     <Content Include="Content\js\HistoricoPonto.js" />
     <Content Include="Content\js\ManutencaoPonto\ManutencaoPonto.js" />
     <Content Include="Content\js\DetalhesAusencia.js" />
@@ -352,6 +357,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
@@ -375,7 +382,9 @@
     <Compile Include="Controllers\RegrasDeNegocios\RAusencia\RegrasAusencia.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RCalculo\CalculoPonto.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\ROcorrenciaDia\RegrasOcorrenciaDia.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\Graficos.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\RelatorioCartaoPonto.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopHoras.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
     <Compile Include="Controllers\ResumoCalculoController.cs" />
     <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
@@ -405,12 +414,14 @@
     <Compile Include="Filtros\FAusencia\FiltroAusenciaEmpresa.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusenciaGrupo.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusenciaMotivo.cs" />
+    <Compile Include="Filtros\FAusencia\FiltroAusenciaMotivoEntreData.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusenciaTodos.cs" />
     <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusencia.cs" />
     <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaAbona.cs" />
     <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaCodigo.cs" />
     <Compile Include="Filtros\FAusencia\FMotivoAusencia\FiltroMotivoAusenciaDescricao.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaborador.cs" />
+    <Compile Include="Filtros\FColaborador\FiltroColaboradorAtivoEntreDatas.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorAtivoPorNome.cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorEmpresaID .cs" />
     <Compile Include="Filtros\FColaborador\FiltroColaboradorEmpresa .cs" />
@@ -433,12 +444,13 @@
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDia.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreData.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreDataPorEmpresa.cs" />
+    <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreDataTodosColaboradores.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPonto.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoColaborador.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoEntreDataColaborador.cs" />
+    <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoTodosRegistros.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoUltimoRegistro.cs" />
     <Compile Include="Filtros\FRegistroPonto\FiltroRegistroPontoCodigo.cs" />
-    <Compile Include="Filtros\FRegistroPonto\FiltroEscalaTodos .cs" />
     <Compile Include="Filtros\IFiltro.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -507,6 +519,8 @@
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\CartaoPonto.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\RegistroPontoCalculo.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\Home\RelatorioTopHorasViewModels.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\Home\TopHomeViewModels.cs" />
     <Compile Include="Models\ViewModels\VResumoCalculo\ResumoCalculoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

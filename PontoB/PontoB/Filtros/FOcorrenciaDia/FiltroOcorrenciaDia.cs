@@ -14,8 +14,13 @@ namespace PontoB.Filtros.FOcorrenciaDia
                 return new FiltroOcorrenciaDiaEntreData();
             else if (coluna.Equals("OcorrenciaDiaEntreDataPorEmpresa", StringComparison.OrdinalIgnoreCase))
                 return new FiltroOcorrenciaDiaEntreDataPorEmpresa();
+            else if (coluna.Equals("FiltroOcorrenciaDiaEntreDataTodosColaboradores", StringComparison.OrdinalIgnoreCase))
+                return new FiltroOcorrenciaDiaEntreDataTodosColaboradores();
 
-            
+           
+
+
+
             return null;
         }
     }

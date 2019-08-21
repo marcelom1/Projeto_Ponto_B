@@ -8,7 +8,7 @@
 <div class="form-row pb-1 pt-4 ">
     <div class="form-group col-md-2">
         <div class="form-group pt-4 mt-2">
-            <button type="button" class="btn btn-secondary botao_cor btn-sm" id="ImprimirTodos">Imprimir Todos</button>
+            <button type="button" class="btn btn-secondary botao_cor btn-sm tooltip3" id="ImprimirTodos">Imprimir Todos</button>
         </div>
     </div>
 </div>
@@ -32,7 +32,7 @@
             @foreach (var ponto in Model)
             {
                 <tr>
-                    <td><img src="~/Content/img/printer.png" id="printerCartaoPonto" class="PonteiroClick" data-colaboradorid="@ponto.Colaborador.Id" width="20" height="20" /></td>
+                    <td><img src="~/Content/img/printer.png" id="printerCartaoPonto" class="PonteiroClick tooltip4" title="Impressão Cartão Ponto" data-colaboradorid="@ponto.Colaborador.Id" width="20" height="20" /></td>
                     <td>@ponto.Colaborador.NomeCompleto</td>
 
                     <td>@((ponto.CalculoPonto.HorasPrevista / 60).ToString("D2") + ":" + ((ponto.CalculoPonto.HorasPrevista % 60) < 0 ? ((ponto.CalculoPonto.HorasPrevista % 60) * -1).ToString("D2") : (ponto.CalculoPonto.HorasPrevista % 60).ToString("D2")))</td>

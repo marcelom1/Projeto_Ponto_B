@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 namespace PontoB.Controllers
 {
@@ -46,6 +48,28 @@ namespace PontoB.Controllers
 
             return View("CartaoPonto", model);
         }
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GraficosHome()
+        {
+            
+            var data = DateTime.Now;
+            
+            var modifica = new
+            {
+                DataHoje = data.ToShortDateString(),
+                Hoje = new Graficos().DadosGraficoDoDia(data),
+                
+                DataOntem = data.AddDays(-1).ToShortDateString(),
+                Ontem = new Graficos().DadosGraficoDoDia(data.AddDays(-1))
+            };
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        
 
 
 

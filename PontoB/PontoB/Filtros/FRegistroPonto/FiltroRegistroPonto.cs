@@ -19,6 +19,10 @@ namespace PontoB.Filtros.FRegistroPonto
                 return new FiltroRegistroPontoColaborador();
             else if (coluna.Equals("RegistroPontoEntreDatas", StringComparison.OrdinalIgnoreCase))
                 return new FiltroRegistroPontoEntreDataColaborador();
+            else if (coluna.Equals("FiltroRegistroPontoTodosRegistros", StringComparison.OrdinalIgnoreCase))
+                return new FiltroRegistroPontoTodosRegistros();
+
+            
 
             return null;
 

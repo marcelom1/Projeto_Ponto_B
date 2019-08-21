@@ -1,5 +1,10 @@
 ﻿$(document).ready(function () {
-    
+
+    $('.tooltip2').tooltipster({
+        trigger: "custom"
+    });
+   
+
     $('#Select2Empresa').select2({
 
         language: "pt-BR",
@@ -35,6 +40,15 @@
 
     });
 });
+
+function inicializacaoTooltip() {
+    $('.tooltip3').tooltipster({
+        trigger: "custom"
+    });
+    $('.tooltip4').tooltipster({
+        trigger: "custom"
+    });
+}
 
 var AntesEmpresaSelect2 = '';
 $("#Select2Empresa").on('select2:close', function () {
@@ -78,14 +92,16 @@ function validacaoData() {
             }
 };
 
+$("#BuscarColaboradores").click(function () {
 
-$(document).on('click', '#BuscarColaboradores', function () {
+    $(".tooltip2").tooltipster("content", "Processando...").tooltipster("open");
     var datafim = $("#dataFim").val();
     var datainicio = $("#dataInicio").val()
     var EmpresaId = $("#Select2Empresa").val();
     if (datafim > datainicio && EmpresaId != 0 && datainicio != '' && datafim != '') {
         ColaboradoresPagincao();
         $("#GridManutencao").removeClass("Oculto");
+        
     } else {
         ModalAlert("", "Ok", "Todos os campos são obrigatórios!", "", "", "Erro");
     }
@@ -109,7 +125,8 @@ function ColaboradoresPagincao() {
         dataType: "html",
         success: function (resposta) {
             $("#Grid").html(resposta)
-            console.log("TESTE OK");
+            $(".tooltip2").tooltipster("close");
+            inicializacaoTooltip();
 
         },
         error: function (json) {
@@ -120,6 +137,7 @@ function ColaboradoresPagincao() {
 }
 
 $(document).on('click', '#printerCartaoPonto', function () {
+    $("#tooltip4").tooltipster("content", "Processando...").tooltipster("open");
     var datafim = $("#dataFim").val();
     var datainicio = $("#dataInicio").val()
     var colaboradorId = $(this).data("colaboradorid");
@@ -134,7 +152,7 @@ $(document).on('click', '#printerCartaoPonto', function () {
                 var myWindow = window.open("", "_blank");
 
                 myWindow.document.write(resposta);
-                console.log(resposta)
+                $("#tooltip4").tooltipster("close");
 
             },
             error: function (json) {
@@ -158,7 +176,11 @@ $(document).on("click", "#contentPager a", function () {
     return false;
 });
 
+
+
+
 $(document).on('click', '#ImprimirTodos', function () {
+    $(".tooltip3").tooltipster("content", "Processando...").tooltipster("open");
     var datafim = $("#dataFim").val();
     var datainicio = $("#dataInicio").val()
     var empresaId = $("#Select2Empresa").val();
@@ -173,7 +195,7 @@ $(document).on('click', '#ImprimirTodos', function () {
                 var myWindow = window.open("", "_blank");
 
                 myWindow.document.write(resposta);
-                console.log(resposta)
+                $(".tooltip3").tooltipster("close");
 
             },
             error: function (json) {

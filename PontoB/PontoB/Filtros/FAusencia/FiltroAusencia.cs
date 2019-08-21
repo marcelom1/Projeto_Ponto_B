@@ -26,6 +26,10 @@ namespace PontoB.Filtros.FAusencia
                 return new FiltroAusenciaTodos();
             else if (coluna.Equals("ColaboradorEntreData", StringComparison.OrdinalIgnoreCase))
                 return new FiltroAusenciaColaboradorEntreData();
+            else if (coluna.Equals("FiltroAusenciaMotivoEntreData", StringComparison.OrdinalIgnoreCase))
+                return new FiltroAusenciaMotivoEntreData();
+
+            
 
             return null;
 
