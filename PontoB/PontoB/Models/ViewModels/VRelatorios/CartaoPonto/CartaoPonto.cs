@@ -1,4 +1,5 @@
-﻿using PontoB.Models.RegistroPontoModels;
+﻿using PontoB.Controllers.RegrasDeNegocios.RCalculo;
+using PontoB.Models.RegistroPontoModels;
 using PontoB.Models.ViewModels.VEscala;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,10 @@ namespace PontoB.Models.ViewModels.VRelatorios.CartaoPonto
         public Colaborador Colaborador { get; set; }
         public IList<ModalEscalaColaboradorViewModel> RelatorioEscala { get; set; }
         public IList<RegistroPontoCalculo> RegistroPontoCalculo { get; set; }
+
+        public CalculoPonto CalculoPonto { get; set; }
+
        
-        public string HorasExedentes { get; set; }
-        public string HorasFaltas { get; set; }
         public string SaldoPeriodo { get; set; }
         
 

@@ -40,6 +40,7 @@
     <div class="form-group col-md-2">
         <label for="DescricaoEscala">Data Final</label>
         <input type="date" class="form-control" id="dataFim" name="" value="">
+
         <span class="erro" id="Erro_DataFim"></span>
     </div>
     <div class="form-group col-md-2">
@@ -48,6 +49,7 @@
         </div>
     </div>
 </div>
+<span class="erro" id="ErrosManutencaoPonto"></span>
 <div id="GridManutencao" class="Oculto">
     <div class="form-row pb-1 pt-4 pr-2 ">
         <div class="form-group col-md-2">
@@ -87,6 +89,8 @@
         </div>
     </div>
     <div>
+        <span class="Oculto" id="DataCarregadaInicio"></span>
+        <span class="Oculto" id="DataCarregadaFim"></span>
         <table class="table table-bordered table-hover table-responsive-xl table-sm tabela">
             <thead class="thead-dark">
                 <tr>

@@ -10,8 +10,8 @@ function BuscaIndiceColaborador() {
         dataType: "html",
         data: JSON.stringify({
             empresaId: EmpresaId,
-            dataInicio: $("#dataInicio").val(),
-            dataFim: $("#dataFim").val(),
+            dataInicio: $("#DataCarregadaInicio").text(),
+            dataFim: $("#DataCarregadaFim").text(),
             colaboradorId: ColaboradorId
         }),
         success: function (temp) {
@@ -32,11 +32,13 @@ $(document).on('click', '#BuscarColaboradores', function () {
     var datafim = $("#dataFim").val();
     var datainicio = $("#dataInicio").val()
     var EmpresaId = $("#Select2Empresa").val();
-    if (datafim > datainicio && EmpresaId != 0 && datainicio != '' && datafim!='') {
-        ColaboradoresPagincao(0);
-        $("#GridManutencao").removeClass("Oculto");
+    if (EmpresaId != 0 && datainicio != '' && datafim != '') {
+        if (validacaoData()) {
+            ColaboradoresPagincao(0);
+            
+        }
     } else {
-        ModalAlert("", "Ok", "Todos os campos são obrigatórios!", "", "","Erro");
+        ModalAlert("", "", "Todos os campos são obrigatórios!", "", "","Erro");
     }
 
 });

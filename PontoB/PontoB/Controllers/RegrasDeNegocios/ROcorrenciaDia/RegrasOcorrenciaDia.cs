@@ -33,6 +33,9 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
 
         public void CalculoPonto(int colaboradorId, DateTime dataInicio, DateTime dataFim)
         {
+            if (dataFim>DateTime.Now.Date)
+                throw new System.ArgumentException("O periodo de apuração não pode ser maior que a data corrente");
+
             //Busca Dados para o CalculoPonto
             var colaborador = dbColaborador.BuscarPorId(colaboradorId);
             var escala = dbEscala.BuscarPorId(colaborador.EscalaId);

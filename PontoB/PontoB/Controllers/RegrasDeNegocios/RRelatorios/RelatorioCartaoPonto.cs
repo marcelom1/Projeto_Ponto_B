@@ -47,8 +47,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.RRelatorios
                 Empresa = empresa,
                 RegistroPontoCalculo = modelRegistroPontoCalculo,
                 RelatorioEscala = EscalaColaborador(colaborador.EscalaId),
-                HorasExedentes = (calculo.HorasExedentes / 60).ToString("D2") + ":" + (calculo.HorasExedentes % 60).ToString("D2"),
-                HorasFaltas = (calculo.HorasFaltas / 60).ToString("D2") + ":" + (calculo.HorasFaltas % 60).ToString("D2"),
+                CalculoPonto = calculo,
                 SaldoPeriodo = (calculo.Saldo / 60).ToString("D2") + ":" + ((calculo.Saldo % 60) < 0 ? ((calculo.Saldo % 60) * -1).ToString("D2") : (calculo.Saldo % 60).ToString())
             };
             return model;
@@ -91,7 +90,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.RRelatorios
                     RegistroConsiderado = StringPontoRegistroViewModel(registros.Where(e => e.DesconsiderarMarcacao == false && e.DataRegistro.Date.Equals(dataInicio.Date)).ToList()),
                     AusenciaColaboradores = ausencia.Where(e => e.DataFim >= dataInicio && e.DataInicio < dataInicio.AddDays(1)).ToList(),
                     RegistroPontosModificados = registros.Where(x => x.DataRegistro.Date.Equals(dataInicio) && (x.RegistroManual == true || x.DesconsiderarMarcacao == true)).ToList(),
-                    OcorrenciaDiaFalta = ocorrencias.Where(e => e.Date.Date.Equals(dataInicio) && e.CodigoOcorrencia.Equals(OcorrenciaDiaFaltaId)).FirstOrDefault(),
+                    Ocorrencias = ocorrencias.Where(e => e.Date.Date.Equals(dataInicio)).ToList(),
                     Saldo = new CalculoPonto(ocorrencias.Where(e => e.Date.Date.Equals(dataInicio)).ToList()).Saldo
 
                 });

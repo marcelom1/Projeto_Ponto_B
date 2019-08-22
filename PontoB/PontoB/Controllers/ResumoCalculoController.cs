@@ -33,25 +33,33 @@ namespace PontoB.Controllers
         public PartialViewResult TabelaResumoCalculo(int empresaId, DateTime dataInicio, DateTime dataFim, int pagina = 1)
         {
             var model = new List<ResumoCalculoViewModel>();
-
-            var valores = new FiltroPeriodoValores
+            if (dataFim > DateTime.Now.Date)
             {
-                Inicio = dataInicio,
-                Fim = dataFim,
-                Id = empresaId
-
-            }.ToString() ;
-            var ocorrencias = dbOcorrenciaDia.Filtro("OcorrenciaDiaEntreDataPorEmpresa", valores);
-            var colaboradores = dbColaborador.Filtro("EmpresaId", empresaId.ToString()).Where(x=>x.DataAdmissao<=dataFim && (x.DataDemissao==null || x.DataDemissao>=dataInicio));
-
-            foreach (var colaborador in colaboradores)
-            {
-                model.Add(new ResumoCalculoViewModel {
-                    Colaborador = colaborador,
-                    CalculoPonto = new CalculoPonto(ocorrencias.Where(x=>x.ColaboradorId.Equals(colaborador.Id)).ToList()),
-                });
+                ModelState.AddModelError("erro", "O periodo de apuração não pode ser maior que a data corrente");
             }
+            else
+            {
+                
 
+                var valores = new FiltroPeriodoValores
+                {
+                    Inicio = dataInicio,
+                    Fim = dataFim,
+                    Id = empresaId
+
+                }.ToString();
+                var ocorrencias = dbOcorrenciaDia.Filtro("OcorrenciaDiaEntreDataPorEmpresa", valores);
+                var colaboradores = dbColaborador.Filtro("EmpresaId", empresaId.ToString()).Where(x => x.DataAdmissao <= dataFim && (x.DataDemissao == null || x.DataDemissao >= dataInicio));
+
+                foreach (var colaborador in colaboradores)
+                {
+                    model.Add(new ResumoCalculoViewModel
+                    {
+                        Colaborador = colaborador,
+                        CalculoPonto = new CalculoPonto(ocorrencias.Where(x => x.ColaboradorId.Equals(colaborador.Id)).ToList()),
+                    });
+                }
+            }
 
             ViewBag.EmpresaId = empresaId;
             ViewBag.DataInicio = dataInicio;

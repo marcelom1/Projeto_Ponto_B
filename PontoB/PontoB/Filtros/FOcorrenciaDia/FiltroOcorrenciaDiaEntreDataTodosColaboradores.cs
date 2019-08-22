@@ -19,7 +19,7 @@ namespace PontoB.Filtros.FOcorrenciaDia
 
             var valores = FiltroPeriodoValores.FromString(filtro);
             if (DateTime.TryParse(valores.Fim.ToString(), out DateTime dataFim))
-                return query.Include(c => c.Colaborador).OrderByDescending(r => r.Date).Where(e=>e.Date >= valores.Inicio && e.Date < dataFim.AddDays(1)).ToList();
+                return query.Include(c => c.Colaborador).OrderByDescending(r => r.Date).Where(e=>e.Date >= valores.Inicio.Value.Date && e.Date < dataFim.Date.AddDays(1)).ToList();
             return dbRegistroPonto.Filtro("Colaborador", valores.Id.ToString());
         }
 

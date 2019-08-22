@@ -22,11 +22,21 @@ namespace PontoB.Controllers
             if (autenticado != null)
             {
                 FormsAuthentication.SetAuthCookie(autenticado.Email, false);
-                if (Request.QueryString["ReturnUrl"] == null)
-                    return RedirectToAction("Index", "Home");
+                if (autenticado.Master)
+                {
+                    
+                    if (Request.QueryString["ReturnUrl"] == null)
+                        return RedirectToAction("Index", "Home");
+                    else
+                        return RedirectToAction(Request.QueryString["ReturnUrl"].ToString());
+                }
                 else
-                    return RedirectToAction(Request.QueryString["ReturnUrl"].ToString());
-                
+                {
+                    if (Request.QueryString["ReturnUrl"] == null)
+                        return RedirectToAction("IndexColaborador", "Home");
+                    else
+                        return RedirectToAction(Request.QueryString["ReturnUrl"].ToString());
+                }
             }
             else
             {

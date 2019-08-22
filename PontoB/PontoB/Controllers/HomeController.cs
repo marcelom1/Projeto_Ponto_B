@@ -12,7 +12,7 @@ namespace PontoB.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
+        [Authorize(Roles = "Master")]
         // GET: Home
         public ActionResult Index()
         {
@@ -22,7 +22,15 @@ namespace PontoB.Controllers
             return View(model);
         }
 
-        
+        [Authorize]
+        public ActionResult IndexColaborador()
+        {
+            
+
+
+            return View();
+        }
+
         public TopHomeViewModels TopHome()
         {
 

@@ -117,88 +117,95 @@ namespace PontoB.Controllers
         public ActionResult TabelaCalculo(int idColaborador, DateTime dataInicio, DateTime dataFim)
         {
             IList<TabelaCalculoViewModels> model = new List<TabelaCalculoViewModels>();
-
-
-            var valores = new FiltroPeriodoValores
+            if (dataFim > DateTime.Now.Date)
             {
-                Inicio = dataInicio,
-                Fim = dataFim,
-                Id = idColaborador
-
-            };
-            var texto = valores.ToString();
-
-
-            //Faz a Busca do filtro
-            var Colaborador = dbColaborador.BuscarPorId(idColaborador);
-            var RegistrosPontos = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto);
-            var HistoricoDeRegistro = ListaPontoRegistroViewModel(RegistrosPontos);
-            var AusenciaColaborador = dbAusencia.Filtro("ColaboradorEntreData", texto);
-            var EscalaColaborador = dbEscala.BuscarPorId(Colaborador.EscalaId);
-            IList<EscalaHorario> EscalaTotalDiaSemana = GetHorasDiaDaSemana(EscalaColaborador);
-            var Ocorrencias = dbOcorrenciaDia.Filtro("OcorrenciaEntreDatas", texto);
-
-            while (dataInicio <= dataFim)
-            {
-                var diasemana = GetDiaDaSemana(dataInicio);
-
-                model.Add(new TabelaCalculoViewModels
-                {
-                    DiaDaSemana = diasemana,
-                    Data = dataInicio,
-                    ColaboradorId = Colaborador.Id,
-                    EscalaId = EscalaColaborador.Id,
-                    Colaborador = Colaborador
-                    
-                    
-
-
-                });
-                dataInicio = dataInicio.AddDays(1);
+                ModelState.AddModelError("erro", "O periodo de apuração não pode ser maior que a data corrente");
             }
-
-            foreach (var item in model)
+            else
             {
-                foreach (var registro in RegistrosPontos.Where(x => x.DataRegistro.Date == item.Data.Date))
+               
+
+
+                var valores = new FiltroPeriodoValores
                 {
-                    item.RegistroPonto.Add(registro);
+                    Inicio = dataInicio,
+                    Fim = dataFim,
+                    Id = idColaborador
+
+                };
+                var texto = valores.ToString();
+
+
+                //Faz a Busca do filtro
+                var Colaborador = dbColaborador.BuscarPorId(idColaborador);
+                var RegistrosPontos = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto);
+                var HistoricoDeRegistro = ListaPontoRegistroViewModel(RegistrosPontos);
+                var AusenciaColaborador = dbAusencia.Filtro("ColaboradorEntreData", texto);
+                var EscalaColaborador = dbEscala.BuscarPorId(Colaborador.EscalaId);
+                IList<EscalaHorario> EscalaTotalDiaSemana = GetHorasDiaDaSemana(EscalaColaborador);
+                var Ocorrencias = dbOcorrenciaDia.Filtro("OcorrenciaEntreDatas", texto);
+
+                while (dataInicio <= dataFim)
+                {
+                    var diasemana = GetDiaDaSemana(dataInicio);
+
+                    model.Add(new TabelaCalculoViewModels
+                    {
+                        DiaDaSemana = diasemana,
+                        Data = dataInicio,
+                        ColaboradorId = Colaborador.Id,
+                        EscalaId = EscalaColaborador.Id,
+                        Colaborador = Colaborador
+
+
+
+
+                    });
+                    dataInicio = dataInicio.AddDays(1);
                 }
 
-                foreach (var historico in HistoricoDeRegistro)
+                foreach (var item in model)
                 {
-                    if (item.Data.Date == DateTime.Parse(historico.Data))
+                    foreach (var registro in RegistrosPontos.Where(x => x.DataRegistro.Date == item.Data.Date))
                     {
-                        item.Registros.Add(historico);
+                        item.RegistroPonto.Add(registro);
+                    }
+
+                    foreach (var historico in HistoricoDeRegistro)
+                    {
+                        if (item.Data.Date == DateTime.Parse(historico.Data))
+                        {
+                            item.Registros.Add(historico);
+                            break;
+                        }
+
+                    }
+
+                    item.Ausencia = AusenciaColaborador.Where(e => e.DataFim >= item.Data && e.DataInicio < item.Data.AddDays(1)).ToList();
+
+                    foreach (var escala in EscalaTotalDiaSemana.Where(x => x.DiaSemana == item.DiaDaSemana))
+                    {
+                        item.TotalEscalaMinutos = escala.TotalEmMinutos;
                         break;
                     }
 
-                }
-
-                item.Ausencia = AusenciaColaborador.Where(e => e.DataFim >= item.Data && e.DataInicio < item.Data.AddDays(1)).ToList();
-
-                foreach (var escala in EscalaTotalDiaSemana.Where(x=>x.DiaSemana==item.DiaDaSemana))
-                {
-                    item.TotalEscalaMinutos = escala.TotalEmMinutos;
-                    break;
-                }
-
-                item.Saldo = 0;
-                item.HorasTrabalhadas = 0;
-                foreach (var horas in Ocorrencias.Where(x=>(x.Date.Date == item.Data.Date)&&(x.CodigoOcorrencia.Equals(5) || x.CodigoOcorrencia.Equals(6) || x.CodigoOcorrencia.Equals(2))))
-                {
-                    if (horas.CodigoOcorrencia == 2)
-                        item.HorasTrabalhadas = horas.QtdMinutos;
-                    else
-                        if (horas.QtdMinutos>0)
+                    item.Saldo = 0;
+                    item.HorasTrabalhadas = 0;
+                    foreach (var horas in Ocorrencias.Where(x => (x.Date.Date == item.Data.Date) && (x.CodigoOcorrencia.Equals(5) || x.CodigoOcorrencia.Equals(6) || x.CodigoOcorrencia.Equals(2))))
+                    {
+                        if (horas.CodigoOcorrencia == 2)
+                            item.HorasTrabalhadas = horas.QtdMinutos;
+                        else
+                            if (horas.QtdMinutos > 0)
                         {
                             if (horas.CodigoOcorrencia.Equals(6))
                                 item.Saldo = horas.QtdMinutos * (-1);
-                            else 
+                            else
                                 item.Saldo = horas.QtdMinutos;
                         }
+                    }
                 }
             }
-
             return PartialView(model);
         }
 

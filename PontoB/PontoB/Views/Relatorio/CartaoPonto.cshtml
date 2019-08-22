@@ -1,4 +1,5 @@
-﻿@model IList <PontoB.Models.ViewModels.VRelatorios.CartaoPonto.CartaoPonto>
+﻿@model IList<PontoB.Models.ViewModels.VRelatorios.CartaoPonto.CartaoPonto>
+@using PontoB.Controllers.RegrasDeNegocios.RCalculo;
 @{
     ViewBag.Title = "CartaoPonto";
 }
@@ -95,60 +96,66 @@
                     <table border='1' class="tabela">
                         <thead>
                             <tr>
-                                <th>DATA</th>
-                                <th>MARCAÇÕES NO REP</th>
-                                <th>REGISTROS CONSIDERADOS</th>
-                                <th>OCORRÊNCIAS</th>
-                                <th>SALDO</th>
+                                <th rowspan="2">DATA</th>
+                                <th rowspan="2">MARCAÇÕES NO REP</th>
+                                <th rowspan="2">REGISTROS CONSIDERADOS</th>
+                                <th rowspan="2">OCORRÊNCIAS</th>
+                                <th colspan="3">HORAS</th>
+                                <th rowspan="2">SALDO DIA</th>
+                            </tr>
+                            <tr>
+                                <th>PREVISTAS</th>
+                                <th>TRABALHADAS</th>
+                                <th>ABONADAS</th>
+                               
                             </tr>
                         </thead>
                         @foreach (var registro in ponto.RegistroPontoCalculo)
                         {
                             if (registro.Data >= ponto.Colaborador.DataAdmissao && (ponto.Colaborador.DataDemissao == null || registro.Data <= ponto.Colaborador.DataDemissao))
                             {
-                            <tr>
-                                <td>@registro.Data.ToShortDateString()</td>
-                                <td>@registro.MarcacaoRep</td>
-                                <td>@registro.RegistroConsiderado</td>
-                                <td>
-                                    <table class="tabela">
-                                        @foreach (var ausencia in registro.AusenciaColaboradores)
-                                        {
-                                            <tr>
-                                                <td>@ausencia.MotivoAusencia.Descricao</td>
-                                                <td> </td>
+                                <tr>
+                                    <td>@registro.Data.ToShortDateString()</td>
+                                    <td>@registro.MarcacaoRep</td>
+                                    <td>@registro.RegistroConsiderado</td>
+                                    <td>
+                                        <table class="tabela">
 
-                                            </tr>
-                                        }
-                                        @foreach (var modificado in registro.RegistroPontosModificados)
-                                        {
-                                            <tr>
-                                                <td>@modificado.DataRegistro.Hour.ToString("D2"):@modificado.DataRegistro.Minute.ToString("D2") - @modificado.Observacao </td>
-                                                <td></td>
-                                            </tr>
-                                        }
-                                        @{ if (registro.OcorrenciaDiaFalta != null)
+                                            @foreach (var ausencia in registro.AusenciaColaboradores)
                                             {
-                                            <tr>
-                                                <td>Falta Sem Justificativa</td>
-                                                <td></td>
-                                            </tr>
+                                                <tr>
+
+                                                    <td>@ausencia.MotivoAusencia.Descricao</td>
+
+
+                                                </tr>
                                             }
-
-                                        }
+                                            @foreach (var modificado in registro.RegistroPontosModificados)
+                                            {
+                                                <tr>
+                                                    <td>@modificado.DataRegistro.Hour.ToString("D2"):@modificado.DataRegistro.Minute.ToString("D2") - @modificado.Observacao</td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </td>
+                                    @{
+                                        var Horas = new CalculoPonto(registro.Ocorrencias);
                                         
-                                       
-
-                                    </table>
-                                </td>
-                                @{
-                                    var saldo = (registro.Saldo / 60).ToString("D2") + ":" + ((registro.Saldo % 60) < 0 ? ((registro.Saldo % 60) * -1).ToString("D2") : (registro.Saldo % 60).ToString("D2"));
-                                }
-
-                                <td>@saldo</td>
-                            </tr>
-                                        }
                                     }
+                                    <td>@((Horas.HorasPrevista / 60).ToString("D2") + ":" + (Horas.HorasPrevista % 60).ToString("D2"))</td>
+                                    <td>@((Horas.HorasTrabalhadas / 60).ToString("D2") + ":" + (Horas.HorasTrabalhadas % 60).ToString("D2"))</td>
+                                    <td>@((Horas.AusenciaAbona / 60).ToString("D2") + ":" + (Horas.AusenciaAbona % 60).ToString("D2"))</td>
+                                    
+
+
+                                    @{
+                                        var saldo = (registro.Saldo / 60).ToString("D2") + ":" + ((registro.Saldo % 60) < 0 ? ((registro.Saldo % 60) * -1).ToString("D2") : (registro.Saldo % 60).ToString("D2"));
+                                    }
+
+                                    <td>@saldo</td>
+                                </tr>
+                            }
+                        }
 
 
                     </table>
@@ -157,7 +164,7 @@
             </tr>
 
 
-            
+
             <tr>
                 <td class="espaco"></td>
             </tr>
@@ -166,16 +173,25 @@
                     <th COLSPAN="5">TOTALIZADORES</th>
                 </tr>
             </thead>
-            
+
             <tr>
                 <td class="espaco"></td>
             </tr>
             <tbody class="centro">
                 <tr>
-                    <td COLSPAN="5">HORAS EXCEDENTES: @ponto.HorasExedentes</td>
+                    <td COLSPAN="5">HORAS PREVISTAS: @((ponto.CalculoPonto.HorasPrevista / 60).ToString("D2") + ":" + (ponto.CalculoPonto.HorasPrevista % 60).ToString("D2"))</td>
                 </tr>
                 <tr>
-                    <td COLSPAN="5">HORAS FALTAS: @ponto.HorasFaltas</td>
+                    <td COLSPAN="5">HORAS TRABALHADAS: @((ponto.CalculoPonto.HorasTrabalhadas / 60).ToString("D2") + ":" + (ponto.CalculoPonto.HorasTrabalhadas % 60).ToString("D2"))</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">HORAS EXCEDENTES: @((ponto.CalculoPonto.HorasExedentes / 60).ToString("D2") + ":" + (ponto.CalculoPonto.HorasExedentes % 60).ToString("D2"))</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">HORAS FALTAS: @((ponto.CalculoPonto.HorasFaltas / 60).ToString("D2") + ":" + (ponto.CalculoPonto.HorasFaltas % 60).ToString("D2"))</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">HORAS ABONADAS: @((ponto.CalculoPonto.AusenciaAbona / 60).ToString("D2") + ":" + (ponto.CalculoPonto.AusenciaAbona % 60).ToString("D2"))</td>
                 </tr>
                 <tr>
                     <td COLSPAN="5">SALDO DO PERÍODO: @ponto.SaldoPeriodo</td>
@@ -200,6 +216,6 @@
 
         </table>
     </div>
- }
+}
 
 

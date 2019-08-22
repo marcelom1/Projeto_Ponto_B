@@ -83,28 +83,34 @@ function validacaoData() {
     var datainicio = $("#dataInicio").val()
     if (datafim)
         if (datainicio)
-            if (datafim < datainicio) {
+            if (datafim < datainicio && datafim != '' && datainicio !='') {
                 $("#Erro_DataInicio").text("Data inicial não pode ser maior que data final!").show();
                 $("#GridManutencao").addClass("Oculto");
+                return false;
             } else {
                 $("#Erro_DataInicio").hide();
-                
+                return true;
             }
 };
 
 $("#BuscarColaboradores").click(function () {
+   
 
-    $(".tooltip2").tooltipster("content", "Processando...").tooltipster("open");
-    var datafim = $("#dataFim").val();
-    var datainicio = $("#dataInicio").val()
-    var EmpresaId = $("#Select2Empresa").val();
-    if (datafim > datainicio && EmpresaId != 0 && datainicio != '' && datafim != '') {
-        ColaboradoresPagincao();
-        $("#GridManutencao").removeClass("Oculto");
-        
-    } else {
-        ModalAlert("", "Ok", "Todos os campos são obrigatórios!", "", "", "Erro");
-    }
+        var datafim = $("#dataFim").val();
+        var datainicio = $("#dataInicio").val()
+        var EmpresaId = $("#Select2Empresa").val();
+        if (EmpresaId != 0 && datainicio != '' && datafim != '') {
+            if (validacaoData()) {
+                $(".tooltip2").tooltipster("content", "Processando...").tooltipster("open");
+
+                ColaboradoresPagincao();
+                $("#GridManutencao").removeClass("Oculto");
+
+            } 
+        } else {
+            ModalAlert("", "", "Todos os campos são obrigatórios!", "", "", "Erro");
+           
+        }
 
 });
 
@@ -124,10 +130,17 @@ function ColaboradoresPagincao() {
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (resposta) {
+           
             $("#Grid").html(resposta)
+            $("#ErrosResumoDeCalculo").text("");
+            if ($("#erroSpan").text() != '') {
+                var erro = $("#erroSpan").text()
+                $("#Grid").html('');
+                $("#ErrosResumoDeCalculo").text(erro);
+            }
             $(".tooltip2").tooltipster("close");
             inicializacaoTooltip();
-
+            
         },
         error: function (json) {
             alert("Erro de conexão com o servidor!");

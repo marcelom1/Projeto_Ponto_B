@@ -79,10 +79,20 @@ function buscaTabela() {
     var dataInicial = $("#dataInicio").val();
     var dataFinal = $("#dataFim").val();
     
-    if (colaboradorId != null && EmpresaId != null && dataInicial!='' && dataFinal!='') {
+    if (colaboradorId != null && EmpresaId != null && dataInicial != '' && dataFinal != '') {
+        $("#ErrosManutencaoPonto").text("");
         $("#spninner").removeClass("Oculto");
         $("#ParcialViewTabelaCalculo").load("/ManutencaoPonto/TabelaCalculo/", { idColaborador: colaboradorId, dataInicio: dataInicial, dataFim: dataFinal }, function () {
-            $("#spninner").addClass("Oculto");
+            var erro = $("#erroSpan").text();
+            if (erro != '') {
+                $("#GridManutencao").addClass("Oculto");
+                $("#ErrosManutencaoPonto").text(erro);
+            } else {
+                $("#GridManutencao").removeClass("Oculto");
+                $("#DataCarregadaInicio").text(dataInicial);
+                $("#DataCarregadaFim").text(dataFinal);
+                $("#spninner").addClass("Oculto");
+            }
         });
     } else {
         $("#ParcialViewTabelaCalculo").html("");
@@ -139,15 +149,23 @@ $("#dataFim").blur(function () {
 
 function validacaoData() {
     var datafim = $("#dataFim").val();
-    var datainicio = $("#dataInicio").val()
+    var datainicio = $("#dataInicio").val();
+    var dataAtual = new Date();
+    console.log(dataAtual);
     if (datafim)
         if (datainicio)
-            if (datafim < datainicio) {
+            if (datafim < datainicio ) {
                 $("#Erro_DataInicio").text("Data inicial não pode ser maior que data final!").show();
                 $("#GridManutencao").addClass("Oculto");
-            } else {
+                return false;
+            } else if (datafim > dataAtual) {
+                $("#Erro_DataFim").text("Data final não pode ser maior que a data corrente").show();
+                $("#GridManutencao").addClass("Oculto");
+                return false;
+            }else {
                 $("#Erro_DataInicio").hide();
                 buscaTabela();
+                return true;
             }
 };
 
@@ -160,8 +178,8 @@ $(document).ready(function () {
 $("#calculo").click(function () {
     $(".tooltip").tooltipster("open").tooltipster("content", "Calculando...");
     var colaboradorId = $("#Select2Colaborador").val();
-    var dataInicial = $("#dataInicio").val();
-    var dataFinal = $("#dataFim").val();
+    var dataInicial = $("#DataCarregadaInicio").text();
+    var dataFinal = $("#DataCarregadaFim").text();
 
     $.ajax({
         type: "POST",
@@ -186,8 +204,8 @@ $("#calculo").click(function () {
 
 $("#CartaoPonto").click(function () {
     var colaboradorId = $("#Select2Colaborador").val();
-    var dataInicial = $("#dataInicio").val();
-    var dataFinal = $("#dataFim").val();
+    var dataInicial = $("#DataCarregadaInicio").text();
+    var dataFinal = $("#DataCarregadaFim").text();
 
     $.ajax({
         type: "POST",
@@ -199,7 +217,7 @@ $("#CartaoPonto").click(function () {
             var myWindow = window.open("", "_blank");
 
             myWindow.document.write(resposta);
-            console.log(resposta);
+            
 
         },
         error: function (json) {

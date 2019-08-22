@@ -557,6 +557,7 @@
     <Content Include="Views\Relatorio\CartaoPonto.cshtml" />
     <Content Include="Views\ResumoCalculo\Index.cshtml" />
     <Content Include="Views\ResumoCalculo\TabelaResumoCalculo.cshtml" />
+    <Content Include="Views\Home\IndexColaborador.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -566,7 +567,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\OcorrenciaDia\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

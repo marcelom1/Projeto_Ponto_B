@@ -14,6 +14,6 @@ namespace PontoB.Models.ViewModels.VRelatorios.CartaoPonto
         public IList<AusenciaColaboradores> AusenciaColaboradores { get; set; }
         public IList<RegistroPonto> RegistroPontosModificados { get; set; }
         public int Saldo { get; set; }
-        public OcorrenciaDia OcorrenciaDiaFalta { get; set; }
+        public IList<OcorrenciaDia> Ocorrencias { get; set; }
     }
 }

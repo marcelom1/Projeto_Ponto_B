@@ -3,33 +3,34 @@
 
 
 @{ var i = 0;}
+@Html.ValidationMessage("erro", "", new { id = "erroSpan" })
 @foreach (var calculo in Model)
 {
-    if (calculo.Data >= calculo.Colaborador.DataAdmissao && (calculo.Colaborador.DataDemissao==null || calculo.Data <= calculo.Colaborador.DataDemissao))
+    if (calculo.Data >= calculo.Colaborador.DataAdmissao && calculo.Data <= DateTime.Now.Date && (calculo.Colaborador.DataDemissao == null || calculo.Data <= calculo.Colaborador.DataDemissao))
     {
-    <tr>
-        <td>@calculo.DiaDaSemana</td>
-        <td id="Data_@i" data-dia="@calculo.Data.ToShortDateString()">@calculo.Data.ToShortDateString()</td>
-        <td>
-            @{
-                foreach (var registros in calculo.Registros)
-                {
-                    @registros.Registros
+        <tr>
+            <td>@calculo.DiaDaSemana</td>
+            <td id="Data_@i" data-dia="@calculo.Data.ToShortDateString()">@calculo.Data.ToShortDateString()</td>
+            <td>
+                @{
+                    foreach (var registros in calculo.Registros)
+                    {
+                        @registros.Registros
+                    }
+
+
                 }
+            </td>
+            <td><a id="AddAusencia" class="PonteiroClick" data-value="@i"><img class="PonteiroClick" title="Adicionar ausência" src="~/Content/img/ausencia.svg" width="28" height="30" /> - <sapn title="Quantidade de ausências">@calculo.Ausencia.Count()</sapn></a></td>
+            <td>@((calculo.TotalEscalaMinutos / 60).ToString("D2") + ":" + (calculo.TotalEscalaMinutos % 60).ToString("D2"))</td>
+            <td>@((calculo.HorasTrabalhadas / 60).ToString("D2") + ":" + (calculo.HorasTrabalhadas % 60).ToString("D2"))</td>
+            <td>@((calculo.Saldo / 60).ToString("D2") + ":" + ((calculo.Saldo % 60) < 0 ? ((calculo.Saldo % 60) * (-1)).ToString("D2") : (calculo.Saldo % 60).ToString("D2")))</td>
+            <td>
+                <a class="AdicionarRegistroPonto" data-value="@i" data-dia="@calculo.Data.ToShortDateString()" data-Escala="@calculo.EscalaId" data-Colaborador="@calculo.ColaboradorId"><img class="PonteiroClick" src="~/Content/img/adicionar.svg" width="28" height="30" /></a>
+                <a class="EditarRegistroPonto" data-value="@i" data-dia="@calculo.Data.ToShortDateString()" data-Escala="@calculo.EscalaId" data-Colaborador="@calculo.ColaboradorId"><img class="PonteiroClick" src="~/Content/img/lapis2.svg" width="28" height="30" /></a>
 
-
-        }
-        </td>
-        <td><a id="AddAusencia" class="PonteiroClick" data-value="@i"><img class="PonteiroClick" title="Adicionar ausência" src="~/Content/img/ausencia.svg" width="28" height="30" /> - <sapn title="Quantidade de ausências">@calculo.Ausencia.Count()</sapn></a></td>
-        <td>@((calculo.TotalEscalaMinutos / 60).ToString("D2") + ":" + (calculo.TotalEscalaMinutos % 60).ToString("D2"))</td>
-        <td>@((calculo.HorasTrabalhadas / 60).ToString("D2") + ":" + (calculo.HorasTrabalhadas % 60).ToString("D2"))</td>
-        <td>@((calculo.Saldo / 60).ToString("D2") + ":" + ((calculo.Saldo % 60) < 0 ? ((calculo.Saldo % 60) * (-1)).ToString("D2") : (calculo.Saldo % 60).ToString("D2")))</td>
-        <td>
-            <a class="AdicionarRegistroPonto" data-value="@i" data-dia="@calculo.Data.ToShortDateString()" data-Escala="@calculo.EscalaId" data-Colaborador="@calculo.ColaboradorId"><img class="PonteiroClick" src="~/Content/img/adicionar.svg" width="28" height="30" /></a>
-            <a class="EditarRegistroPonto" data-value="@i" data-dia="@calculo.Data.ToShortDateString()" data-Escala="@calculo.EscalaId" data-Colaborador="@calculo.ColaboradorId"><img class="PonteiroClick" src="~/Content/img/lapis2.svg" width="28" height="30" /></a>
-
-        </td>
-    </tr>
+            </td>
+        </tr>
         i++;
     }
 
