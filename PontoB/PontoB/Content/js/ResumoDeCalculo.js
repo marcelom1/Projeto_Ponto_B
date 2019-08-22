@@ -219,3 +219,34 @@ $(document).on('click', '#ImprimirTodos', function () {
     }
 
 });
+
+
+$(document).on('click', '#CalcularTodos', function () {
+
+    $(".tooltip").tooltipster("open").tooltipster("content", "Calculando...");
+    var EmpresaId = $("#Select2Empresa").val();
+    var dataInicial = $("#dataInicio").val();
+    var dataFinal = $("#dataFim").val();
+
+    $.ajax({
+        type: "POST",
+        url: "/ResumoCalculo/CalculoTodosPontos/",
+        data: JSON.stringify({ idEmpresa: EmpresaId, dataInicial: dataInicial, dataFinal: dataFinal }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (resposta) {
+            $("#erro-calculo").text(resposta);
+            console.log(resposta);
+            ColaboradoresPagincao();
+            $(".tooltip").tooltipster("close");
+
+        },
+        error: function (json) {
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
+            $(".tooltip").tooltipster("close");
+        }
+    });
+
+});
+

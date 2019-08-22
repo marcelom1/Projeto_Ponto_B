@@ -171,7 +171,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
             {
                 return true;
             }
-            throw new System.ArgumentException("Falha no cálculo - Os registros devem está em quantidade pares para efetuar o cálculo no dia: "+registros[0].DataRegistro.ToShortDateString());
+            throw new System.ArgumentException("Falha no cálculo - Os registros devem está em quantidade pares para efetuar o cálculo no dia: "+registros[0].DataRegistro.ToShortDateString()+" - "+registros[0].Colaborador.NomeCompleto);
            
         }
 
@@ -307,6 +307,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
 
             
         }
+
         
 
 

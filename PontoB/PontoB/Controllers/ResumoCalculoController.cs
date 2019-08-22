@@ -1,6 +1,7 @@
 ﻿using PagedList;
 using PontoB.Business.Utils;
 using PontoB.Controllers.RegrasDeNegocios.RCalculo;
+using PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia;
 using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.ViewModels.VResumoCalculo;
@@ -69,6 +70,28 @@ namespace PontoB.Controllers
 
 
             return PartialView(model.ToPagedList(pagina, 10));
+        }
+
+        public string CalculoTodosPontos(int idEmpresa, DateTime dataInicial, DateTime dataFinal)
+        {
+            var calculo = new RegrasOcorrenciaDia();
+            var colaboradores = dbColaborador.Filtro("EmpresaId", idEmpresa.ToString());
+
+            foreach (var colaborador in colaboradores.Where(e => (e.DataDemissao == null || e.DataDemissao >= dataInicial) && e.DataAdmissao < dataFinal.AddDays(1)))
+            {
+                try
+                {
+                    calculo.CalculoPonto(colaborador.Id, dataInicial, dataFinal);
+                }
+                catch (Exception e)
+                {
+
+                    return e.Message;
+                }
+            }
+           
+            return "";
+
         }
     }
 }

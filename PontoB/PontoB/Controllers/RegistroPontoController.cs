@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using PontoB.Business.Utils;
 using PontoB.Models.ViewModels.VEscala;
+using PontoB.Controllers.RegrasDeNegocios.RPontuacao;
 
 namespace PontoB.Controllers
 {
@@ -64,6 +65,7 @@ namespace PontoB.Controllers
                     registro.DesconsiderarMarcacao = false;
                     registro.RegistroManual = false;
                     dbRegistroPonto.Adiciona(registro);
+                    new Gamificacao().VerificaSePontuouAoRegistrar(registro);
                     return "True";
                 }
                 else

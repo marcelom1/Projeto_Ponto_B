@@ -5,12 +5,18 @@
 }
 
 @model PagedList.IPagedList<PontoB.Models.ViewModels.VResumoCalculo.ResumoCalculoViewModel>
-@Html.ValidationMessage("erro","", new { id = "erroSpan" })
+@Html.ValidationMessage("erro", "", new { id = "erroSpan" })
+<span class="Oculto" id="DataCarregadaInicio"></span>
+<span class="Oculto" id="DataCarregadaFim"></span>
 <div class="form-row pb-1 pt-4 ">
-    <div class="form-group col-md-2">
-        <div class="form-group pt-4 mt-2">
+    <div class="form-group col-md-4">
+        <div class="btn-group pt-4 mt-2" role="group" aria-label="Exemplo básico">
+
+            <button type="button" class="btn btn-secondary botao_cor btn-sm tooltip3" id="CalcularTodos">Calcular Todos</button>
+
             <button type="button" class="btn btn-secondary botao_cor btn-sm tooltip3" id="ImprimirTodos">Imprimir Todos</button>
         </div>
+
     </div>
 </div>
 <div class="table-responsive">

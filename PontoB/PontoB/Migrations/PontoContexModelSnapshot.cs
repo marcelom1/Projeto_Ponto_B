@@ -41,8 +41,6 @@ namespace PontoB.Migrations
 
                     b.Property<int>("AusenciaId");
 
-                    b.Property<int>("Id");
-
                     b.Property<DateTime?>("DataFim")
                         .IsRequired();
 
@@ -246,8 +244,6 @@ namespace PontoB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Id");
-
                     b.Property<DateTime>("Data");
 
                     b.Property<int>("SaldoEmMinutos");
@@ -286,8 +282,6 @@ namespace PontoB.Migrations
 
                     b.Property<int>("CodigoOcorrencia");
 
-                    b.Property<int>("Id");
-
                     b.Property<DateTime>("Date");
 
                     b.Property<int>("QtdMinutos");
@@ -306,8 +300,6 @@ namespace PontoB.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Id");
 
                     b.Property<DateTime>("DataRegistro");
 
