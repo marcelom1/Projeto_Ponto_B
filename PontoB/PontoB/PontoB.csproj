@@ -386,6 +386,7 @@
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\Graficos.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\RelatorioCartaoPonto.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopHoras.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopPontuacao.cs" />
     <Compile Include="Controllers\RelatorioController.cs" />
     <Compile Include="Controllers\ResumoCalculoController.cs" />
     <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
@@ -443,6 +444,8 @@
     <Compile Include="Filtros\FEscala\FiltroEscalaCodigo.cs" />
     <Compile Include="Filtros\FEscala\FiltroEscalaDescricao.cs" />
     <Compile Include="Filtros\FEscala\FiltroEscalaTodos .cs" />
+    <Compile Include="Filtros\FGamificacao\FiltroGamificacao.cs" />
+    <Compile Include="Filtros\FGamificacao\PontuacaoEntreData.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDia.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreData.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreDataPorEmpresa.cs" />
@@ -457,45 +460,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190706184120_Inicial.cs" />
-    <Compile Include="Migrations\20190706184120_Inicial.designer.cs">
-      <DependentUpon>20190706184120_Inicial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190707145232_CNPJUnico.cs" />
-    <Compile Include="Migrations\20190707145232_CNPJUnico.designer.cs">
-      <DependentUpon>20190707145232_CNPJUnico.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190708173716_Escalas.cs" />
-    <Compile Include="Migrations\20190708173716_Escalas.designer.cs">
-      <DependentUpon>20190708173716_Escalas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190709201556_TotalEscala.cs" />
-    <Compile Include="Migrations\20190709201556_TotalEscala.designer.cs">
-      <DependentUpon>20190709201556_TotalEscala.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190713165014_Colaborador.cs" />
-    <Compile Include="Migrations\20190713165014_Colaborador.designer.cs">
-      <DependentUpon>20190713165014_Colaborador.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190714180734_DataColaborador.cs" />
-    <Compile Include="Migrations\20190714180734_DataColaborador.designer.cs">
-      <DependentUpon>20190714180734_DataColaborador.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190716183413_Ausencia.cs" />
-    <Compile Include="Migrations\20190716183413_Ausencia.designer.cs">
-      <DependentUpon>20190716183413_Ausencia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190722231158_RegistroPonto.cs" />
-    <Compile Include="Migrations\20190722231158_RegistroPonto.designer.cs">
-      <DependentUpon>20190722231158_RegistroPonto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190805171621_ManutencaoPonto.cs" />
-    <Compile Include="Migrations\20190805171621_ManutencaoPonto.designer.cs">
-      <DependentUpon>20190805171621_ManutencaoPonto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20190808115729_OcorrenciaDia.cs" />
-    <Compile Include="Migrations\20190808115729_OcorrenciaDia.designer.cs">
-      <DependentUpon>20190808115729_OcorrenciaDia.cs</DependentUpon>
+    <Compile Include="Migrations\20190822193852_Inicial.cs" />
+    <Compile Include="Migrations\20190822193852_Inicial.designer.cs">
+      <DependentUpon>20190822193852_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />

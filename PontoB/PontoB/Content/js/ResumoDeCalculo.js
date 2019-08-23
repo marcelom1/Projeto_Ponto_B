@@ -222,8 +222,8 @@ $(document).on('click', '#ImprimirTodos', function () {
 
 
 $(document).on('click', '#CalcularTodos', function () {
-
-    $(".tooltip").tooltipster("open").tooltipster("content", "Calculando...");
+    $(".tooltip4").tooltipster("content", "Calculando...").tooltipster("open");
+    $("#ErrosResumoDeCalculo").text("");
     var EmpresaId = $("#Select2Empresa").val();
     var dataInicial = $("#dataInicio").val();
     var dataFinal = $("#dataFim").val();
@@ -235,10 +235,10 @@ $(document).on('click', '#CalcularTodos', function () {
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (resposta) {
-            $("#erro-calculo").text(resposta);
-            console.log(resposta);
-            ColaboradoresPagincao();
-            $(".tooltip").tooltipster("close");
+
+            $("#ErrosResumoDeCalculo").text(resposta);
+           
+            $(".tooltip4").tooltipster("close");
 
         },
         error: function (json) {

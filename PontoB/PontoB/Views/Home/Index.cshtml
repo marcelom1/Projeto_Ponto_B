@@ -30,7 +30,7 @@
             <div id="conteiner">
                 <h2>Top Horas Excedentes <img src="~/Content/img/Estrela-Amarela.png" width="40" height="40" /></h2>
                 <h6>@Model.DataInicio até @Model.DataFim</h6>
-                <table class="table table-hover">
+                <table class="table table-hover TopFive">
                     @{int i = 1;}
                     @foreach (var horas in Model.HorasExcedentes)
                     {
@@ -54,7 +54,7 @@
             <div id="conteiner">
                 <h2>Top Horas Faltas <img src="~/Content/img/estrela-Vermelha.png" width="40" height="40" /></h2>
                 <h6>@Model.DataInicio até @Model.DataFim</h6>
-                <table class="table table-hover">
+                <table class="table table-hover TopFive">
                     @{int j = 1;}
                     @foreach (var horas in Model.HorasFalta)
                     {
@@ -73,38 +73,20 @@
         <li class=" col-sm">
             <div id="conteiner">
                 <h2>Top Pontuação <img src="~/Content/img/Trofeu.png" width="40" height="40" /></h2>
-                <h6>dd/mm/aaaa até dd/mm/aaaa</h6>
-                <table  class="table table-hover">
-                    <tr>
-                        <td>1</td>
-                        <td>Gabriele dos Santos</td>
-                        <td>25</td>
+                <h6>@Model.DataInicio até @Model.DataFim</h6>
+                <table class="table table-hover TopFive">
+                    @{int k = 1; }
+                    @foreach (var pontos in Model.TopPontos)
+                    {
+                        <tr>
+                            <td>@k</td>
+                            <td>@pontos.NomeColaborador</td>
+                            <td>@pontos.HorasPontuacao</td>
 
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Pedro Almeida</td>
-                        <td>10</td>
+                        </tr>
+                        k++;
+                    }
 
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jose da Silva</td>
-                        <td>9</td>
-
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Marcelo Miglioli</td>
-                        <td>4</td>
-
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Angelina dos Santos</td>
-                        <td>1</td>
-
-                    </tr>
                 </table>
             </div>
         </li>

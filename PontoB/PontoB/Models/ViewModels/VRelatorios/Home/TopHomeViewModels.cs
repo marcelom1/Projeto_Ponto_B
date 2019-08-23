@@ -11,5 +11,6 @@ namespace PontoB.Models.ViewModels.VRelatorios.Home
         public string DataFim { get; set; }
         public IList<RelatorioTopHorasViewModels> HorasFalta { get; set; }
         public IList<RelatorioTopHorasViewModels> HorasExcedentes { get; set; }
+        public IList<RelatorioTopHorasViewModels> TopPontos { get; set; }
     }
 }

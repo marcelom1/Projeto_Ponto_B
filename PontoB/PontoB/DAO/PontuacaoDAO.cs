@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PontoB.Filtros.FGamificacao;
 using PontoB.Models;
 using System;
 using System.Collections.Generic;
@@ -32,21 +33,21 @@ namespace PontoB.DAO
         }
 
 
-        /*public IList<Pontuacao> Filtro(string coluna, string filtro)
+        public IList<Pontuacao> Filtro(string coluna, string filtro)
         {
 
             using (var contexto = new PontoContex())
             {
-                var objFiltro = FiltroRegistroPonto.ObterFiltroColuna(coluna);
+                var objFiltro = FiltroGamificacao.ObterFiltroColuna(coluna);
 
 
                 return objFiltro.Filtrar(contexto
-                         .RegistroPonto
+                         .Pontuacao
                          .Include(e => e.Colaborador)
                          .AsNoTracking(), filtro);
 
             }
-        }*/
+        }
 
 
 

@@ -41,6 +41,8 @@ namespace PontoB.Migrations
 
                     b.Property<int>("AusenciaId");
 
+                    b.Property<int>("ColaboradorId");
+
                     b.Property<DateTime?>("DataFim")
                         .IsRequired();
 
@@ -63,7 +65,7 @@ namespace PontoB.Migrations
 
                     b.HasIndex("AusenciaId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("ColaboradorId");
 
                     b.HasIndex("MotivoAusenciaId");
 
@@ -244,6 +246,8 @@ namespace PontoB.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ColaboradorId");
+
                     b.Property<DateTime>("Data");
 
                     b.Property<int>("SaldoEmMinutos");
@@ -254,7 +258,7 @@ namespace PontoB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("ColaboradorId");
 
                     b.ToTable("ManutencaoPonto");
                 });
@@ -282,17 +286,38 @@ namespace PontoB.Migrations
 
                     b.Property<int>("CodigoOcorrencia");
 
+                    b.Property<int>("ColaboradorId");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<int>("QtdMinutos");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("ColaboradorId");
 
-                    b.HasIndex("Date", "Id", "CodigoOcorrencia");
+                    b.HasIndex("Date", "ColaboradorId", "CodigoOcorrencia");
 
                     b.ToTable("OcorrenciaDia");
+                });
+
+            modelBuilder.Entity("PontoB.Models.Pontuacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ColaboradorId");
+
+                    b.Property<DateTime>("DataRegistro");
+
+                    b.Property<int>("Ponto");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColaboradorId");
+
+                    b.ToTable("Pontuacao");
                 });
 
             modelBuilder.Entity("PontoB.Models.RegistroPontoModels.RegistroPonto", b =>
@@ -300,6 +325,8 @@ namespace PontoB.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ColaboradorId");
 
                     b.Property<DateTime>("DataRegistro");
 
@@ -315,7 +342,7 @@ namespace PontoB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("ColaboradorId");
 
                     b.ToTable("RegistroPonto");
                 });
@@ -329,7 +356,7 @@ namespace PontoB.Migrations
 
                     b.HasOne("PontoB.Models.Colaborador", "Colaborador")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ColaboradorId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PontoB.Models.MotivoAusencia", "MotivoAusencia")
@@ -381,7 +408,7 @@ namespace PontoB.Migrations
                 {
                     b.HasOne("PontoB.Models.Colaborador", "Colaborador")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ColaboradorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -389,7 +416,15 @@ namespace PontoB.Migrations
                 {
                     b.HasOne("PontoB.Models.Colaborador", "Colaborador")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ColaboradorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PontoB.Models.Pontuacao", b =>
+                {
+                    b.HasOne("PontoB.Models.Colaborador", "Colaborador")
+                        .WithMany()
+                        .HasForeignKey("ColaboradorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -397,7 +432,7 @@ namespace PontoB.Migrations
                 {
                     b.HasOne("PontoB.Models.Colaborador", "Colaborador")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ColaboradorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
