@@ -3,22 +3,81 @@
     Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 
 }
+@model IList<PontoB.Models.ViewModels.VRelatorios.Home.HomeColaboradorViewModel>
 
 
 @section css{
-   
+    <link rel="stylesheet" href="~/Content/CSS/Graficos.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/CSS/font-awesome.min.css">
 }
 
 <div class="Cart container">
     <ul class="homeGrafico row">
         <li class=" col-sm">
-            <div id="conteiner">
 
+            <a href="@Url.Action("Index", "RegistroPonto")">
+                <div class="widget-small primary PonteiroClick">
+                    <i class="icon fa fa-clock-o fa-3x"></i>
+                    <div class="info">
+                        <h4>Registrar Ponto</h4>
+                        <p><b></b></p>
+                    </div>
+
+                </div>
+            </a>
+            <div class="widget-small primary">
+                <div class="info">
+                    <table class="table tabelaFont">
+                        <tr>
+                            <th>Data</th>
+                            <th>Registros</th>
+
+                        </tr>
+                        @foreach (var registro in Model)
+                        {
+                            <tr>
+                                <td>@registro.Data.ToShortDateString()</td>
+                                <td>@registro.Registros</td>
+
+                            </tr>
+                        }
+
+
+                    </table>
+                </div>
             </div>
-        </li>
-        <li class="col-sm">
-            <div id="conteiner">
 
+        </li>
+        <li class=" col-sm">
+            
+            <div class="widget-small info">
+                <i class="icon fa fa-trophy fa-3x"></i>
+                <div class="info">
+                    <h6>@ViewBag.DataPontos</h6>
+                    <h4>Pontos</h4>
+                    <p><b>@ViewBag.TotalPontos</b></p>
+                </div>
+            </div>
+            <div class="widget-small info">
+
+                <div class="info">
+                    <table class="table tabelaFont">
+                        <tr>
+                            <th>Data</th>
+                            <th>Pontos</th>
+
+                        </tr>
+                        @foreach (var pontos in Model)
+                        {
+                            <tr>
+                                <td>@pontos.Data.ToShortDateString()</td>
+                                <td>@pontos.Pontos</td>
+
+                            </tr>
+                        }
+                        
+                    </table>
+                </div>
             </div>
         </li>
     </ul>
@@ -26,6 +85,5 @@
 
 
 @section scripts{
-    
 
 }
