@@ -66,3 +66,7 @@
 .Oculto {
     display: none;
 }
+
+#erroSpan {
+    display: none;
+}

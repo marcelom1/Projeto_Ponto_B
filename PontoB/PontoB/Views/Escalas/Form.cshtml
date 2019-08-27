@@ -1,14 +1,14 @@
-﻿    @{
-        ViewBag.Title = "Escalas";
-        Layout = "~/Views/Shared/_LayoutAdm.cshtml";
+﻿@{
+    ViewBag.Title = "Escalas";
+    Layout = "~/Views/Shared/_LayoutAdm.cshtml";
 
-    }
+}
 
 @section css{
     <link rel="stylesheet" href="~/Content/CSS/CadastroEscala.css">
 }
 
-
+@Html.ValidationMessage("erro", "", new { id = "erroSpan" })
 <h2 class="pb-3">Cadastro Escala</h2>
 @Html.ActionLink("Novo", "/Form", null, new { @class = "btn botao_padrao btn-sm" })
 @using (Html.BeginForm("Adiciona", "Escalas", FormMethod.Post, new { @id = "CadastroEscala", @name = "CadastroEscala" }))
@@ -31,7 +31,7 @@
     </div>
 }
 
-    
+
 @using (Html.BeginForm("NovoHorario", "Escalas", FormMethod.Post, new { @id = "CadastroEscalaHorario", @name = "CadastroEscalaHorario" }))
 {
     <span class="erro">@Html.ValidationMessage("AdicionarNovoHorario")</span>
@@ -47,13 +47,13 @@
                     <tr>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" name="checks" type="checkbox" id="Segunda" value="Segunda"/>
+                                <input class="form-check-input" name="checks" type="checkbox" id="Segunda" value="Segunda" />
                                 <label class="form-check-label" for="Segunda">Segunda</label>
                             </div>
                         </td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" name="checks" type="checkbox" id="Terça" value="Terça"/>
+                                <input class="form-check-input" name="checks" type="checkbox" id="Terça" value="Terça" />
                                 <label class="form-check-label" for="Terça">Terça</label>
                             </div>
                         </td>
@@ -170,11 +170,14 @@
 
 <div class="form-row float-right">
     <div class="form-group col-md-1">
-        <input type="button" id="Botao_Excluir_Formulario_Escala" formaction="/Escalas/Excluir"  value="Excluir" class="btn botao_cor btn-lg">
+        <input type="button" id="Botao_Excluir_Formulario_Escala" formaction="/Escalas/Excluir" value="Excluir" class="btn botao_cor btn-lg">
     </div>
 </div>
 
 
 @section scripts{
     <script src="~/Content/js/CadastroEscala.js"></script>
+
+
+
 }

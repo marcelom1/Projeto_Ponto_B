@@ -12,6 +12,7 @@ namespace PontoB.Models.ViewModels.VRegistroPonto
         public DateTime? FiltroDataInicio { get; set; }
         public DateTime? FiltroDataFim { get; set; }
         public int escalaId { get; set; }
+        public Colaborador Colaborador { get; set; }
 
     }
 }

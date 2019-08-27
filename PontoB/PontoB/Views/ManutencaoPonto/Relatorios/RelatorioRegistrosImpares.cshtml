@@ -1,0 +1,104 @@
+﻿@model IList<PontoB.Models.ViewModels.VRelatorios.Manutencao.RegistrosImpares>
+
+@foreach (var item in Model)
+{
+    <table class="tabela borda">
+        <!-- Cabeçalho -->
+        <thead class="linhaCabecalho">
+            <tr>
+                <th COLSPAN="5">CONFERÊNCIA DOS REGISTROS PARES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td COLSPAN="2">Período: @item.Periodo</td>
+                <td COLSPAN="1">Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()</td>
+                <td COLSPAN="3">Usuário: @User.Identity.Name</td>
+            </tr>
+        </tbody>
+        <tr>
+            <td class="espaco"></td>
+        </tr>
+        <thead class="linhaCabecalho">
+            <tr>
+                <th COLSPAN="5">DADOS DO EMPREGADOR</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (item.Empresa == null)
+            {
+
+                <tr>
+                    <td>Todas as Empresas</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td COLSPAN="4">Razão Social: @item.Empresa.RazaoSocial</td>
+                    <td COLSPAN="1">CNPJ: @item.Empresa.Cnpj</td>
+                </tr>
+                <tr>
+                    <td COLSPAN="5">Endereço: @item.Empresa.EnderecoEmpresa</td>
+                </tr>
+            }
+        </tbody>
+
+        <tr>
+            <td class="espaco"></td>
+        </tr>
+        <thead class="linhaCabecalho">
+            <tr>
+                <th COLSPAN="5">COLABORADORES</th>
+            </tr>
+        </thead>
+
+        <td COLSPAN="5" class="registro">
+
+            <table border='1' class="tabela">
+                @foreach (var registro in item.Registro)
+                {
+                    <thead>
+                        <tr>
+
+                            <th COLSPAN="5" style="text-align:left;">@registro.Colaborador.CPF - @registro.Colaborador.NomeCompleto</th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tr>
+                        <td>
+                            <table border="1" class="tabela">
+                               
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Registros</th>
+                                        
+                                    </tr>
+                               
+                               
+
+                                    <tr>
+                                        <td>@registro.DataRegistro.Date</td>
+                                        <td>@string.Join(" - ", item.Registro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.DataRegistro.Date && x.DesconsiderarMarcacao == false).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),</td>
+
+                                    </tr>
+                                
+                            </table>
+                        </td>
+                    </tr>
+
+
+
+                }
+
+            </table>
+        </td>
+
+
+    </table>
+    <footer class="footer">
+        Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()
+    </footer>
+}

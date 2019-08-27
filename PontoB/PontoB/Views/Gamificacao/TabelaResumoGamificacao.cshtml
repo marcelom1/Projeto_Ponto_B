@@ -1,0 +1,69 @@
+﻿@using PagedList.Mvc
+
+@{
+    Layout = "";
+}
+
+@model PagedList.IPagedList<PontoB.Models.ViewModels.VRelatorios.Gamificacao.TabelaPontuacaoViewModel>
+@Html.ValidationMessage("erro", "", new { id = "erroSpan" })
+<span class="Oculto" id="DataCarregadaInicio"></span>
+<span class="Oculto" id="DataCarregadaFim"></span>
+<div class="form-row pb-1 pt-4 ">
+    <div class="form-group col-md-4">
+        <div class="btn-group pt-4 mt-2" role="group" aria-label="Exemplo básico">
+            <button type="button" class="btn btn-secondary botao_cor btn-sm tooltip3" id="ImprimirRelatorio">Imprimir Resumo</button>
+        </div>
+        <div class="btn-group pt-4 mt-2" role="group" aria-label="Exemplo básico">
+            <button type="button" class="btn btn-secondary botao_cor btn-sm tooltip4" id="ImprimirDetalhado">Imprimir Detalhado</button>
+        </div>
+
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th>Empresa</th>
+                <th>CPF</th>
+                <th>Nome Completo</th>
+                <th>Pontos Acomulados</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+            <tr>
+
+                <td>@item.Empresa.RazaoSocial</td>
+                <td>@item.Colaborador.CPF</td>
+                <td>@item.Colaborador.NomeCompleto</td>
+                <td>@item.Pontuacao.Sum(x=>x.Ponto)</td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div id="contentPager">
+
+        @Html.PagedListPager(Model, page => Url.Action("TabelaResumoGamificacao",
+        new { pagina = page, empresaId = ViewBag.EmpresaId, dataInicio = ViewBag.DataInicio, dataFim = ViewBag.DataFim }),
+        new PagedListRenderOptions
+        {
+            FunctionToTransformEachPageLink = (liTag, aTag) =>
+            {
+                aTag.Attributes.Add("class", "page-link");
+                liTag.InnerHtml = aTag.ToString();
+                return liTag;
+            },
+            LiElementClasses = new[] { "page-item" },
+            UlElementClasses = new[] { "pagination justify-content-center" }
+        })
+    </div>
+
+
+</div>
+
+<script src="~/Content/js/RelatorioGamificacao.js"></script>

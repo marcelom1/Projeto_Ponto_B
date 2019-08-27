@@ -12,5 +12,6 @@ namespace PontoB.Models
         public Colaborador Colaborador { get; set; }
         public int Ponto { get; set; }
         public DateTime DataRegistro { get; set; }
+        public int OrigemPontuacaoId { get; set; }
     }
 }

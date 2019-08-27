@@ -50,7 +50,7 @@
         </li>
         <li class=" col-sm">
             
-            <div class="widget-small info">
+            <div class="widget-small info PonteiroClick" id="pontuacaoColaborador">
                 <i class="icon fa fa-trophy fa-3x"></i>
                 <div class="info">
                     <h6>@ViewBag.DataPontos</h6>
@@ -85,5 +85,25 @@
 
 
 @section scripts{
+    <script>
+        $(document).on('click', '#pontuacaoColaborador', function () {
+            $.ajax({
+                type: "POST",
+                url: "/Gamificacao/RelatorioDetalhadoGamificacaoUsuario",
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (temp) {
+                    var myWindow = window.open("", "_blank");
+                    myWindow.document.write(temp);
 
+                },
+                error: function (json) {
+                    alert("Erro de conexão com o servidor!");
+                    Console.log(json);
+                }
+            });
+        });
+
+       
+    </script>
 }

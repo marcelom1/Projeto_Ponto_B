@@ -6,6 +6,7 @@ using PontoB.Models.RegistroPontoModels;
 using PontoB.Models.ViewModels.VCalculoPonto;
 using PontoB.Models.ViewModels.VManutencaoPonto;
 using PontoB.Models.ViewModels.VRegistroPonto;
+using PontoB.Models.ViewModels.VRelatorios.Manutencao;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,14 +21,14 @@ namespace PontoB.Controllers
     [Authorize(Roles = "Master")]
     public class ManutencaoPontoController : Controller
     {
-        private ColaboradorDAO dbColaborador        = new ColaboradorDAO();
-        private EmpresaDAO dbEmpresa                = new EmpresaDAO();
-        private ManutencaoPontoDAO dbManutencaoPonto      = new ManutencaoPontoDAO();
-        private RegistroPontoDAO dbRegistroPonto    = new RegistroPontoDAO();
-        private AusenciaDAO dbAusencia              = new AusenciaDAO();
-        private EscalaDAO dbEscala                  = new EscalaDAO();
+        private ColaboradorDAO dbColaborador = new ColaboradorDAO();
+        private EmpresaDAO dbEmpresa = new EmpresaDAO();
+        private ManutencaoPontoDAO dbManutencaoPonto = new ManutencaoPontoDAO();
+        private RegistroPontoDAO dbRegistroPonto = new RegistroPontoDAO();
+        private AusenciaDAO dbAusencia = new AusenciaDAO();
+        private EscalaDAO dbEscala = new EscalaDAO();
         private OcorrenciaDiaDAO dbOcorrenciaDia = new OcorrenciaDiaDAO();
-      
+
 
         // GET: ManutencaoPonto
         public ActionResult Index()
@@ -36,7 +37,7 @@ namespace PontoB.Controllers
             return View();
         }
 
-       
+
 
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -45,7 +46,7 @@ namespace PontoB.Controllers
             var colaborador = dbColaborador.Filtro("Nome Completo", searchTerm);
 
 
-            var modifica = colaborador.Where(e=>e.EmpresaId==idEmpresa && (e.DataDemissao == null || e.DataDemissao>= dataInicio) && (e.DataAdmissao<= dataFim)).Select(x => new
+            var modifica = colaborador.Where(e => e.EmpresaId == idEmpresa && (e.DataDemissao == null || e.DataDemissao >= dataInicio) && (e.DataAdmissao <= dataFim)).Select(x => new
             {
                 id = x.Id,
                 text = x.NomeCompleto,
@@ -76,7 +77,7 @@ namespace PontoB.Controllers
 
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public JsonResult ColaboradoresPagincao(string empresaId, DateTime dataInicio, DateTime dataFim, int indice=0)
+        public JsonResult ColaboradoresPagincao(string empresaId, DateTime dataInicio, DateTime dataFim, int indice = 0)
         {
             var colaborador = dbColaborador.Filtro("EmpresaId", empresaId);
 
@@ -90,7 +91,7 @@ namespace PontoB.Controllers
 
             }).OrderBy(x => x.Nome).ElementAt(indice);
 
-            
+
 
             return Json(modifica, JsonRequestBehavior.AllowGet);
 
@@ -105,13 +106,13 @@ namespace PontoB.Controllers
 
             var lista = colaborador.Where(e => e.EmpresaId == Convert.ToInt32(empresaId) && (e.DataDemissao == null || e.DataDemissao >= dataInicio) && (e.DataAdmissao <= dataFim));
 
-           // var colaboradorSelecionado = dbColaborador.BuscarPorId(colaboradorId);
+            // var colaboradorSelecionado = dbColaborador.BuscarPorId(colaboradorId);
 
-            var indice = lista.OrderBy(x => x.NomeCompleto).ToList().FindLastIndex(x=>x.Id.Equals(colaboradorId));
+            var indice = lista.OrderBy(x => x.NomeCompleto).ToList().FindLastIndex(x => x.Id.Equals(colaboradorId));
 
             var qtdLista = lista.Count();
 
-            return Json(new {indice, qtdLista }, JsonRequestBehavior.AllowGet);
+            return Json(new { indice, qtdLista }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult TabelaCalculo(int idColaborador, DateTime dataInicio, DateTime dataFim)
@@ -123,7 +124,7 @@ namespace PontoB.Controllers
             }
             else
             {
-               
+
 
 
                 var valores = new FiltroPeriodoValores
@@ -147,7 +148,7 @@ namespace PontoB.Controllers
 
                 while (dataInicio <= dataFim)
                 {
-                    var diasemana = GetDiaDaSemana(dataInicio);
+                    var diasemana = dataInicio.ToDiaDaSemana();
 
                     model.Add(new TabelaCalculoViewModels
                     {
@@ -211,8 +212,9 @@ namespace PontoB.Controllers
 
         public int AdicionarGrupoAusencia(string data)
         {
-            var ausencia = new Ausencia{
-                Descricao = "Lançamento Manual - "+data
+            var ausencia = new Ausencia
+            {
+                Descricao = "Lançamento Manual - " + data
             };
 
             try
@@ -229,29 +231,7 @@ namespace PontoB.Controllers
         }
 
 
-        private static string GetDiaDaSemana(DateTime dataInicio)
-        {
-            switch ((int)dataInicio.DayOfWeek)
-            {
-                case 0:
-                    return "Domingo";
-                case 1:
-                    return "Segunda";
-                case 2:
-                    return "Terça";
-                case 3:
-                    return "Quarta";
-                case 4:
-                    return "Quinta";
-                case 5:
-                    return "Sexta";
-                case 6:
-                    return "Sábado";
-                default:
-                    return "";
 
-            }
-        }
 
         private static IList<EscalaHorario> GetHorasDiaDaSemana(Escala EscalaColaborador)
         {
@@ -269,20 +249,21 @@ namespace PontoB.Controllers
             return EscalaTotalDiaSemana;
         }
 
-        
+
 
         public ActionResult ModalTabelaCalculo(int idColaborador, int idEscala, DateTime data)
         {
-            var escala = dbEscala.BuscarPorId(idEscala).EscalasHorario.OrderBy(e=>e.EntradaMinuto).ThenBy(e=>e.EntradaHora).Where(e=>e.DiaSemana.Equals(GetDiaDaSemana(data)));
-            
-            var model = new ManutencaoPontoViewModel {
+            var escala = dbEscala.BuscarPorId(idEscala).EscalasHorario.OrderBy(e => e.EntradaMinuto).ThenBy(e => e.EntradaHora).Where(e => e.DiaSemana.Equals(data.ToDiaDaSemana()));
+
+            var model = new ManutencaoPontoViewModel
+            {
                 EscalaHorario = StringEscalaViewModel(escala),
-                DiaDaSemana = GetDiaDaSemana(data),
+                DiaDaSemana = data.ToDiaDaSemana(),
                 Dia = data,
                 colaboradorId = idColaborador
-                
+
             };
-            
+
 
 
             return PartialView(model);
@@ -290,7 +271,7 @@ namespace PontoB.Controllers
 
         public ActionResult TabelaManutencao(int idColaborador, DateTime data)
         {
-            
+
             var valores = new FiltroPeriodoValores
             {
                 Inicio = data,
@@ -312,12 +293,12 @@ namespace PontoB.Controllers
 
         public ActionResult AdicionarRegistroManualmente(int idColaborador, int idEscala, DateTime data)
         {
-            var escala = dbEscala.BuscarPorId(idEscala).EscalasHorario.OrderBy(e => e.EntradaMinuto).ThenBy(e => e.EntradaHora).Where(e => e.DiaSemana.Equals(GetDiaDaSemana(data)));
+            var escala = dbEscala.BuscarPorId(idEscala).EscalasHorario.OrderBy(e => e.EntradaMinuto).ThenBy(e => e.EntradaHora).Where(e => e.DiaSemana.Equals(data.ToDiaDaSemana()));
 
             var model = new ManutencaoPontoViewModel
             {
                 EscalaHorario = StringEscalaViewModel(escala),
-                DiaDaSemana = GetDiaDaSemana(data),
+                DiaDaSemana = data.ToDiaDaSemana(),
                 Dia = data,
                 colaboradorId = idColaborador
 
@@ -328,10 +309,10 @@ namespace PontoB.Controllers
 
         public string DesconsiderarMarcacao(IList<string> desconsidera, IList<string> observacao, IList<int> registroId)
         {
-           
+
             foreach (var id in registroId)
             {
-                
+
                 var registro = dbRegistroPonto.BuscarPorId(id);
                 if (!registro.RegistroManual)
                 {
@@ -340,7 +321,8 @@ namespace PontoB.Controllers
                     dbRegistroPonto.Atualiza(registro);
                 }
             }
-            if (desconsidera != null) { 
+            if (desconsidera != null)
+            {
                 for (int i = 0; i < desconsidera.Count(); i++)
                 {
                     var registro = dbRegistroPonto.BuscarPorId(Convert.ToInt32(desconsidera[i]));
@@ -353,7 +335,7 @@ namespace PontoB.Controllers
 
 
         }
-        
+
         public bool RemoverRegistroManual(int idRegistro)
         {
             var registro = dbRegistroPonto.BuscarPorId(idRegistro);
@@ -362,7 +344,7 @@ namespace PontoB.Controllers
 
             return false;
         }
-        
+
         public bool AdicionarRegistroManutencao(DateTime data, DateTime hora, int colaboradorId, string motivo)
         {
 
@@ -376,7 +358,7 @@ namespace PontoB.Controllers
                 Observacao = motivo,
                 DesconsiderarMarcacao = false,
                 RegistroManual = true
-               
+
 
             };
             dbRegistroPonto.Adiciona(registro);
@@ -387,7 +369,7 @@ namespace PontoB.Controllers
 
         public List<HistoricoRegistroPontoViewModels> ListaPontoRegistroViewModel(IList<RegistroPonto> filtro)
         {
-           
+
             List<HistoricoRegistroPontoViewModels> model = new List<HistoricoRegistroPontoViewModels>();
 
             foreach (var registro in filtro.OrderByDescending(d => d.DataRegistro).Select(x => x.DataRegistro.Date).Distinct())
@@ -395,7 +377,7 @@ namespace PontoB.Controllers
                 model.Add(new HistoricoRegistroPontoViewModels
                 {
                     Data = registro.Date.ToShortDateString(),
-                    Registros = string.Join(" - ", filtro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.Date && x.DesconsiderarMarcacao==false).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),
+                    Registros = string.Join(" - ", filtro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.Date && x.DesconsiderarMarcacao == false).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),
                     colaborador = filtro[0].Colaborador
                 });
             }
@@ -409,7 +391,7 @@ namespace PontoB.Controllers
             string resultado = "";
 
             resultado = string.Join(" - ", filtro.Select(x => x.EntradaHora.ToString("00") + ":" + x.EntradaMinuto.ToString("00") + " - " + x.SaidaHora.ToString("00") + x.SaidaMinuto.ToString("00")));
-            
+
             return resultado;
 
         }
@@ -418,7 +400,7 @@ namespace PontoB.Controllers
         {
             var calculo = new RegrasOcorrenciaDia();
 
-            
+
 
             try
             {
@@ -433,5 +415,58 @@ namespace PontoB.Controllers
 
         }
 
+        public ActionResult RelatorioRegistrosImpares(DateTime dataInicio, DateTime dataFim, int empresaId = 0)
+        {
+            var model = new List<RegistrosImpares>();
+            if (dataFim > DateTime.Now.Date)
+            {
+                ModelState.AddModelError("erro", "O período escolhido não pode ser maior que a data corrente");
+            }
+            else
+            {
+                var valores = new FiltroPeriodoValores
+                {
+                    Inicio = dataInicio,
+                    Fim = dataFim,
+                    Id = empresaId
+                };
+
+                var registros = dbRegistroPonto.Filtro("FiltroRegistroPontoTodosRegistros", valores.ToString()).Where(x => x.Colaborador.DataAdmissao <= dataFim && (x.Colaborador.DataDemissao == null || x.Colaborador.DataDemissao >= dataInicio));
+
+                foreach (var data in registros.Select(x=>x.DataRegistro.Date).Distinct())
+                {
+                    foreach (var r in registros.Where(x=>x.DataRegistro.Date.Equals(data)).Select(x => x.ColaboradorId).Distinct())
+                    {
+                        var lista = (registros.Where(x => x.ColaboradorId.Equals(r) && x.DataRegistro.Date.Equals(data) && x.DesconsiderarMarcacao == false));
+                        if(lista.Count() % 2 != 0)
+                        {
+
+                            model.Add(new RegistrosImpares
+                            {
+                                Colaborador = lista.First().Colaborador,
+                                Empresa = lista.First().Colaborador.Empresa,
+                                Periodo = dataInicio.ToShortDateString() + " Até " + dataFim.ToShortDateString(),
+                                Registro = lista.ToList()
+
+
+                            });
+                           
+                        }
+                    }
+                }
+
+                
+
+               
+
+
+                
+            }
+
+
+
+
+            return View("Relatorios/RelatorioRegistrosImpares", model);
+        }
     }
 }

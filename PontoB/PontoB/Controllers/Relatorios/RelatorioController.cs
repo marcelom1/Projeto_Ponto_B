@@ -6,6 +6,7 @@ using PontoB.Models;
 using PontoB.Models.RegistroPontoModels;
 using PontoB.Models.ViewModels.VEscala;
 using PontoB.Models.ViewModels.VRelatorios.CartaoPonto;
+using PontoB.Models.ViewModels.VRelatorios.Gamificacao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,37 @@ using System.Web.Services;
 
 namespace PontoB.Controllers
 {
+    [Authorize]
     public class RelatorioController : Controller
     {
-        ColaboradorDAO dbColaborador = new ColaboradorDAO();
+        
+        private ColaboradorDAO dbColaborador = new ColaboradorDAO();
+        private PontuacaoDAO dbPontuacao = new PontuacaoDAO();
+
         // GET: Relatorio
+        [Authorize(Roles = "Master")]
+        public ActionResult Index(string relatorio)
+        {
+            ViewBag.Relatorio = relatorio;
+            if (relatorio.Equals("RelatorioRegistrosImpares", StringComparison.OrdinalIgnoreCase))
+            {
+                ViewBag.NomeRelatorio = "Registros Ímpares";
+                ViewBag.Controller = "ManutencaoPonto";
+            }
+            else if (relatorio.Equals("TabelaResumoGamificacao", StringComparison.OrdinalIgnoreCase))
+            {
+                ViewBag.NomeRelatorio = "Gamificação";
+                ViewBag.Controller = "Gamificacao";
+            }
+            return View();
+        }
+
+
+
+
+
+
+        [Authorize(Roles = "Master")]
         public ActionResult CartaoPonto(DateTime dataInicio, DateTime dataFim, int colaboradorId)
         {
             IList<CartaoPonto> model = new List<CartaoPonto>();
@@ -28,6 +56,7 @@ namespace PontoB.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Master")]
         public ActionResult TodosCartaoPontoEmpresa(DateTime dataInicio, DateTime dataFim, int empresaId)
         {
             var filtro = new FiltroPeriodoValores
@@ -48,6 +77,8 @@ namespace PontoB.Controllers
 
             return View("CartaoPonto", model);
         }
+
+        [Authorize(Roles = "Master")]
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public JsonResult GraficosHome()
@@ -69,9 +100,19 @@ namespace PontoB.Controllers
 
         }
 
+
+
+
+
+
+
+
+
+      
+
         
 
-
+       
 
 
     }

@@ -100,7 +100,8 @@ namespace PontoB.Controllers
                 HistoricoRegistroPonto = Lista.ToPagedList(pagina, 10),
                 FiltroDataInicio = dataInicio,
                 FiltroDataFim = dataFim,
-                escalaId = filtro[0].Colaborador.EscalaId
+                escalaId = colaboradorLogado.EscalaId,
+                Colaborador = colaboradorLogado
             };
 
 
@@ -131,7 +132,9 @@ namespace PontoB.Controllers
                 HistoricoRegistroPonto = Lista.ToPagedList(pagina, 10),
                 FiltroDataInicio = dataInicio,
                 FiltroDataFim = dataFim,
-                escalaId = filtro[0].Colaborador.EscalaId
+                escalaId = colaboradorLogado.EscalaId,
+                Colaborador = colaboradorLogado
+                
             };
 
             //Preenche as ViewBag com os resultado do filtro

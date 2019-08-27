@@ -9,7 +9,7 @@
 @section css{
     <link rel="stylesheet" href="~/Content/CSS/CadastroEscala.css">
 }
-
+@Html.ValidationMessage("erro", "", new { id = "erroSpan" })
 <h2 class="pb-3">Cadastro Escalas</h2>
 @Html.ActionLink("Novo", "Form", "0", new { @class = "btn botao_padrao btn-sm" })
 <h5 class="pt-1">Filtrar</h5>

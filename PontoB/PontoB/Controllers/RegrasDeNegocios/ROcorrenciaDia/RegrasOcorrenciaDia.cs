@@ -19,7 +19,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
         private static int OcorrenciaAusenciaDescontaId = 4;
         private static int OcorrenciaHorasExedentesId = 5;
         private static int OcorrenciaHorasFaltasId = 6;
-        private static int OcorrenciaDiaFaltaId = 7;
+       
 
         
 
@@ -141,12 +141,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
                     temp.CodigoOcorrencia = OcorrenciaHorasFaltasId;
                     temp.QtdMinutos = calculo * (-1);
                     dbOcorenciaDia.Adiciona(temp);
-                    if (Prevista != 0 && Trabalhadas == 0 && AusenciaAbona == 0)
-                    {
-                        temp.Id = 0;
-                        temp.CodigoOcorrencia = OcorrenciaDiaFaltaId;
-                        dbOcorenciaDia.Adiciona(temp);
-                    }
+                    
                 }
                 else if (calculo > 0)
                 {

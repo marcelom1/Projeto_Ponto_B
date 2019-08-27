@@ -78,7 +78,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.RRelatorios
         private IList<RegistroPontoCalculo> GridCalculoDiario(DateTime dataInicio, DateTime dataFim, IList<OcorrenciaDia> ocorrencias, IList<RegistroPonto> registros, IList<AusenciaColaboradores> ausencia)
         {
             var modelRegistro = new List<RegistroPontoCalculo>();
-            int OcorrenciaDiaFaltaId = 7;
+            
             while (dataInicio <= dataFim)
             {
 

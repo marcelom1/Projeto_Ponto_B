@@ -179,8 +179,18 @@ namespace PontoB.Controllers
             var pesquisa = dbEscala.BuscarPorId(escala.Id);
 
             //Caso encontre algo, exluir o registro
-            if (pesquisa != null)
-                dbEscala.ExcluirEscala(pesquisa);
+            try
+            {
+                if (pesquisa != null)
+                    dbEscala.ExcluirEscala(pesquisa);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("erro", "Não é possivel excluir escalas que já estão atrelada a algum colaborador");
+                ViewBag.Escalas = dbEscala.BuscarPorId(pesquisa.Id);
+                ViewBag.Escalas.EscalasHorario = dbEscalaHorario.Lista(pesquisa.Id);
+                return View("Form", new { id = pesquisa.Id });
+            }
 
             return RedirectToAction("Index", "Escalas");
         }
@@ -191,8 +201,18 @@ namespace PontoB.Controllers
             var pesquisa = dbEscala.BuscarPorId(id);
 
             //Caso encontre algo, exluir o registro
-            if (pesquisa != null)
-                dbEscala.ExcluirEscala(pesquisa);
+            try
+            {
+                if (pesquisa != null)
+                    dbEscala.ExcluirEscala(pesquisa);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("erro", "Não é possivel excluir escalas que já estão atrelada a algum colaborador");
+                ViewBag.FiltroColuna = "";
+                ViewBag.Filtro = "";
+                return View("Index", dbEscala.Lista(1));
+            }
 
             return RedirectToAction("Index", "Escalas");
         }

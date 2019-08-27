@@ -207,7 +207,10 @@ $(document).on('click', '#ImprimirTodos', function () {
             success: function (resposta) {
                 var myWindow = window.open("", "_blank");
 
-                myWindow.document.write(resposta);
+                myWindow.document.write(resposta, function () {
+                    
+                });
+                
                 $(".tooltip3").tooltipster("close");
 
             },

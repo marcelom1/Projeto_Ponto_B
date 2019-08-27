@@ -1,4 +1,5 @@
-﻿using PontoB.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PontoB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace PontoB.Filtros.FColaborador
         {
             if (int.TryParse(filtro, out int numero))
             {
-                return (query.OrderBy(e => e.NomeCompleto).Where(e => e.EmpresaId.Equals(numero)).ToList());
+                if (numero!=0)
+                    return (query.OrderBy(e => e.NomeCompleto).Include(x=>x.Empresa.EnderecoEmpresa).Where(e => e.EmpresaId.Equals(numero)).ToList());
+                
 
             }
-            return query.OrderBy(e => e.NomeCompleto).Where(e => e.EmpresaId.Equals(filtro)).ToList();
+            return query.OrderBy(e => e.NomeCompleto).ToList();
 
         }
     }

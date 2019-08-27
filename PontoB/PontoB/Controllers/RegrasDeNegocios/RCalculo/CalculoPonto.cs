@@ -19,14 +19,14 @@ namespace PontoB.Controllers.RegrasDeNegocios.RCalculo
         public int Saldo { get; }   = 0;
 
         
-        private OcorrenciaDiaDAO dbOcorrenciaDia = new OcorrenciaDiaDAO();
+        private readonly OcorrenciaDiaDAO dbOcorrenciaDia = new OcorrenciaDiaDAO();
         private static int OcorrenciaPrevistasId = 1;
         private static int OcorrenciaTrabalhadasId = 2;
         private static int OcorrenciaAusenciaAbonaId = 3;
         private static int OcorrenciaAusenciaDescontaId = 4;
         private static int OcorrenciaHorasExedentesId = 5;
         private static int OcorrenciaHorasFaltasId = 6;
-        private static int OcorrenciaDiaFaltaId = 7;
+        
 
         public CalculoPonto(IList<OcorrenciaDia> ocorrencias)
         {

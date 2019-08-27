@@ -20,6 +20,10 @@ namespace PontoB.DAO.Mapeamento
             builder.HasIndex(c => c.Email)
                    .IsUnique();
 
+            builder.HasOne(e => e.Escala)
+                   .WithMany(c => c.Colaboradores)
+                   .OnDelete(DeleteBehavior.Restrict);
+
             builder.ToTable("Colaborador");
         }
     }

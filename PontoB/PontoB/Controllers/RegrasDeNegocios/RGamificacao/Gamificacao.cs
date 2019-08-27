@@ -16,6 +16,8 @@ namespace PontoB.Controllers.RegrasDeNegocios.RPontuacao
         private RegistroPontoDAO dbRegistroPonto = new RegistroPontoDAO();
 
 
+        private static int NaPrimeiraMarcacao = 1;
+
         public void VerificaSePontuouAoRegistrar(RegistroPonto registro)
         {
             var pontuacao = new Pontuacao
@@ -23,10 +25,13 @@ namespace PontoB.Controllers.RegrasDeNegocios.RPontuacao
                Colaborador = registro.Colaborador,
                ColaboradorId = registro.ColaboradorId,
                DataRegistro = registro.DataRegistro,
-               Ponto = 0
+               Ponto = 0,
+               OrigemPontuacaoId = 0
+               
             };
             if (PontualidadeNaPrimeiraMarcacao(registro)){
                 pontuacao.Ponto = 1;
+                pontuacao.OrigemPontuacaoId = NaPrimeiraMarcacao;
                 dbPontuacao.Adiciona(pontuacao);
             }
         }
@@ -36,13 +41,14 @@ namespace PontoB.Controllers.RegrasDeNegocios.RPontuacao
             var filtro = dbRegistroPonto.Filtro("UltimoRegistroDia", registro.Colaborador.Id.ToString()).FirstOrDefault();
             var diaDaSemana = registro.DataRegistro.ToDiaDaSemana();
             var escala = dbEscala.Lista(registro.Colaborador.EscalaId).Where(e => e.DiaSemana.Equals(diaDaSemana)).OrderBy(x=>x.EntradaMinuto).ThenBy(x=>x.EntradaHora).FirstOrDefault() ;
-          
-            var horaEscala = new TimeSpan(escala.EntradaHora,escala.EntradaMinuto,0);
-            var horaEntrada = DateTime.MinValue + horaEscala;
+            if (escala != null)
+            {
+                var horaEscala = new TimeSpan(escala.EntradaHora, escala.EntradaMinuto, 0);
+                var horaEntrada = DateTime.MinValue + horaEscala;
 
-            if (registro.DataRegistro.TimeOfDay >= horaEntrada.AddMinutes(-5).TimeOfDay && registro.DataRegistro.TimeOfDay <= horaEntrada.AddMinutes(5).TimeOfDay)
-                return true;
-           
+                if (registro.DataRegistro.TimeOfDay >= horaEntrada.AddMinutes(-5).TimeOfDay && registro.DataRegistro.TimeOfDay <= horaEntrada.AddMinutes(5).TimeOfDay)
+                    return true;
+            }
 
 
             return false;

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="">
 }
 
-<h2 class="pb-3">Histórico Ponto - @Model.HistoricoRegistroPonto[0].colaborador.NomeCompleto</h2>
+<h2 class="pb-3">Histórico Ponto - @Model.Colaborador.NomeCompleto</h2>
 <button class="btn btn-outline-secondary botao_padrao btn-sm" data-escala="@Model.escalaId" id="VisualizarEscala" type="button" >Visualizar Escala</button>
     <h4 class="pt-1">Filtrar</h4>
     @using (Html.BeginForm("Filtro", "RegistroPonto", FormMethod.Get, new { @id = "FiltroRegistroPonto", @name = "FiltroRegistroPonto" }))

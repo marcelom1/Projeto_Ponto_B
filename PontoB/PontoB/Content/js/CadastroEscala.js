@@ -48,7 +48,8 @@ $(document).ready(function () {
         }
     });
 
-
+    if ($("#erroSpan").text() != "")
+        ModalAlert("", "", $("#erroSpan").text() , "", "", "Erro");
 
 });
 

@@ -14,6 +14,8 @@ namespace PontoB.Filtros.FGamificacao
                 return new PontuacaoEntreData();
             else if (coluna.Equals("PontuacaoEntreDataColaborador", StringComparison.OrdinalIgnoreCase))
                 return new PontuacaoEntreDataColaborador();
+            else if (coluna.Equals("PontuacaoEntreDataEmpresa", StringComparison.OrdinalIgnoreCase))
+                return new PontuacaoEntreDataEmpresa();
 
             return null;
 

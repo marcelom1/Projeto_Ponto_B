@@ -348,6 +348,8 @@
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\RegistroPonto.js" />
+    <Content Include="Content\js\RelatorioGamificacao.js" />
+    <Content Include="Content\js\RelatorioPadrao.js" />
     <Content Include="Content\js\ResumoDeCalculo.js" />
     <Content Include="Content\js\select2.min.js" />
     <Content Include="Content\js\tooltipster.bundle.min.js" />
@@ -372,42 +374,44 @@
     <Compile Include="Business\Utils\FiltroPeriodoValores.cs" />
     <Compile Include="Business\Utils\DateTimeExtensions.cs" />
     <Compile Include="Business\Utils\NullableDateTimeExtensions.cs" />
-    <Compile Include="Controllers\AusenciaController.cs" />
-    <Compile Include="Controllers\ManutencaoPontoController.cs" />
-    <Compile Include="Controllers\ColaboradorController.cs" />
-    <Compile Include="Controllers\EmpresaController.cs" />
-    <Compile Include="Controllers\EscalasController.cs" />
+    <Compile Include="Controllers\Cadastros\AusenciaController.cs" />
+    <Compile Include="Controllers\ManutencaoPonto\ManutencaoPontoController.cs" />
+    <Compile Include="Controllers\Cadastros\ColaboradorController.cs" />
+    <Compile Include="Controllers\Cadastros\EmpresaController.cs" />
+    <Compile Include="Controllers\Cadastros\EscalasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\RegistroPontoController.cs" />
+    <Compile Include="Controllers\RegistroPonto\RegistroPontoController.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RAusencia\RegrasAusencia.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RCalculo\CalculoPonto.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\ROcorrenciaDia\RegrasOcorrenciaDia.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RGamificacao\Gamificacao.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\Graficos.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\RelatorioCartaoPonto.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\ResumoPontosGamificacao.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopHoras.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopPontuacao.cs" />
-    <Compile Include="Controllers\RelatorioController.cs" />
-    <Compile Include="Controllers\ResumoCalculoController.cs" />
-    <Compile Include="DAO\AusenciaColaboradoresDAO.cs" />
-    <Compile Include="DAO\AusenciaDAO.cs" />
-    <Compile Include="DAO\ManutencaoPontoDAO.cs" />
-    <Compile Include="DAO\ColaboradorDAO.cs" />
-    <Compile Include="DAO\EscalaDAO.cs" />
-    <Compile Include="DAO\EscalaHorarioDAO.cs" />
+    <Compile Include="Controllers\Relatorios\RelatorioController.cs" />
+    <Compile Include="Controllers\Relatorios\GamificacaoController.cs" />
+    <Compile Include="Controllers\ManutencaoPonto\ResumoCalculoController.cs" />
+    <Compile Include="DAO\Cadastros\AusenciaColaboradoresDAO.cs" />
+    <Compile Include="DAO\Cadastros\AusenciaDAO.cs" />
+    <Compile Include="DAO\CalculoPonto\ManutencaoPontoDAO.cs" />
+    <Compile Include="DAO\Cadastros\ColaboradorDAO.cs" />
+    <Compile Include="DAO\Cadastros\EscalaDAO.cs" />
+    <Compile Include="DAO\Cadastros\EscalaHorarioDAO.cs" />
     <Compile Include="DAO\Mapeamento\ColaboradorMap.cs" />
     <Compile Include="DAO\Mapeamento\EmpresaMap.cs" />
     <Compile Include="DAO\Mapeamento\EnderecoMap.cs" />
-    <Compile Include="DAO\EmpresaDAO.cs" />
-    <Compile Include="DAO\EnderecoDAO.cs" />
-    <Compile Include="DAO\EstadosUFDAO.cs" />
+    <Compile Include="DAO\Cadastros\EmpresaDAO.cs" />
+    <Compile Include="DAO\Cadastros\EnderecoDAO.cs" />
+    <Compile Include="DAO\Cadastros\EstadosUFDAO.cs" />
     <Compile Include="DAO\Mapeamento\EscalaMap.cs" />
     <Compile Include="DAO\Mapeamento\OcorrenciaDiaMap.cs" />
-    <Compile Include="DAO\MotivoAusenciaDAO.cs" />
-    <Compile Include="DAO\OcorrenciaDiaDAO.cs" />
-    <Compile Include="DAO\PontuacaoDAO.cs" />
-    <Compile Include="DAO\RegistroPontoDAO.cs" />
+    <Compile Include="DAO\Cadastros\MotivoAusenciaDAO.cs" />
+    <Compile Include="DAO\CalculoPonto\OcorrenciaDiaDAO.cs" />
+    <Compile Include="DAO\Gamificacao\PontuacaoDAO.cs" />
+    <Compile Include="DAO\RegistroPonto\RegistroPontoDAO.cs" />
     <Compile Include="Encrypt\Encrypt.cs" />
     <Compile Include="Encrypt\SenhaHasher.cs" />
     <Compile Include="Filtros\FAusencia\FiltroAusencia.cs" />
@@ -448,6 +452,7 @@
     <Compile Include="Filtros\FGamificacao\FiltroGamificacao.cs" />
     <Compile Include="Filtros\FGamificacao\PontuacaoEntreData.cs" />
     <Compile Include="Filtros\FGamificacao\PontuacaoEntreDataColaborador.cs" />
+    <Compile Include="Filtros\FGamificacao\PontuacaoEntreDataEmpresa.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDia.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreData.cs" />
     <Compile Include="Filtros\FOcorrenciaDia\FiltroOcorrenciaDiaEntreDataPorEmpresa.cs" />
@@ -465,6 +470,14 @@
     <Compile Include="Migrations\20190822193852_Inicial.cs" />
     <Compile Include="Migrations\20190822193852_Inicial.designer.cs">
       <DependentUpon>20190822193852_Inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190827121508_ColaboradorEscala.cs" />
+    <Compile Include="Migrations\20190827121508_ColaboradorEscala.designer.cs">
+      <DependentUpon>20190827121508_ColaboradorEscala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190827131910_CodGamificacao.cs" />
+    <Compile Include="Migrations\20190827131910_CodGamificacao.designer.cs">
+      <DependentUpon>20190827131910_CodGamificacao.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
@@ -491,9 +504,12 @@
     <Compile Include="Models\ViewModels\VRegistroPonto\HistoricoRegistroPontoViewModels.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\CartaoPonto.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\CartaoPonto\RegistroPontoCalculo.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\Gamificacao\RelatorioResumoPontuacaoViewModel.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\Gamificacao\TabelaPontuacaoViewModel.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\Home\HomeColaboradorViewModel.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\Home\RelatorioTopHorasViewModels.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\Home\TopHomeViewModels.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\Manutencao\RegistrosImpares.cs" />
     <Compile Include="Models\ViewModels\VResumoCalculo\ResumoCalculoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -531,6 +547,11 @@
     <Content Include="Views\ResumoCalculo\Index.cshtml" />
     <Content Include="Views\ResumoCalculo\TabelaResumoCalculo.cshtml" />
     <Content Include="Views\Home\IndexColaborador.cshtml" />
+    <Content Include="Views\Relatorio\Index.cshtml" />
+    <Content Include="Views\Gamificacao\TabelaResumoGamificacao.cshtml" />
+    <Content Include="Views\Gamificacao\Relatorios\RelatorioResumoGamificacao.cshtml" />
+    <Content Include="Views\Gamificacao\Relatorios\RelatorioDetalhadoGamificacao.cshtml" />
+    <Content Include="Views\ManutencaoPonto\Relatorios\RelatorioRegistrosImpares.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
