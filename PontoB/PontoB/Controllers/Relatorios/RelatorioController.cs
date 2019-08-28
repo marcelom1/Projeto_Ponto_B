@@ -101,19 +101,5 @@ namespace PontoB.Controllers
         }
 
 
-
-
-
-
-
-
-
-      
-
-        
-
-       
-
-
     }
 }

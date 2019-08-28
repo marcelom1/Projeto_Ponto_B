@@ -1,5 +1,6 @@
 ﻿using PontoB.Business.Utils;
 using PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia;
+using PontoB.Controllers.RegrasDeNegocios.RRelatorios;
 using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.RegistroPontoModels;
@@ -417,56 +418,29 @@ namespace PontoB.Controllers
 
         public ActionResult RelatorioRegistrosImpares(DateTime dataInicio, DateTime dataFim, int empresaId = 0)
         {
-            var model = new List<RegistrosImpares>();
+            
+            var model = new RegistrosImpares
+            {
+                Empresa = empresaId.Equals(0) ? null : dbEmpresa.BuscarPorId(empresaId),
+                Periodo = dataInicio.ToShortDateString() + " Até " + dataFim.ToShortDateString(),
+               
+
+            };
+
             if (dataFim > DateTime.Now.Date)
             {
                 ModelState.AddModelError("erro", "O período escolhido não pode ser maior que a data corrente");
+                model.Registros = new List<ViewModelRelatorioRegistroImpares>();
             }
             else
             {
-                var valores = new FiltroPeriodoValores
-                {
-                    Inicio = dataInicio,
-                    Fim = dataFim,
-                    Id = empresaId
-                };
+                model.Registros = new RegistrosEmNumeroImpares().RegistrosImpares(dataInicio, dataFim, empresaId);
 
-                var registros = dbRegistroPonto.Filtro("FiltroRegistroPontoTodosRegistros", valores.ToString()).Where(x => x.Colaborador.DataAdmissao <= dataFim && (x.Colaborador.DataDemissao == null || x.Colaborador.DataDemissao >= dataInicio));
-
-                foreach (var data in registros.Select(x=>x.DataRegistro.Date).Distinct())
-                {
-                    foreach (var r in registros.Where(x=>x.DataRegistro.Date.Equals(data)).Select(x => x.ColaboradorId).Distinct())
-                    {
-                        var lista = (registros.Where(x => x.ColaboradorId.Equals(r) && x.DataRegistro.Date.Equals(data) && x.DesconsiderarMarcacao == false));
-                        if(lista.Count() % 2 != 0)
-                        {
-
-                            model.Add(new RegistrosImpares
-                            {
-                                Colaborador = lista.First().Colaborador,
-                                Empresa = lista.First().Colaborador.Empresa,
-                                Periodo = dataInicio.ToShortDateString() + " Até " + dataFim.ToShortDateString(),
-                                Registro = lista.ToList()
-
-
-                            });
-                           
-                        }
-                    }
-                }
-
-                
-
-               
-
-
-                
             }
-
-
-
 
             return View("Relatorios/RelatorioRegistrosImpares", model);
         }
+
+        
     }
 }

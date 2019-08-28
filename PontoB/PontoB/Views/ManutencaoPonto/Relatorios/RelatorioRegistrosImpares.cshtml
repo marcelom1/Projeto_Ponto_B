@@ -1,7 +1,6 @@
-﻿@model IList<PontoB.Models.ViewModels.VRelatorios.Manutencao.RegistrosImpares>
+﻿@model PontoB.Models.ViewModels.VRelatorios.Manutencao.RegistrosImpares
 
-@foreach (var item in Model)
-{
+
     <table class="tabela borda">
         <!-- Cabeçalho -->
         <thead class="linhaCabecalho">
@@ -11,7 +10,7 @@
         </thead>
         <tbody>
             <tr>
-                <td COLSPAN="2">Período: @item.Periodo</td>
+                <td COLSPAN="2">Período: @Model.Periodo</td>
                 <td COLSPAN="1">Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()</td>
                 <td COLSPAN="3">Usuário: @User.Identity.Name</td>
             </tr>
@@ -25,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            @if (item.Empresa == null)
+            @if (Model.Empresa == null)
             {
 
                 <tr>
@@ -35,11 +34,11 @@
             else
             {
                 <tr>
-                    <td COLSPAN="4">Razão Social: @item.Empresa.RazaoSocial</td>
-                    <td COLSPAN="1">CNPJ: @item.Empresa.Cnpj</td>
+                    <td COLSPAN="4">Razão Social: @Model.Empresa.RazaoSocial</td>
+                    <td COLSPAN="1">CNPJ: @Model.Empresa.Cnpj</td>
                 </tr>
                 <tr>
-                    <td COLSPAN="5">Endereço: @item.Empresa.EnderecoEmpresa</td>
+                    <td COLSPAN="5">Endereço: @Model.Empresa.EnderecoEmpresa</td>
                 </tr>
             }
         </tbody>
@@ -56,35 +55,43 @@
         <td COLSPAN="5" class="registro">
 
             <table border='1' class="tabela">
-                @foreach (var registro in item.Registro)
+
+                @foreach (var colaborador in Model.Registros.Select(x=> new { x.Colaborador }).Distinct())
                 {
+
                     <thead>
                         <tr>
-
-                            <th COLSPAN="5" style="text-align:left;">@registro.Colaborador.CPF - @registro.Colaborador.NomeCompleto</th>
-
-
+                            <th COLSPAN="5" style="text-align:left;">@colaborador.Colaborador.CPF - @colaborador.Colaborador.NomeCompleto</th>
                         </tr>
                     </thead>
 
                     <tr>
                         <td>
                             <table border="1" class="tabela">
-                               
-                                    <tr>
-                                        <th>Data</th>
-                                        <th>Registros</th>
-                                        
-                                    </tr>
-                               
-                               
 
-                                    <tr>
-                                        <td>@registro.DataRegistro.Date</td>
-                                        <td>@string.Join(" - ", item.Registro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == registro.DataRegistro.Date && x.DesconsiderarMarcacao == false).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),</td>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Registros</th>
 
-                                    </tr>
-                                
+                                </tr>
+
+
+                                @foreach (var r in Model.Registros.Where(x => x.Colaborador.Id.Equals(colaborador.Colaborador.Id)))
+                                {
+
+                                    foreach (var data in r.Registro.Select(x => x.DataRegistro).Distinct())
+                                    {
+                                        <tr>
+                                            <td>@data</td>
+                                            <td>@string.Join(" - ", r.Registro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == r.Data.Date && x.DesconsiderarMarcacao == false).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00"))),</td>
+
+                                        </tr>
+                                    }
+
+
+                                }
+
+
                             </table>
                         </td>
                     </tr>
@@ -101,4 +108,4 @@
     <footer class="footer">
         Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()
     </footer>
-}
+

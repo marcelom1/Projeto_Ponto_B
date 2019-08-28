@@ -387,6 +387,7 @@
     <Compile Include="Controllers\RegrasDeNegocios\ROcorrenciaDia\RegrasOcorrenciaDia.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RGamificacao\Gamificacao.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\Graficos.cs" />
+    <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\RegistrosEmNumeroImpares.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\RelatorioCartaoPonto.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\ResumoPontosGamificacao.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopHoras.cs" />
@@ -510,6 +511,7 @@
     <Compile Include="Models\ViewModels\VRelatorios\Home\RelatorioTopHorasViewModels.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\Home\TopHomeViewModels.cs" />
     <Compile Include="Models\ViewModels\VRelatorios\Manutencao\RegistrosImpares.cs" />
+    <Compile Include="Models\ViewModels\VRelatorios\Manutencao\ViewModelRelatorioRegistroImpares.cs" />
     <Compile Include="Models\ViewModels\VResumoCalculo\ResumoCalculoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -561,6 +563,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Relatorios\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

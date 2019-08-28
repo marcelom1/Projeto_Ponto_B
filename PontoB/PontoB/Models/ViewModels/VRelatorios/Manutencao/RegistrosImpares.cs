@@ -8,9 +8,9 @@ namespace PontoB.Models.ViewModels.VRelatorios.Manutencao
 {
     public class RegistrosImpares
     {
-        public Colaborador Colaborador { get; set; }
-        public List<RegistroPonto> Registro { get; set; }
+       
         public Empresa Empresa { get; set; }
         public string Periodo { get; set; }
+        public List<ViewModelRelatorioRegistroImpares> Registros { get; set; }
     }
 }
