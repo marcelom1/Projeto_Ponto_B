@@ -79,6 +79,9 @@ namespace PontoB.Controllers
             return View(model.OrderByDescending(x=>x.Data).ToList());
         }
 
+        
+
+
         public TopHomeViewModels TopHome()
         {
 
@@ -112,5 +115,7 @@ namespace PontoB.Controllers
             return resultado;
 
         }
+
+
     }
 }

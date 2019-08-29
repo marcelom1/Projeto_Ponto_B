@@ -343,7 +343,9 @@
     <Content Include="Content\js\ManutencaoPonto\Ausencia.js" />
     <Content Include="Content\js\ManutencaoPonto\Pagincacao.js" />
     <Content Include="Content\js\ManutencaoPonto\Registro.js" />
+    <Content Include="Content\js\MenuSuperior.js" />
     <Content Include="Content\js\modalAlert.js" />
+    <Content Include="Content\js\ModalAlterarSenha.js" />
     <Content Include="Content\js\moment.js" />
     <Content Include="Content\js\popper.min.js" />
     <Content Include="Content\js\pt-BR.js" />
@@ -559,6 +561,7 @@
     <Content Include="Views\Relatorio\Gamificacao\Pontos\RelatorioDetalhadoGamificacao.cshtml" />
     <Content Include="Views\Relatorio\Gamificacao\Pontos\RelatorioResumoGamificacao.cshtml" />
     <Content Include="Views\Relatorio\Gamificacao\Pontos\TabelaResumoGamificacao.cshtml" />
+    <Content Include="Views\Colaborador\ModalAlterarSenha.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

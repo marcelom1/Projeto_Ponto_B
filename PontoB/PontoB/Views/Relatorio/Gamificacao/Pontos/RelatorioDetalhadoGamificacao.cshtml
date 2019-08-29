@@ -82,17 +82,21 @@
                                 @foreach (var p in pontos.Pontuacao.OrderBy(x => x.DataRegistro))
                                 {
 
-                                <tr>
-                                    <td>@p.DataRegistro.ToShortDateString()</td>
-                                    <td>@p.DataRegistro.ToShortTimeString()</td>
-                                    @if (p.OrigemPontuacaoId.Equals(1))
-                                    {
-                                        <td>Sem atraso na primeira marcação do dia</td>
-                                    }
+                                    <tr>
+                                        <td>@p.DataRegistro.ToShortDateString()</td>
+                                        <td>@p.DataRegistro.ToShortTimeString()</td>
+                                        @if (p.OrigemPontuacaoId.Equals(1))
+                                        {
+                                            <td>Sem atraso na primeira marcação do dia</td>
+                                        }
+                                        else if (p.OrigemPontuacaoId.Equals(2))
+                                        {
+                                            <td>Sem inserção de horario manual</td>
+                                        }
 
-                                    <td>@p.Ponto</td>
+                                        <td>@p.Ponto</td>
 
-                                </tr>
+                                    </tr>
                                 }
                             </table>
                         </td>

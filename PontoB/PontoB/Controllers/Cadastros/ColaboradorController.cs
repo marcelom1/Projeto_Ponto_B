@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Services;
 using System.Web.Services;
+using Microsoft.AspNet.Identity;
 
 namespace PontoB.Controllers
 {
@@ -222,7 +223,29 @@ namespace PontoB.Controllers
             }
             return RedirectToAction("Index", "Colaborador");
         }
+        public ActionResult ModalAlterarSenha()
+        {
+            return View();
+        }
 
-       
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult AlterarSenhaColaborador(string senhaAtual, string novaSenha, string confirmacaoSenha)
+        {
+            var login = User.Identity.Name;
+            Colaborador autenticado = dbColaborador.ConfirmacaoAutenticacao(login, senhaAtual);
+            if (autenticado != null) {
+                if (novaSenha.Equals(confirmacaoSenha))
+                {
+                    autenticado.Senha = novaSenha;
+                    dbColaborador.Atualiza(autenticado);
+                    return Json("Senha alterada com sucesso!", JsonRequestBehavior.AllowGet);
+                }
+                return Json("Erro nova senha e a confirmação não são as mesmas", JsonRequestBehavior.AllowGet);
+            }
+            return Json("A senha atual não confere com a cadastrada", JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

@@ -23,3 +23,7 @@
     $("#ModalAlert").modal();
 
 };
+
+function ModalAlertFechar(){
+    $("#ModalAlert").modal('hide');
+};

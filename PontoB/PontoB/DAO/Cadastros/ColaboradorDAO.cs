@@ -105,7 +105,7 @@ namespace PontoB.DAO
         {
             using (var contexto = new PontoContex())
             {
-                return contexto.Colaborador.FirstOrDefault(a => a.Email == login && a.Senha == Encrypt.Encrypt.getMD5Hash(senha));
+                return contexto.Colaborador.Include(x=>x.EnderecoColaborador).Include(x=>x.EnderecoColaborador.Estado).FirstOrDefault(a => a.Email == login && a.Senha == Encrypt.Encrypt.getMD5Hash(senha));
             }
         }
 

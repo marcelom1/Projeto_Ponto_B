@@ -21,6 +21,7 @@ namespace PontoB.Controllers
             Colaborador autenticado = dbColaborador.ConfirmacaoAutenticacao(login, senha);
             if (autenticado != null)
             {
+               
                 FormsAuthentication.SetAuthCookie(autenticado.Email, false);
                 if (autenticado.Master)
                 {
@@ -49,5 +50,7 @@ namespace PontoB.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Login");
         }
+
+        
     }
 }

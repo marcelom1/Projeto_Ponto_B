@@ -1,4 +1,5 @@
 ﻿using PontoB.Business.Utils;
+using PontoB.Controllers.RegrasDeNegocios.RPontuacao;
 using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.RegistroPontoModels;
@@ -68,6 +69,7 @@ namespace PontoB.Controllers.RegrasDeNegocios.ROcorrenciaDia
                 GerarOcorrenciasAusencia(data, ausencia, escala);
                 GerarOcorrenciasHorasPrevistas(data, escala, colaboradorId);
                 GerarOcorrenciasHorasTrabalhadas(registrosDia,data,colaborador.Id);
+                new Gamificacao().VerificaSePontuouAoCalcularDia(registrosDia, data, colaborador);
             }
 
 
