@@ -1,6 +1,9 @@
 ﻿using PontoB.Business.Utils;
 using PontoB.Controllers.RegrasDeNegocios.RCalculo;
 using PontoB.Controllers.RegrasDeNegocios.RRelatorios;
+using PontoB.Controllers.Relatorios;
+using PontoB.Controllers.Relatorios.Gamificacao;
+using PontoB.Controllers.Relatorios.Manutencao;
 using PontoB.DAO;
 using PontoB.Models;
 using PontoB.Models.RegistroPontoModels;
@@ -29,18 +32,67 @@ namespace PontoB.Controllers
         public ActionResult Index(string relatorio)
         {
             ViewBag.Relatorio = relatorio;
-            if (relatorio.Equals("RelatorioRegistrosImpares", StringComparison.OrdinalIgnoreCase))
+            if (relatorio.Equals("TabelaRegistrosImpares", StringComparison.OrdinalIgnoreCase))
             {
                 ViewBag.NomeRelatorio = "Registros Ímpares";
-                ViewBag.Controller = "ManutencaoPonto";
+                ViewBag.Controller = "BuscaRelatorioManutencao";
             }
             else if (relatorio.Equals("TabelaResumoGamificacao", StringComparison.OrdinalIgnoreCase))
             {
                 ViewBag.NomeRelatorio = "Gamificação";
-                ViewBag.Controller = "Gamificacao";
+                ViewBag.Controller = "BuscaRelatorioGamificacao";
             }
             return View();
         }
+
+       
+
+
+        public ActionResult BuscaRelatorioGamificacao(string relatorio, DateTime? dataInicio, DateTime? dataFim, int pagina = 1, int empresaId = 0)
+        {
+            if (relatorio.Equals("RelatorioResumoGamificacao", StringComparison.OrdinalIgnoreCase))
+                return new GamificacaoController().RelatorioResumoGamificacao(dataInicio.Value, dataFim.Value, empresaId);
+            else if (relatorio.Equals("RelatorioDetalhadoGamificacao", StringComparison.OrdinalIgnoreCase))
+                return new GamificacaoController().RelatorioDetalhadoGamificacao(dataInicio.Value, dataFim.Value, empresaId);
+            else if (relatorio.Equals("RelatorioDetalhadoGamificacaoUsuario", StringComparison.OrdinalIgnoreCase))
+                return new GamificacaoController().RelatorioDetalhadoGamificacaoUsuario();
+            else if (relatorio.Equals("TabelaResumoGamificacao", StringComparison.OrdinalIgnoreCase))
+                return new GamificacaoController().TabelaResumoGamificacao(dataInicio.Value, dataFim.Value,pagina, empresaId);
+
+
+            return View();
+        }
+
+
+
+        public ActionResult BuscaRelatorioManutencao(string relatorio, DateTime dataInicio, DateTime dataFim, int empresaId = 0)
+        {
+            if (relatorio.Equals("RelatorioRegistrosImpares", StringComparison.OrdinalIgnoreCase))
+                return new RegistrosImparesController().RelatorioRegistrosImpares(dataInicio, dataFim, empresaId);
+            else if (relatorio.Equals("TabelaRegistrosImpares", StringComparison.OrdinalIgnoreCase))
+                return new RegistrosImparesController().TabelaRegistrosImpares(dataInicio, dataFim, empresaId);
+
+            return View();
+        }
+
+
+
+        public ActionResult BuscaRelatorioCartaoPonto(string relatorio, DateTime dataInicio, DateTime dataFim,int colaboradorId = 0 ,int empresaId = 0)
+        {
+            if (relatorio.Equals("TodosCartaoPontoEmpresa", StringComparison.OrdinalIgnoreCase))
+                return View();
+            else if (relatorio.Equals("CartaoPonto", StringComparison.OrdinalIgnoreCase))
+                return View();
+
+            return View();
+        }
+
+
+
+
+
+
+
 
 
 

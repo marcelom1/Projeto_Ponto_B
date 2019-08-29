@@ -1,0 +1,29 @@
+﻿<script>
+    $(document).ready(function () {
+        console.log("teste");
+        var datafim = $("#dataFim").val();
+        var datainicio = $("#dataInicio").val()
+        var empresaId = $("#Select2Empresa").val();
+        if (datafim > datainicio && datainicio != '' && datafim != '') {
+            $.ajax({
+                type: "POST",
+                url: "/Relatorio/BuscaRelatorioManutencao/",
+                data: JSON.stringify({ relatorio: "RelatorioRegistrosImpares", empresaId: empresaId, dataInicio: datainicio, dataFim: datafim }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (resposta) {
+                    var myWindow = window.open("", "_blank");
+                    myWindow.document.write(resposta);
+
+
+                },
+                error: function (json) {
+                    alert("Erro de conexão com o servidor!");
+                    Console.log(json);
+
+                }
+            });
+        }
+    });
+
+</script>

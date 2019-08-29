@@ -1,0 +1,114 @@
+﻿@model PontoB.Models.ViewModels.VRelatorios.Manutencao.RegistrosImpares
+
+@{
+    Layout = "";
+}
+<link rel="stylesheet" href="~/Content/CSS/RelatorioCartaoPonto.css">
+<table class="tabela borda">
+    <!-- Cabeçalho -->
+    <thead class="linhaCabecalho">
+        <tr>
+            <th COLSPAN="5">CONFERÊNCIA DOS REGISTROS ÍMPARES</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td COLSPAN="2">Período: @Model.Periodo</td>
+            <td COLSPAN="1">Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()</td>
+            <td COLSPAN="3">Usuário: @User.Identity.Name</td>
+        </tr>
+    </tbody>
+    <tr>
+        <td class="espaco"></td>
+    </tr>
+    <thead class="linhaCabecalho">
+        <tr>
+            <th COLSPAN="5">DADOS DO EMPREGADOR</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Empresa == null)
+        {
+
+            <tr>
+                <td>Todas as Empresas</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td COLSPAN="4">Razão Social: @Model.Empresa.RazaoSocial</td>
+                <td COLSPAN="1">CNPJ: @Model.Empresa.Cnpj</td>
+            </tr>
+            <tr>
+                <td COLSPAN="5">Endereço: @Model.Empresa.EnderecoEmpresa</td>
+            </tr>
+        }
+    </tbody>
+
+    <tr>
+        <td class="espaco"></td>
+    </tr>
+    <thead class="linhaCabecalho">
+        <tr>
+            <th COLSPAN="5">COLABORADORES</th>
+        </tr>
+    </thead>
+
+    <td COLSPAN="5" class="registro">
+        @foreach (var colaborador in Model.Registros.Select(x => new { x.Colaborador }).Distinct())
+        {
+            <table border='1' class="tabela">
+
+
+
+                <thead>
+                    <tr>
+                        <th COLSPAN="5" style="text-align:left;">@colaborador.Colaborador.CPF - @colaborador.Colaborador.NomeCompleto</th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td COLSPAN="5">
+                        <table border="1" class="tabela">
+
+                            <tr>
+                                <th COLSPAN="2" style="text-align:left;">Registros</th>
+
+                            </tr>
+
+
+                            @foreach (var r in Model.Registros.Where(x => x.Colaborador.Id.Equals(colaborador.Colaborador.Id)))
+                            {
+
+                                foreach (var data in r.Registro.Select(x => x.DataRegistro.ToShortDateString()).Distinct())
+                                {
+                                    <tr>
+                                        <td COLSPAN="2">@data: @string.Join(" - ", r.Registro.OrderBy(x => x.DataRegistro).Where(x => x.DataRegistro.Date == r.Data.Date && x.DesconsiderarMarcacao == false).Select(x => x.HoraRegistro.ToString("00") + ":" + x.MinutoRegistro.ToString("00")))</td>
+                                        
+
+                                    </tr>
+                                }
+
+
+                            }
+
+
+                        </table>
+                    </td>
+                </tr>
+
+
+
+                
+
+            </table>
+        }
+        </td>
+
+
+</table>
+<footer class="footer">
+    Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()
+</footer>
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PontoB.Models
 {
@@ -14,7 +15,5 @@ namespace PontoB.Models
         public virtual IList<EscalaHorario> EscalasHorario { get; set; }
         public virtual ICollection<Colaborador> Colaboradores { get; set; }
 
-
-
-    }
+    }       
 }

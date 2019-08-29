@@ -393,8 +393,9 @@
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopHoras.cs" />
     <Compile Include="Controllers\RegrasDeNegocios\RRelatorios\TopPontuacao.cs" />
     <Compile Include="Controllers\Relatorios\RelatorioController.cs" />
-    <Compile Include="Controllers\Relatorios\GamificacaoController.cs" />
+    <Compile Include="Controllers\Relatorios\Gamificacao\GamificacaoController.cs" />
     <Compile Include="Controllers\ManutencaoPonto\ResumoCalculoController.cs" />
+    <Compile Include="Controllers\Relatorios\Manutencao\RegistrosImparesController.cs" />
     <Compile Include="DAO\Cadastros\AusenciaColaboradoresDAO.cs" />
     <Compile Include="DAO\Cadastros\AusenciaDAO.cs" />
     <Compile Include="DAO\CalculoPonto\ManutencaoPontoDAO.cs" />
@@ -553,7 +554,11 @@
     <Content Include="Views\Gamificacao\TabelaResumoGamificacao.cshtml" />
     <Content Include="Views\Gamificacao\Relatorios\RelatorioResumoGamificacao.cshtml" />
     <Content Include="Views\Gamificacao\Relatorios\RelatorioDetalhadoGamificacao.cshtml" />
-    <Content Include="Views\ManutencaoPonto\Relatorios\RelatorioRegistrosImpares.cshtml" />
+    <Content Include="Views\Relatorio\Manutencao\RegistrosImpares\TabelaRegistrosImpares.cshtml" />
+    <Content Include="Views\Relatorio\Manutencao\RegistrosImpares\RelatorioRegistrosImpares.cshtml" />
+    <Content Include="Views\Relatorio\Gamificacao\Pontos\RelatorioDetalhadoGamificacao.cshtml" />
+    <Content Include="Views\Relatorio\Gamificacao\Pontos\RelatorioResumoGamificacao.cshtml" />
+    <Content Include="Views\Relatorio\Gamificacao\Pontos\TabelaResumoGamificacao.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -563,7 +568,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Relatorios\" />
+    <Folder Include="Views\RegistroImpares\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

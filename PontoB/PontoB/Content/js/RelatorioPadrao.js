@@ -115,8 +115,9 @@ function AtualizarGrid() {
 
     $.ajax({
         type: "POST",
-        url: "/" + controller + "/" + relatorio +"/",
+        url: "/" + "Relatorio" + "/" + controller +"/",
         data: JSON.stringify({
+            relatorio: relatorio,
             empresaId: empresaId,
             dataInicio: $("#dataInicio").val(),
             dataFim: $("#dataFim").val(),
@@ -134,7 +135,7 @@ function AtualizarGrid() {
                 $("#ErrosResumoDeCalculo").text(erro);
             }
             $(".tooltip2").tooltipster("close");
-            inicializacaoTooltip();
+            //inicializacaoTooltip();
 
         },
         error: function (json) {

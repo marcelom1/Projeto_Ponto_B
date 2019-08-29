@@ -1,0 +1,113 @@
+﻿@model IList<PontoB.Models.ViewModels.VRelatorios.Gamificacao.RelatorioResumoPontuacaoViewModel>
+<link rel="stylesheet" href="~/Content/CSS/RelatorioCartaoPonto.css">
+@foreach (var item in Model)
+{
+<table class="tabela borda">
+    <!-- Cabeçalho -->
+    <thead class="linhaCabecalho">
+        <tr>
+            <th COLSPAN="5">PONTUAÇÃO GAMIFICAÇÃO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td COLSPAN="2">Período: @item.Periodo</td>
+            <td COLSPAN="1">Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()</td>
+            <td COLSPAN="3">Usuário: @User.Identity.Name</td>
+        </tr>
+    </tbody>
+    <tr>
+        <td class="espaco"></td>
+    </tr>
+    <thead class="linhaCabecalho">
+        <tr>
+            <th COLSPAN="5">DADOS DO EMPREGADOR</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (item.Empresa == null)
+        {
+
+            <tr>
+                <td>Todas as Empresas</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td COLSPAN="4">Razão Social: @item.Empresa.RazaoSocial</td>
+                <td COLSPAN="1">CNPJ: @item.Empresa.Cnpj</td>
+            </tr>
+            <tr>
+                <td COLSPAN="5">Endereço: @item.Empresa.EnderecoEmpresa</td>
+            </tr>
+        }
+    </tbody>
+
+    <tr>
+        <td class="espaco"></td>
+    </tr>
+    <thead class="linhaCabecalho">
+        <tr>
+            <th COLSPAN="5">COLABORADORES</th>
+        </tr>
+    </thead>
+   
+        <td COLSPAN="5" class="registro">
+
+            <table border='1' class="tabela">
+                @foreach (var pontos in item.Pontuacao.OrderByDescending(x => x.Pontuacao.Sum(e => e.Ponto)))
+                {
+                    <thead>
+                        <tr>
+
+                            <th COLSPAN="5" style="text-align:left;">@pontos.Colaborador.CPF - @pontos.Colaborador.NomeCompleto - @pontos.Pontuacao.Sum(x=>x.Ponto) Pontos</th>
+                            
+
+                        </tr>
+                    </thead>
+
+                    <tr>
+                        <td>
+                            <table border="1" class="tabela">
+                                @if (pontos.Pontuacao.Count > 0)
+                                {
+                                    <tr>
+                                        <th>Data Registro</th>
+                                        <th>Hora</th>
+                                        <th>Origem da Pontuação</th>
+                                        <th>Qtd Pontos</th>
+                                    </tr>
+                                }
+                                @foreach (var p in pontos.Pontuacao.OrderBy(x => x.DataRegistro))
+                                {
+
+                                <tr>
+                                    <td>@p.DataRegistro.ToShortDateString()</td>
+                                    <td>@p.DataRegistro.ToShortTimeString()</td>
+                                    @if (p.OrigemPontuacaoId.Equals(1))
+                                    {
+                                        <td>Sem atraso na primeira marcação do dia</td>
+                                    }
+
+                                    <td>@p.Ponto</td>
+
+                                </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                    
+                   
+
+                 }
+
+                </table>
+</td>
+    
+
+    </table>
+    <footer class="footer">
+        Emissão: @DateTime.Now.ToShortDateString() - @DateTime.Now.ToShortTimeString()
+    </footer>
+}

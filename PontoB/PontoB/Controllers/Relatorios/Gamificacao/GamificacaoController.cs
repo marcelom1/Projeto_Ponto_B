@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PontoB.Controllers.Relatorios
+namespace PontoB.Controllers.Relatorios.Gamificacao
 {
     [Authorize]
     public class GamificacaoController : Controller
@@ -18,7 +18,7 @@ namespace PontoB.Controllers.Relatorios
         private PontuacaoDAO dbPontuacao = new PontuacaoDAO();
       
         [Authorize(Roles = "Master")]
-        public PartialViewResult TabelaResumoGamificacao(DateTime dataInicio, DateTime dataFim, int pagina = 1, int empresaId=0)
+        public ActionResult TabelaResumoGamificacao(DateTime dataInicio, DateTime dataFim, int pagina = 1, int empresaId=0)
         {
             var model = new List<TabelaPontuacaoViewModel>();
             if (dataFim > DateTime.Now.Date)
@@ -37,11 +37,10 @@ namespace PontoB.Controllers.Relatorios
 
 
 
-            return PartialView(model.OrderByDescending(x=>x.Pontuacao.Sum(e=>e.Ponto)).ToPagedList(pagina, 10));
+            return View("Gamificacao/Pontos/TabelaResumoGamificacao", model.OrderByDescending(x=>x.Pontuacao.Sum(e=>e.Ponto)).ToPagedList(pagina, 10));
         }
 
 
-        [Authorize(Roles = "Master")]
         
 
 
@@ -71,7 +70,7 @@ namespace PontoB.Controllers.Relatorios
             };
 
 
-            return View("Relatorios/RelatorioResumoGamificacao", model);
+            return View("~/Views/Relatorio/Gamificacao/Pontos/RelatorioResumoGamificacao.cshtml", model);
         }
 
         [Authorize(Roles = "Master")]
@@ -101,7 +100,7 @@ namespace PontoB.Controllers.Relatorios
 
 
 
-            return View("Relatorios/RelatorioDetalhadoGamificacao", model);
+            return View("~/Views/Relatorio/Gamificacao/Pontos/RelatorioDetalhadoGamificacao.cshtml", model);
         }
 
         [Authorize]
@@ -129,7 +128,7 @@ namespace PontoB.Controllers.Relatorios
 
 
 
-            return View("Relatorios/RelatorioDetalhadoGamificacao", model);
+            return View("~/Views/Relatorio/Gamificacao/Pontos/RelatorioDetalhadoGamificacao.cshtml", model);
         }
     }
 }
