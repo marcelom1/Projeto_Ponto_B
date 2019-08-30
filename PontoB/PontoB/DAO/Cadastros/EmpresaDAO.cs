@@ -14,7 +14,7 @@ namespace PontoB.DAO
 {
     public class EmpresaDAO
     {
-        public void Adiciona(Empresa empresa)
+        public int Adiciona(Empresa empresa)
         {
             using (var context = new PontoContex())
             {
@@ -22,6 +22,7 @@ namespace PontoB.DAO
                 context.Empresa.Add(empresa);
                 context.SaveChanges();
             }
+            return empresa.Id;
         }
         public IPagedList<Empresa> Lista(int? pagina)
         {

@@ -11,7 +11,7 @@ namespace PontoB.DAO
 {
     public class EscalaDAO
     {
-        public void Adiciona(Escala escala)
+        public int Adiciona(Escala escala)
         {
             using (var context = new PontoContex())
             {
@@ -19,6 +19,7 @@ namespace PontoB.DAO
                 context.Escala.Add(escala);
                 context.SaveChanges();
             }
+            return escala.Id;
         }
         public IPagedList<Escala> Lista(int? pagina)
         {
@@ -75,5 +76,7 @@ namespace PontoB.DAO
                 contexto.SaveChanges();
             }
         }
+        
+
     }
 }

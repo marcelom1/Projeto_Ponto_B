@@ -553,15 +553,12 @@
     <Content Include="Views\ResumoCalculo\TabelaResumoCalculo.cshtml" />
     <Content Include="Views\Home\IndexColaborador.cshtml" />
     <Content Include="Views\Relatorio\Index.cshtml" />
-    <Content Include="Views\Gamificacao\TabelaResumoGamificacao.cshtml" />
-    <Content Include="Views\Gamificacao\Relatorios\RelatorioResumoGamificacao.cshtml" />
-    <Content Include="Views\Gamificacao\Relatorios\RelatorioDetalhadoGamificacao.cshtml" />
     <Content Include="Views\Relatorio\Manutencao\RegistrosImpares\TabelaRegistrosImpares.cshtml" />
     <Content Include="Views\Relatorio\Manutencao\RegistrosImpares\RelatorioRegistrosImpares.cshtml" />
     <Content Include="Views\Relatorio\Gamificacao\Pontos\RelatorioDetalhadoGamificacao.cshtml" />
     <Content Include="Views\Relatorio\Gamificacao\Pontos\RelatorioResumoGamificacao.cshtml" />
     <Content Include="Views\Relatorio\Gamificacao\Pontos\TabelaResumoGamificacao.cshtml" />
-    <Content Include="Views\Colaborador\ModalAlterarSenha.cshtml" />
+    <Content Include="Views\Login\ModalAlterarSenha.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -571,7 +568,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\RegistroImpares\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

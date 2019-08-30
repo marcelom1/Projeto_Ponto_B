@@ -10,7 +10,7 @@ namespace PontoB.DAO
 {
     public class ColaboradorDAO
     {
-        public void Adiciona(Colaborador colaborador)
+        public int Adiciona(Colaborador colaborador)
         {
             
             using (var context = new PontoContex())
@@ -24,6 +24,7 @@ namespace PontoB.DAO
                 context.Colaborador.Add(colaborador);
                 context.SaveChanges();
             }
+            return colaborador.Id;
         }
         public IList<Colaborador> Lista()
         {

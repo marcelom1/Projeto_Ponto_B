@@ -223,10 +223,7 @@ namespace PontoB.Controllers
             }
             return RedirectToAction("Index", "Colaborador");
         }
-        public ActionResult ModalAlterarSenha()
-        {
-            return View();
-        }
+        
 
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]

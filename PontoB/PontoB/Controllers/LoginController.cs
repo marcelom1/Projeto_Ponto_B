@@ -51,6 +51,10 @@ namespace PontoB.Controllers
             return RedirectToAction("Index", "Login");
         }
 
-        
+        [Authorize]
+        public ActionResult ModalAlterarSenha()
+        {
+            return View();
+        }
     }
 }

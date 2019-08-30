@@ -27,7 +27,7 @@ namespace PontoB.DAO
             }
         }
 
-        public void Adiciona(EscalaHorario escalaHorario)
+        public int Adiciona(EscalaHorario escalaHorario)
         {
             using (var context = new PontoContex())
             {
@@ -35,6 +35,7 @@ namespace PontoB.DAO
                 context.EscalaHorario.Add(escalaHorario);
                 context.SaveChanges();
             }
+            return escalaHorario.Id;
         }
 
         public EscalaHorario BuscarPorId(int id)

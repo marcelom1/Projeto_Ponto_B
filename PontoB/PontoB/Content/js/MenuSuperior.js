@@ -2,7 +2,7 @@
 $("#AlterarSenha").click(function () {
     $.ajax({
         type: "POST",
-        url: "/Colaborador/ModalAlterarSenha/",
+        url: "/Login/ModalAlterarSenha/",
         data: JSON.stringify({
            
         }),
