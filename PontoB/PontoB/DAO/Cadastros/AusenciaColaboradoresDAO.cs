@@ -13,7 +13,7 @@ namespace PontoB.DAO
 {
     public class AusenciaColaboradoresDAO
     {
-        public void Adiciona(AusenciaColaboradores ausencia)
+        public AusenciaColaboradores Adiciona(AusenciaColaboradores ausencia)
         {
             using (var context = new PontoContex())
             {
@@ -23,6 +23,8 @@ namespace PontoB.DAO
                 context.AusenciaColaboradores.Add(ausencia);
                 context.SaveChanges();
             }
+
+            return ausencia;
         }
         public IList<AusenciaColaboradores> Lista()
         {

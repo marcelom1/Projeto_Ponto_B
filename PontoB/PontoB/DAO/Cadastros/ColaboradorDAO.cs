@@ -10,21 +10,22 @@ namespace PontoB.DAO
 {
     public class ColaboradorDAO
     {
-        public int Adiciona(Colaborador colaborador)
+        public Colaborador Adiciona(Colaborador colaborador)
         {
             
             using (var context = new PontoContex())
             {
 
                 colaborador.Escala = context.Escala.Find(colaborador.EscalaId);
-                colaborador.Empresa = context.Empresa.Find(colaborador.EmpresaId);
-                colaborador.EnderecoColaborador.Estado = context.EstadoUF.Find(colaborador.EnderecoColaborador.Estado.Id);
+               colaborador.Empresa = context.Empresa.Find(colaborador.EmpresaId);
+                if(colaborador.EnderecoColaborador!=null)
+                    colaborador.EnderecoColaborador.Estado = context.EstadoUF.Find(colaborador.EnderecoColaborador.Estado.Id);
                 colaborador.Senha = Encrypt.Encrypt.getMD5Hash(colaborador.Senha);
 
                 context.Colaborador.Add(colaborador);
                 context.SaveChanges();
             }
-            return colaborador.Id;
+            return colaborador;
         }
         public IList<Colaborador> Lista()
         {

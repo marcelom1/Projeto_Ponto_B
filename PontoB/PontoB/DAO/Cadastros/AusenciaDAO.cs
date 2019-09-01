@@ -11,7 +11,7 @@ namespace PontoB.DAO
 {
     public class AusenciaDAO
     {
-        public void Adiciona(Ausencia ausencia)
+        public int Adiciona(Ausencia ausencia)
         {
             using (var context = new PontoContex())
             {
@@ -19,6 +19,7 @@ namespace PontoB.DAO
                 context.Ausencia.Add(ausencia);
                 context.SaveChanges();
             }
+            return ausencia.Id;
         }
         public IPagedList<Ausencia> Lista(int? pagina)
         {
