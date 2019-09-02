@@ -1,9 +1,9 @@
-﻿using PontoB.Business.Utils;
+﻿using Microsoft.EntityFrameworkCore;
+using PontoB.Business.Utils;
 using PontoB.DAO;
 using PontoB.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 

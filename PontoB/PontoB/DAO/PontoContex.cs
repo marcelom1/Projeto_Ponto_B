@@ -27,6 +27,7 @@ namespace PontoB
         public DbSet<ManutencaoPonto> ManutencaoPonto { get; set; }
         public DbSet<OcorrenciaDia> OcorrenciaDia { get; set; }
         public DbSet<Pontuacao> Pontuacao { get; set; }
+        public DbSet<RecuperarSenha> RecuperarSenha { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

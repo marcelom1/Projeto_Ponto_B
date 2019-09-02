@@ -30,19 +30,73 @@
 <body class="text-center Fundo">
     @using (Html.BeginForm("Autentica", "Login", FormMethod.Post, new { @id = "LoginAutenticacao", @name = "LoginAutenticacao", @class = "form-signin FundoLogin" }))
     {
-       
-            <img class="mb-4" src="~/Content/img/LogoB.gif" alt="" width="153" height="141">
-            <h1 class="h3 mb-3 font-weight-normal texto">Identifique-se</h1>
-            <label for="inputEmail" class="sr-only">Endereço de email</label>
-            <input type="email" id="inputEmail" name="login" class="form-control" placeholder="Seu email" required autofocus>
-            <label for="inputPassword" class="sr-only">Senha</label>
-            <input type="password" id="inputPassword" name="senha" class="form-control" placeholder="Senha" required>
-            <label class="erro">@ViewBag.Erro</label>
-            <div class="checkbox mb-3">
-            </div>
-            <button class="btn btn-lg btn-block botao_cor" type="submit">Login</button>
-            <p class="mt-5 mb-3 text-muted">&copy; Ponto B - 2019</p>
-       
+
+        <img class="mb-4" src="~/Content/img/LogoB.gif" alt="" width="153" height="141">
+        <h1 class="h3 mb-3 font-weight-normal texto">Identifique-se</h1>
+        <label for="inputEmail" class="sr-only">Endereço de email</label>
+        <input type="email" id="inputEmail" name="login" class="form-control" placeholder="Seu email" required autofocus>
+        <label for="inputPassword" class="sr-only">Senha</label>
+        <input type="password" id="inputPassword" name="senha" class="form-control" placeholder="Senha" required>
+        <label class="erro">@ViewBag.Erro</label>
+
+        <button class="btn btn-lg btn-block botao_cor" type="submit">Login</button>
+        <div class="checkbox mb-3">
+            <label id="recuperarSenha" class="PonteiroClick texto">Recuperar Senha</label>
+        </div>
+        <p class="mt-5 mb-3 text-muted">&copy; Ponto B - 2019</p>
+
     }
+
+    <!-- Modal Genérico Para Alert-->
+    <div class="modal fade" id="ModalAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Recuperar Senha</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Você receberá um e-mail com o código de redefinição de senha</p>
+                    <div id="conteudoModal">
+                        <div id="ModalRecuperar">
+                            <span class="erro" id="MsgServidor"></span>
+                            <div class="form-row pt-1">
+                                <div class="form-group col">
+                                    <label for="inputPassword4">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Senha Atual" name="email" value="">
+                                    <span class="erro" id="Erro_Email"></span>
+
+                                </div>
+                            </div>
+                            <button class="btn botao_cor_verde btn-sm" id="EnivarEmail" value="Salvar">Enviar</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Content/js/jquery.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $("#EnivarEmail").click(function () {
+            EnviarSolicitacao();
+
+        });
+        $("#recuperarSenha").click(function () {
+            console.log("teste");
+            $("#ModalAlert").modal();
+
+        });
+
+
+    </script>
+    <script src="~/Content/js/RecuperarSenha.js"></script>
 </body>
 </html>

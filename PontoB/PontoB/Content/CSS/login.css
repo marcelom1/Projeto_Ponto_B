@@ -17,6 +17,11 @@ html, body {
     
 }
 
+.sucess {
+    color: green;
+}
+
+
 body {
   display: -ms-flexbox;
   display: flex;
@@ -75,10 +80,25 @@ body {
     color: black;
 }
 
+.PonteiroClick {
+    cursor: pointer;
+}
 .erro{
     color: red;
 }
 
+#ModalRecuperar{
+    text-align:left;
+}
 
+.PonteiroClick {
+    cursor: pointer;
+}
+
+
+.botao_cor_verde {
+    background-color: green;
+    color: white;
+}
 
 
