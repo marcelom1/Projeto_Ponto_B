@@ -6,9 +6,9 @@ using PontoB.Email;
 using System.Web.Services;
 using System.Web.Script.Services;
 using PontoB.DAO.Cadastros;
-using System.Web.Configuration;
 using System.Net;
 using Newtonsoft.Json;
+using System;
 
 namespace PontoB.Controllers
 {
@@ -74,13 +74,29 @@ namespace PontoB.Controllers
             if (response.Success)
             {
                 var colaborador = dbColaborador.BuscarEmail(email);
+                
                 if (colaborador != null)
+                {
+                    var solicitacoes = dbRecuperarSenha.BuscarPorColaborador(colaborador);
+                    if (solicitacoes.Count < 3)
                     {
                         new EnvioEmail().EsqueciMinhaSenha(colaborador);
+                        foreach (var solcitacao in solicitacoes)
+                        {
+                            solcitacao.Validade = DateTime.Now;
+                            dbRecuperarSenha.Atualiza(solcitacao);
+                        }
+
                     }
-               
-                    return PartialView();
+                    else
+                    {
+                        return Json("Para manter sua conta segura, só permitimos que você solicite uma nova senha determinadas vezes por dia. Aguarde 24 horas e tente redefinir sua senha novamente. Além disso, verifique a pasta de spam ou lixo eletrônico do seu email.", JsonRequestBehavior.AllowGet);
+                    }
                 }
+                return PartialView();
+               
+                    
+            }
             return Json("Por favor resolva o captcha!", JsonRequestBehavior.AllowGet);
         }
 

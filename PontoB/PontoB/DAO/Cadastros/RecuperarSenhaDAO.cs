@@ -48,6 +48,27 @@ namespace PontoB.DAO.Cadastros
             }
         }
 
+        public IList<RecuperarSenha> BuscarPorColaborador(Colaborador colaborador)
+        {
+            using (var contexto = new PontoContex())
+            {
+                return contexto.RecuperarSenha.Include(e => e.Colaborador).Where(e => e.ColaboradorId.Equals(colaborador.Id) && e.Validade.Date == DateTime.Now.Date).ToList();
+            }
+        }
+
+        public void Atualiza(RecuperarSenha solicitacao)
+        {
+            using (var contexto = new PontoContex())
+            {
+                solicitacao.Colaborador = contexto.Colaborador.Find(solicitacao.ColaboradorId);
+                contexto.RecuperarSenha.Update(solicitacao);
+                contexto.SaveChanges();
+            }
+        }
+
+
+
+
 
 
 

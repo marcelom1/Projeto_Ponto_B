@@ -15,7 +15,7 @@ namespace PontoB.DAO.Config
             builder.Property(c => c.Id)
                    .HasDefaultValueSql("NEXT VALUE FOR MinhaSequencia");
 
-            builder.HasOne(p => p.EnderecoEmpresa);
+           
 
             builder.HasIndex(p => p.Cnpj)
                    .IsUnique();
