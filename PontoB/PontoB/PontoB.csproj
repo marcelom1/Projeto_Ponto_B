@@ -475,6 +475,7 @@
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\Ausencia.cs" />
     <Compile Include="Models\AusenciaColaboradores.cs" />
+    <Compile Include="Models\CaptchaReponse.cs" />
     <Compile Include="Models\ManutencaoPonto.cs" />
     <Compile Include="Models\Colaborador.cs" />
     <Compile Include="Models\Empresa.cs" />

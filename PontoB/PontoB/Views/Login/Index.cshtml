@@ -19,7 +19,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/Content/CSS/bootstrap.min.css">
-  
+    <link rel="stylesheet" href="~/Content/CSS/tooltipster.bundle.min.css" />
+
     <!--CSS Próprio -->
     <link rel="stylesheet" href="~/Content/CSS/login.css">
 
@@ -61,18 +62,22 @@
                     <p>Você receberá um e-mail com o código de redefinição de senha</p>
                     <div id="conteudoModal">
                         <div id="ModalRecuperar">
-                            <span class="erro" id="MsgServidor"></span>
-                            <div class="form-row pt-1">
-                                <div class="form-group col">
-                                    <label for="inputPassword4">Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Senha Atual" name="email" value="">
-                                    <span class="erro" id="Erro_Email"></span>
+                            @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "formulario" }))
+                            {
+                                <span class="erro" id="MsgServidor"></span>
+                                <div class="form-row pt-1">
+                                    <div class="form-group col">
+                                        <label for="inputPassword4">Email</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Senha Atual" name="email" value="">
+                                        <span class="erro" id="Erro_Email"></span>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <button class="btn botao_cor_verde btn-sm" id="EnivarEmail" value="Salvar">Enviar</button>
-
+                                <div class="g-recaptcha" data-sitekey="6Le_N7YUAAAAAMFcktP2CJEgYWcOAl3frwBXjYkp"></div>
+                                <button class="btn botao_cor_verde btn-sm tooltip23" id="EnivarEmail" value="Salvar">Enviar</button>
+                            }
                         </div>
+
                     </div>
                 </div>
 
@@ -82,6 +87,8 @@
     <script src="~/Content/js/jquery-3.3.1.slim.min.js"></script>
     <script src="~/Content/js/jquery.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="~/Content/js/tooltipster.bundle.min.js"></script>
 
 
     <script>

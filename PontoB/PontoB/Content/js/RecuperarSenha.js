@@ -1,6 +1,51 @@
 ﻿
+$(document).on('submit', '#formulario', function (e) {
+    e.preventDefault();
+
+});
+
+$(document).ready(function () {
+    inicializacaoTooltip();
+});
+
+
+function inicializacaoTooltip() {
+    $('.tooltip23').tooltipster({
+        trigger: "custom"
+    });
+  
+}
+
+
+
 function EnviarSolicitacao() {
-    var email = $("#email").val();
+    $(".tooltip23").tooltipster("content", "Processando...").tooltipster("open");
+    var form = $("#formulario");
+    
+    var form_data = new FormData(form[0]);
+
+
+
+    $.ajax({
+        type: "POST",
+        url: "/Login/RecuperarSenhaEmail/",
+        processData: false,
+        contentType: false,
+        data: form_data,
+        dataType: "html",
+        success: function (resposta) {
+            $(".tooltip23").tooltipster("close");
+            if (resposta == '"Por favor resolva o captcha!"') {
+                $("#MsgServidor").text(resposta);
+                console.log(resposta);
+            } else {
+                
+                $('#ModalRecuperar').html(resposta);
+                console.log(resposta);
+            }
+        }
+    });
+    /*var email = $("#email").val();
     $.ajax({
         type: "POST",
         url: "/Login/RecuperarSenhaEmail/",
@@ -18,7 +63,7 @@ function EnviarSolicitacao() {
 
             Console.log(json);
         }
-    });
+    });*/
 };
 
 
@@ -58,7 +103,8 @@ function ValidaSenhaConfirmação(token, NovaSenha, ConfirmaSenha,email) {
 }
 
 
-function EnviarNovaSenha(token, NovaSenha, ConfirmaSenha,email) {
+function EnviarNovaSenha(token, NovaSenha, ConfirmaSenha, email) {
+   
     $.ajax({
         type: "POST",
         url: "/Login/AlterarSenhaViaEmail/",
@@ -70,7 +116,7 @@ function EnviarNovaSenha(token, NovaSenha, ConfirmaSenha,email) {
             if (resposta == "Senha alterada com sucesso!") {
                 $("#MsgServidor").removeClass("erro").addClass("sucess");
                 $("#MsgServidor").text(resposta);
-                $("#conteudoModal").html($("#MsgServidor"));
+                $("#ModalRecuperar").html($("#MsgServidor"));
 
             }
             $("#MsgServidor").text(resposta);
