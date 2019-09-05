@@ -24,7 +24,7 @@ namespace PontoB.Controllers
     {
         private ColaboradorDAO dbColaborador = new ColaboradorDAO();
         private EmpresaDAO dbEmpresa = new EmpresaDAO();
-        private ManutencaoPontoDAO dbManutencaoPonto = new ManutencaoPontoDAO();
+       
         private RegistroPontoDAO dbRegistroPonto = new RegistroPontoDAO();
         private AusenciaDAO dbAusencia = new AusenciaDAO();
         private EscalaDAO dbEscala = new EscalaDAO();

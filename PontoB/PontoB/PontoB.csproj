@@ -384,7 +384,6 @@
     <Compile Include="DAO\Cadastros\AusenciaColaboradoresDAO.cs" />
     <Compile Include="DAO\Cadastros\AusenciaDAO.cs" />
     <Compile Include="DAO\Cadastros\RecuperarSenhaDAO.cs" />
-    <Compile Include="DAO\CalculoPonto\ManutencaoPontoDAO.cs" />
     <Compile Include="DAO\Cadastros\ColaboradorDAO.cs" />
     <Compile Include="DAO\Cadastros\EscalaDAO.cs" />
     <Compile Include="DAO\Cadastros\EscalaHorarioDAO.cs" />
@@ -471,12 +470,19 @@
     <Compile Include="Migrations\20190902182508_RecuperarSenha.designer.cs">
       <DependentUpon>20190902182508_RecuperarSenha.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190905135237_endereco.cs" />
+    <Compile Include="Migrations\20190905135237_endereco.designer.cs">
+      <DependentUpon>20190905135237_endereco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20190905143143_endereco2.cs" />
+    <Compile Include="Migrations\20190905143143_endereco2.designer.cs">
+      <DependentUpon>20190905143143_endereco2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\PontoContexModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\Ausencia.cs" />
     <Compile Include="Models\AusenciaColaboradores.cs" />
     <Compile Include="Models\CaptchaReponse.cs" />
-    <Compile Include="Models\ManutencaoPonto.cs" />
     <Compile Include="Models\Colaborador.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="DAO\PontoContex.cs" />
