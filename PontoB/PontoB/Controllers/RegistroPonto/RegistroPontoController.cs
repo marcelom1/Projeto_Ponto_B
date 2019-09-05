@@ -48,6 +48,7 @@ namespace PontoB.Controllers
         }
         public string Registro()
         {
+            
             var buscaColaborador = dbColaborador.BuscarEmail(User.Identity.Name);
             if (buscaColaborador.DataDemissao == null || buscaColaborador.DataDemissao >= DateTime.Now)
             {
@@ -75,6 +76,8 @@ namespace PontoB.Controllers
             }
             return "Erro - Data de registro superior a data de demissão";
         }
+
+       
 
         public ActionResult Historico(DateTime? dataInicio, DateTime? dataFim, int pagina = 1)
         {

@@ -9,6 +9,7 @@ namespace PontoB.Test.Cadastro
     public  class ColaboradorTeste
     {
         private static ColaboradorDAO dbColaborador = new ColaboradorDAO();
+        private static EstadosUFDAO dbEstado = new EstadosUFDAO();
 
         public  Colaborador CriarColaboradorPadrao(DateTime dataAdmissao, DateTime? dataDemissao)
         {
@@ -24,7 +25,17 @@ namespace PontoB.Test.Cadastro
                 
                 EmpresaId = 0,
                 
-                Senha = "123"
+                Senha = "123",
+                EnderecoColaborador = new Endereco
+                {
+                    Logradouro = "Logradouro Teste",
+                    Bairro = "Bairro Teste",
+                    Cidade = "Cidade Teste",
+                    Estado = dbEstado.BuscarPorId(1)
+
+
+                }
+
             };
 
            

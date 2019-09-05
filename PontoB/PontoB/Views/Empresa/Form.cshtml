@@ -61,6 +61,7 @@
         <div class="form-group col-md-5">
             <label for="Logradouro">Logradouro</label>
             <input type="text" class="form-control" id="Logradouro" name="empresa.EnderecoEmpresa.Logradouro" placeholder="Ex: Rua Exemplo XI" value="@ViewBag.Empresa.EnderecoEmpresa.Logradouro">
+            <span class="erro" id="Erro_Cnpj">@Html.ValidationMessage("Empresa.EnderecoEmpresa.Logradouro")</span>
         </div>
         <div class="form-group col-md-2">
             <label for="LogradouroNumero">Numero</label>
@@ -75,6 +76,7 @@
         <div class="form-group col-md-5">
             <label for="LogradouroBairro">Bairro</label>
             <input type="text" class="form-control" id="LogradouroBairro" name="empresa.EnderecoEmpresa.Bairro" placeholder="Ex: Vila Formosa" value="@ViewBag.Empresa.EnderecoEmpresa.Bairro">
+            <span class="erro" id="Erro_Cnpj">@Html.ValidationMessage("Empresa.EnderecoEmpresa.Bairro")</span>
         </div>
         <div class="form-group col-md-2">
             <label for="LogradouroEstado">Estado</label>
@@ -87,10 +89,12 @@
 
 
             </select>
+            <span class="erro" id="Erro_Cnpj">@Html.ValidationMessage("Empresa.EnderecoEmpresa.Estado.Id")</span>
         </div>
         <div class="form-group col-md-5">
             <label for="LogradouroCidade">Cidade</label>
             <input type="text" class="form-control" id="LogradouroCidade" name="empresa.EnderecoEmpresa.Cidade" placeholder="Ex: Blumenau" value="@ViewBag.Empresa.EnderecoEmpresa.Cidade">
+            <span class="erro" id="Erro_Cnpj">@Html.ValidationMessage("Empresa.EnderecoEmpresa.Cidade")</span>
         </div>
     </div>
 

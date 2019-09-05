@@ -57,7 +57,7 @@ namespace PontoB.DAO
             using(var contexto = new PontoContex())
             {
 
-              
+              //  contexto.Endereco.Remove(empresa.EnderecoEmpresa);
                 contexto.Empresa.Remove(empresa);
                 contexto.SaveChanges();
                 

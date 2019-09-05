@@ -32,7 +32,7 @@ namespace PontoB.Models
         [Required(ErrorMessage = "PIS é um campo obrigatório.")]
         public string Pis { get; set; }
 
-       
+        [Required(ErrorMessage = "Endereço é um campo obrigatório.")]
         public virtual Endereco EnderecoColaborador { get; set; }
 
         [Required(ErrorMessage = "Escala é um campo obrigatório.")]

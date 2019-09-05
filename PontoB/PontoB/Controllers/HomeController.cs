@@ -46,12 +46,14 @@ namespace PontoB.Controllers
             };
             var texto = valores.ToString();
 
+            
+
 
             //Faz a Busca do filtro
             var registros = dbRegistroPonto.Filtro("RegistroPontoEntreDatas", texto);
 
             valores.Inicio = DateTime.Now.AddDays(-30);
-            var pontos = dbPontuacao.Filtro("PontuacaoEntreDataColaborador", texto);
+            var pontos = dbPontuacao.Filtro("PontuacaoEntreDataColaborador", valores.ToString());
 
 
 
@@ -96,7 +98,7 @@ namespace PontoB.Controllers
                 DataFim = dataFim.ToShortDateString(),
                 HorasFalta = topHoras.Where(x => x.HorasPontuacao < 0).Take(5).ToList(),
                 HorasExcedentes = topHoras.Reverse().Where(x => x.HorasPontuacao > 0).Take(5).ToList(),
-                TopPontos = topPontuacao.OrderBy(x => x.HorasPontuacao).Where(x=>x.HorasPontuacao>0).ToList()
+                TopPontos = topPontuacao.OrderBy(x => x.HorasPontuacao).Where(x=>x.HorasPontuacao>0).Take(5).ToList()
                 
 
             };

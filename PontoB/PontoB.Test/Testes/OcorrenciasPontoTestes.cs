@@ -22,6 +22,7 @@ namespace PontoB.Test
 
         private static EscalaDAO dbEscala = new EscalaDAO();
         private static EmpresaDAO dbEmpresa = new EmpresaDAO();
+        private static EnderecoDAO dbEndereco = new EnderecoDAO();
         private static AusenciaDAO dbAusencia = new AusenciaDAO();
         
 
@@ -60,8 +61,11 @@ namespace PontoB.Test
             var ListaOcorrencias = dbOcorrenciaDia.Filtro("OcorrenciaEntreDatas", valores.ToString());
             if (ausencia.Count() > 0)
                 dbAusencia.ExcluirAusencia(ausencia.First().Ausencia);
+           
+            //dbEscala.ExcluirEscala(colaborador.Escala);
             dbEmpresa.ExcluirEmpresa(colaborador.Empresa);
-            dbEscala.ExcluirEscala(colaborador.Escala);
+            
+            
             
                                 
 
