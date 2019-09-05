@@ -66,7 +66,7 @@ $("#Select2Empresa").on('select2:close', function () {
         AntesEmpresaSelect2 = $("#Empresa_id").val();
     } else {
         $("#Empresa_id").val("");
-        $("#GridManutencao").addClass("Oculto");
+        $("#Grid").addClass("Oculto");
     }
 
 });

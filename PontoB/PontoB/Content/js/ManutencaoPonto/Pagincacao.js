@@ -61,7 +61,8 @@ function ColaboradoresPagincao(indice) {
         dataType: "html",
         success: function (resposta) {
             var obj = JSON.parse(resposta);
-            
+            $("#calculo").removeClass("Oculto");
+            $("#CartaoPonto").removeClass("Oculto");
             $('#Select2Colaborador').val(null).trigger('change');
             var newOption = new Option(obj.Nome, obj.id, false, true);
             $('#Select2Colaborador').append(newOption).trigger('change');

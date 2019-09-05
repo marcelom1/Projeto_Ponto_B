@@ -79,7 +79,7 @@ function buscaTabela() {
     var dataInicial = $("#dataInicio").val();
     var dataFinal = $("#dataFim").val();
     
-    if (colaboradorId != null && EmpresaId != null && dataInicial != '' && dataFinal != '') {
+    if (colaboradorId != null && EmpresaId != '' && dataInicial != '' && dataFinal != '') {
         $("#ErrosManutencaoPonto").text("");
         $("#spninner").removeClass("Oculto");
         $("#ParcialViewTabelaCalculo").load("/ManutencaoPonto/TabelaCalculo/", { idColaborador: colaboradorId, dataInicio: dataInicial, dataFim: dataFinal }, function () {
@@ -118,15 +118,21 @@ $("#Select2Empresa").on('select2:close', function () {
         $("#GridManutencao").addClass("Oculto");
     }
     
-    buscaTabela();
+    validacaoData();
 });
 
 
 
 $("#Select2Colaborador").on('select2:close', function () {
     AtualizaSelectColaborador();
-    if ($("#Select2Colaborador").val() != null)
+    if ($("#Select2Colaborador").val() != null) {
+        $("#calculo").removeClass("Oculto");
+        $("#CartaoPonto").removeClass("Oculto");
         BuscaIndiceColaborador();
+    } else {
+        $("#calculo").addClass("Oculto");
+        $("#CartaoPonto").addClass("Oculto");
+    }
 });
 
 function AtualizaSelectColaborador() {
