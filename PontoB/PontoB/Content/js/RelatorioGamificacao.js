@@ -45,6 +45,18 @@ $(document).on('click', '#ImprimirDetalhado', function () {
 });
 
 
+$(document).on("click", "#contentPager a", function () {
+    $.ajax({
+        url: $(this).attr("href"),
+        type: 'GET',
+        cache: false,
+        success: function (result) {
+            $('#Grid').html(result);
+        }
+    });
+    return false;
+});
+
 
 $(document).on('click', '#ImprimirRelatorio', function () {
     $(".tooltip3").tooltipster("content", "Processando...").tooltipster("open");

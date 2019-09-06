@@ -48,8 +48,8 @@
     <br />
     <div id="contentPager">
 
-        @Html.PagedListPager(Model, page => Url.Action("TabelaResumoGamificacao",
-        new { pagina = page, empresaId = ViewBag.EmpresaId, dataInicio = ViewBag.DataInicio, dataFim = ViewBag.DataFim }),
+        @Html.PagedListPager(Model, page => Url.Action("BuscaRelatorioGamificacao",
+        new { pagina = page,relatorio = "TabelaResumoGamificacao",  empresaId = ViewBag.EmpresaId, dataInicio = ViewBag.DataInicio, dataFim = ViewBag.DataFim }),
         new PagedListRenderOptions
         {
             FunctionToTransformEachPageLink = (liTag, aTag) =>

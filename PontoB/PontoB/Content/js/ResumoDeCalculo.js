@@ -80,10 +80,10 @@ $("#dataFim").blur(function () {
 
 function validacaoData() {
     var datafim = $("#dataFim").val();
-    var datainicio = $("#dataInicio").val()
-    if (datafim)
-        if (datainicio)
-            if (datafim < datainicio && datafim != '' && datainicio !='') {
+    var datainicio = $("#dataInicio").val();
+    if (datafim) {
+        if (datainicio) {
+            if (datafim < datainicio && datafim != '' && datainicio != '') {
                 $("#Erro_DataInicio").text("Data inicial não pode ser maior que data final!").show();
                 $("#GridManutencao").addClass("Oculto");
                 return false;
@@ -91,6 +91,10 @@ function validacaoData() {
                 $("#Erro_DataInicio").hide();
                 return true;
             }
+        }
+    }
+    $("#Grid").addClass("Oculto");
+     
 };
 
 $("#BuscarColaboradores").click(function () {
@@ -104,7 +108,7 @@ $("#BuscarColaboradores").click(function () {
                 $(".tooltip2").tooltipster("content", "Processando...").tooltipster("open");
 
                 ColaboradoresPagincao();
-                $("#GridManutencao").removeClass("Oculto");
+                $("#Grid").removeClass("Oculto");
 
             } 
         } else {

@@ -122,7 +122,10 @@ namespace PontoB.Controllers
         [HttpPost]
         public ActionResult NovoHorario(IList<string> checks, DateTime NovoHoraEntrada, DateTime NovoHoraSaida, int EscalaID)
         {
-
+            if (checks == null)
+            {
+                ModelState.AddModelError("AdicionarNovoHorario", "Selecione pelo menos um dia da semana!");
+            }
             if (ModelState.IsValid)
             {
                 //Para cada dia da semana selecionado é criado uma nova linha

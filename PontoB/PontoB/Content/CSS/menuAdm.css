@@ -147,3 +147,7 @@ h6 {
 .sucess {
     color:green;
 }
+
+.Oculto {
+    display: none;
+}

@@ -158,9 +158,9 @@ function validacaoData() {
     var datainicio = $("#dataInicio").val();
     var dataAtual = new Date();
     console.log(dataAtual);
-    if (datafim)
-        if (datainicio)
-            if (datafim < datainicio ) {
+    if (datafim) {
+        if (datainicio) {
+            if (datafim < datainicio) {
                 $("#Erro_DataInicio").text("Data inicial não pode ser maior que data final!").show();
                 $("#GridManutencao").addClass("Oculto");
                 return false;
@@ -168,11 +168,14 @@ function validacaoData() {
                 $("#Erro_DataFim").text("Data final não pode ser maior que a data corrente").show();
                 $("#GridManutencao").addClass("Oculto");
                 return false;
-            }else {
+            } else {
                 $("#Erro_DataInicio").hide();
                 buscaTabela();
                 return true;
             }
+        }
+    }
+    $("#GridManutencao").addClass("Oculto");
 };
 
 $(document).ready(function () {

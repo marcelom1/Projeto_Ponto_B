@@ -12,7 +12,7 @@ using System.Web.Services;
 
 namespace PontoB.Controllers
 {
-    [Authorize(Roles = "Master")]
+    [Authorize]
     public class ColaboradorController : Controller
     {
         
@@ -22,7 +22,7 @@ namespace PontoB.Controllers
         private EnderecoDAO dbEndereco = new EnderecoDAO();
         private EstadosUFDAO dbEstado = new EstadosUFDAO();
 
-
+        [Authorize(Roles = "Master")]
         public ActionResult Index(int pagina = 1, string coluna = "", string filtro = "")
         {
             //Aplica paginação no Filtro
@@ -39,6 +39,7 @@ namespace PontoB.Controllers
             return View(dbColaborador.Lista().ToPagedList(pagina,10));
         }
 
+        [Authorize(Roles = "Master")]
         [WebMethod()]
         [ScriptMethod(ResponseFormat =ResponseFormat.Json)]
         public JsonResult GetEmpresas(string searchTerm)
@@ -56,6 +57,7 @@ namespace PontoB.Controllers
             
         }
 
+        [Authorize(Roles = "Master")]
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public JsonResult getEscala(string searchTerm)
@@ -73,7 +75,7 @@ namespace PontoB.Controllers
 
         }
 
-
+        [Authorize(Roles = "Master")]
         public ActionResult Filtro(string coluna, string texto, int pagina = 1)
         {
             
@@ -88,7 +90,7 @@ namespace PontoB.Controllers
             return View("Index", filtro);
         }
 
-
+        [Authorize(Roles = "Master")]
         public ActionResult Form(int id = 0)
         {
             //Lista todas as UF
@@ -120,7 +122,7 @@ namespace PontoB.Controllers
             };
             return View(colaborador);
         }
-
+        [Authorize(Roles = "Master")]
         [HttpPost]
         public ActionResult Adiciona(Colaborador colaborador)
         {
@@ -195,7 +197,7 @@ namespace PontoB.Controllers
                 return View("Form",model);
             }
         }
-
+        [Authorize(Roles = "Master")]
         [HttpPost]
         public ActionResult Excluir(Colaborador colaborador)
         {
@@ -211,7 +213,7 @@ namespace PontoB.Controllers
 
             return RedirectToAction("Index", "Colaborador");
         }
-
+        [Authorize(Roles = "Master")]
         public ActionResult Excluir(int id)
         {
 

@@ -310,30 +310,32 @@ namespace PontoB.Controllers
 
         public string DesconsiderarMarcacao(IList<string> desconsidera, IList<string> observacao, IList<int> registroId)
         {
-
-            foreach (var id in registroId)
+            if (registroId != null)
             {
-
-                var registro = dbRegistroPonto.BuscarPorId(id);
-                if (!registro.RegistroManual)
+                foreach (var id in registroId)
                 {
-                    registro.DesconsiderarMarcacao = false;
-                    registro.Observacao = null;
-                    dbRegistroPonto.Atualiza(registro);
+
+                    var registro = dbRegistroPonto.BuscarPorId(id);
+                    if (!registro.RegistroManual)
+                    {
+                        registro.DesconsiderarMarcacao = false;
+                        registro.Observacao = null;
+                        dbRegistroPonto.Atualiza(registro);
+                    }
                 }
             }
-            if (desconsidera != null)
-            {
-                for (int i = 0; i < desconsidera.Count(); i++)
+                if (desconsidera != null)
                 {
-                    var registro = dbRegistroPonto.BuscarPorId(Convert.ToInt32(desconsidera[i]));
-                    registro.DesconsiderarMarcacao = true;
-                    registro.Observacao = observacao[i];
-                    dbRegistroPonto.Atualiza(registro);
+                    for (int i = 0; i < desconsidera.Count(); i++)
+                    {
+                        var registro = dbRegistroPonto.BuscarPorId(Convert.ToInt32(desconsidera[i]));
+                        registro.DesconsiderarMarcacao = true;
+                        registro.Observacao = observacao[i];
+                        dbRegistroPonto.Atualiza(registro);
+                    }
                 }
-            }
+
             return "True";
-
 
         }
 
