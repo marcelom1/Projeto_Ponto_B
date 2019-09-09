@@ -71,13 +71,10 @@ function SalvarNovoHorarioEscala() {
     var HoraSaida = $("#NovoHoraSaida").val();
     var DiaSemana = $("#DiasDaSemana").val();
     console.log(HoraEntrada);
-    if (DiaSemana == "") {
-        alert("Dia da semana não pode ficar em branco!");
-    }
-    else if (HoraEntrada == null) {
+    if (HoraEntrada == "") {
         alert("Hora Entrada não pode ser nula!");
     }
-    else if (HoraSaida == null) {
+    else if (HoraSaida == "") {
         alert("Hora Saida não pode ser nula!");
     }
     else if (HoraEntrada >= HoraSaida) {

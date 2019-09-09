@@ -96,6 +96,7 @@ function buscaTabela() {
         });
     } else {
         $("#ParcialViewTabelaCalculo").html("");
+        $("#GridManutencao").addClass("Oculto");
     }
 };
 

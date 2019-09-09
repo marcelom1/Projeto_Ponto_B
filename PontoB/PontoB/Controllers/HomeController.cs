@@ -91,6 +91,7 @@ namespace PontoB.Controllers
             var dataFim = DateTime.Now;
             var topHoras = new TopHoras().TopFive(dataInicio, dataFim);
             var topPontuacao = new TopPontuacao().TopFive(dataInicio, dataFim);
+            
 
             var model = new TopHomeViewModels
             {
@@ -98,7 +99,7 @@ namespace PontoB.Controllers
                 DataFim = dataFim.ToShortDateString(),
                 HorasFalta = topHoras.Where(x => x.HorasPontuacao < 0).Take(5).ToList(),
                 HorasExcedentes = topHoras.Reverse().Where(x => x.HorasPontuacao > 0).Take(5).ToList(),
-                TopPontos = topPontuacao.OrderBy(x => x.HorasPontuacao).Where(x=>x.HorasPontuacao>0).Take(5).ToList()
+                TopPontos = topPontuacao.Where(x => x.HorasPontuacao > 0).OrderByDescending(x => x.HorasPontuacao).Take(5).ToList()
                 
 
             };
